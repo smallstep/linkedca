@@ -16,3 +16,7 @@ message Admin {
     string provisioner_id = 4;
     Type type = 5;
 }
+
+message AdminList {
+    repeated Admin admins = 1;
+}
