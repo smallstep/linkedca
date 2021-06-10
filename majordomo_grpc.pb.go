@@ -57,7 +57,7 @@ func NewMajordomoClient(cc grpc.ClientConnInterface) MajordomoClient {
 
 func (c *majordomoClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
 	out := new(LoginResponse)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/Login", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/Login", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c *majordomoClient) Login(ctx context.Context, in *LoginRequest, opts ...g
 
 func (c *majordomoClient) GetConfiguration(ctx context.Context, in *ConfigurationRequest, opts ...grpc.CallOption) (*ConfigurationResponse, error) {
 	out := new(ConfigurationResponse)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/GetConfiguration", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/GetConfiguration", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (c *majordomoClient) GetConfiguration(ctx context.Context, in *Configuratio
 
 func (c *majordomoClient) CreateProvisioner(ctx context.Context, in *CreateProvisionerRequest, opts ...grpc.CallOption) (*Provisioner, error) {
 	out := new(Provisioner)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/CreateProvisioner", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/CreateProvisioner", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (c *majordomoClient) CreateProvisioner(ctx context.Context, in *CreateProvi
 
 func (c *majordomoClient) UpdateProvisioner(ctx context.Context, in *UpdateProvisionerRequest, opts ...grpc.CallOption) (*Provisioner, error) {
 	out := new(Provisioner)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/UpdateProvisioner", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/UpdateProvisioner", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (c *majordomoClient) UpdateProvisioner(ctx context.Context, in *UpdateProvi
 
 func (c *majordomoClient) DeleteProvisioner(ctx context.Context, in *DeleteProvisionerRequest, opts ...grpc.CallOption) (*Provisioner, error) {
 	out := new(Provisioner)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/DeleteProvisioner", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/DeleteProvisioner", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +102,7 @@ func (c *majordomoClient) DeleteProvisioner(ctx context.Context, in *DeleteProvi
 
 func (c *majordomoClient) CreateAdmin(ctx context.Context, in *CreateAdminRequest, opts ...grpc.CallOption) (*Admin, error) {
 	out := new(Admin)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/CreateAdmin", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/CreateAdmin", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +111,7 @@ func (c *majordomoClient) CreateAdmin(ctx context.Context, in *CreateAdminReques
 
 func (c *majordomoClient) UpdateAdmin(ctx context.Context, in *UpdateAdminRequest, opts ...grpc.CallOption) (*Admin, error) {
 	out := new(Admin)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/UpdateAdmin", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/UpdateAdmin", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func (c *majordomoClient) UpdateAdmin(ctx context.Context, in *UpdateAdminReques
 
 func (c *majordomoClient) DeleteAdmin(ctx context.Context, in *DeleteAdminRequest, opts ...grpc.CallOption) (*Admin, error) {
 	out := new(Admin)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/DeleteAdmin", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/DeleteAdmin", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func (c *majordomoClient) DeleteAdmin(ctx context.Context, in *DeleteAdminReques
 
 func (c *majordomoClient) PostCertificate(ctx context.Context, in *CertificateRequest, opts ...grpc.CallOption) (*CertificateResponse, error) {
 	out := new(CertificateResponse)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/PostCertificate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/PostCertificate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +138,7 @@ func (c *majordomoClient) PostCertificate(ctx context.Context, in *CertificateRe
 
 func (c *majordomoClient) PostSSHCertificate(ctx context.Context, in *SSHCertificateRequest, opts ...grpc.CallOption) (*SSHCertificateResponse, error) {
 	out := new(SSHCertificateResponse)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/PostSSHCertificate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/PostSSHCertificate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func (c *majordomoClient) PostSSHCertificate(ctx context.Context, in *SSHCertifi
 
 func (c *majordomoClient) RevokeCertificate(ctx context.Context, in *TODO, opts ...grpc.CallOption) (*TODO, error) {
 	out := new(TODO)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/RevokeCertificate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/RevokeCertificate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func (c *majordomoClient) RevokeCertificate(ctx context.Context, in *TODO, opts 
 
 func (c *majordomoClient) RevokeSSHCertificate(ctx context.Context, in *TODO, opts ...grpc.CallOption) (*TODO, error) {
 	out := new(TODO)
-	err := c.cc.Invoke(ctx, "/majordomo.Majordomo/RevokeSSHCertificate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/RevokeSSHCertificate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +260,7 @@ func _Majordomo_Login_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/Login",
+		FullMethod: "/linkedca.Majordomo/Login",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).Login(ctx, req.(*LoginRequest))
@@ -278,7 +278,7 @@ func _Majordomo_GetConfiguration_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/GetConfiguration",
+		FullMethod: "/linkedca.Majordomo/GetConfiguration",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).GetConfiguration(ctx, req.(*ConfigurationRequest))
@@ -296,7 +296,7 @@ func _Majordomo_CreateProvisioner_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/CreateProvisioner",
+		FullMethod: "/linkedca.Majordomo/CreateProvisioner",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).CreateProvisioner(ctx, req.(*CreateProvisionerRequest))
@@ -314,7 +314,7 @@ func _Majordomo_UpdateProvisioner_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/UpdateProvisioner",
+		FullMethod: "/linkedca.Majordomo/UpdateProvisioner",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).UpdateProvisioner(ctx, req.(*UpdateProvisionerRequest))
@@ -332,7 +332,7 @@ func _Majordomo_DeleteProvisioner_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/DeleteProvisioner",
+		FullMethod: "/linkedca.Majordomo/DeleteProvisioner",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).DeleteProvisioner(ctx, req.(*DeleteProvisionerRequest))
@@ -350,7 +350,7 @@ func _Majordomo_CreateAdmin_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/CreateAdmin",
+		FullMethod: "/linkedca.Majordomo/CreateAdmin",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).CreateAdmin(ctx, req.(*CreateAdminRequest))
@@ -368,7 +368,7 @@ func _Majordomo_UpdateAdmin_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/UpdateAdmin",
+		FullMethod: "/linkedca.Majordomo/UpdateAdmin",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).UpdateAdmin(ctx, req.(*UpdateAdminRequest))
@@ -386,7 +386,7 @@ func _Majordomo_DeleteAdmin_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/DeleteAdmin",
+		FullMethod: "/linkedca.Majordomo/DeleteAdmin",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).DeleteAdmin(ctx, req.(*DeleteAdminRequest))
@@ -404,7 +404,7 @@ func _Majordomo_PostCertificate_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/PostCertificate",
+		FullMethod: "/linkedca.Majordomo/PostCertificate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).PostCertificate(ctx, req.(*CertificateRequest))
@@ -422,7 +422,7 @@ func _Majordomo_PostSSHCertificate_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/PostSSHCertificate",
+		FullMethod: "/linkedca.Majordomo/PostSSHCertificate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).PostSSHCertificate(ctx, req.(*SSHCertificateRequest))
@@ -440,7 +440,7 @@ func _Majordomo_RevokeCertificate_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/RevokeCertificate",
+		FullMethod: "/linkedca.Majordomo/RevokeCertificate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).RevokeCertificate(ctx, req.(*TODO))
@@ -458,7 +458,7 @@ func _Majordomo_RevokeSSHCertificate_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/majordomo.Majordomo/RevokeSSHCertificate",
+		FullMethod: "/linkedca.Majordomo/RevokeSSHCertificate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).RevokeSSHCertificate(ctx, req.(*TODO))
@@ -470,7 +470,7 @@ func _Majordomo_RevokeSSHCertificate_Handler(srv interface{}, ctx context.Contex
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Majordomo_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "majordomo.Majordomo",
+	ServiceName: "linkedca.Majordomo",
 	HandlerType: (*MajordomoServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
