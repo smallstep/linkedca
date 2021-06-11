@@ -4,6 +4,8 @@ package linkedca;
 
 option go_package = "go.step.sm/linkedca";
 
+import "google/protobuf/timestamp.proto";
+
 message Provisioner {
 	enum Type {
 		NOOP = 0;
@@ -28,6 +30,8 @@ message Provisioner {
 	bytes x509_template_data = 8;
 	bytes ssh_template = 9;
 	bytes ssh_template_data = 10;
+	google.protobuf.Timestamp created_at = 11;
+	google.protobuf.Timestamp deleted_at = 12;
 }
 
 message ProvisionerDetails {
