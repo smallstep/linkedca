@@ -27,9 +27,9 @@ message Provisioner {
 	ProvisionerDetails details = 5;
 	Claims claims = 6;
 	Template x509_template = 7;
-	Template ssh_template = 9;
-	google.protobuf.Timestamp created_at = 10;
-	google.protobuf.Timestamp deleted_at = 11;
+	Template ssh_template = 8;
+	google.protobuf.Timestamp created_at = 9;
+	google.protobuf.Timestamp deleted_at = 10;
 }
 
 message ProvisionerDetails {
