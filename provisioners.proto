@@ -26,12 +26,10 @@ message Provisioner {
 	string name = 4;
 	ProvisionerDetails details = 5;
 	Claims claims = 6;
-	bytes x509_template = 7;
-	bytes x509_template_data = 8;
-	bytes ssh_template = 9;
-	bytes ssh_template_data = 10;
-	google.protobuf.Timestamp created_at = 11;
-	google.protobuf.Timestamp deleted_at = 12;
+	Template x509_template = 7;
+	Template ssh_template = 9;
+	google.protobuf.Timestamp created_at = 10;
+	google.protobuf.Timestamp deleted_at = 11;
 }
 
 message ProvisionerDetails {
