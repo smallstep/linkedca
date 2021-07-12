@@ -45,11 +45,10 @@ service Majordomo {
 
 message TODO {}
 
-message LoginRequest {
+message  LoginRequest {
 	string authority_id = 1;
-	string username = 2;
-	string password = 3;
-	string pem_certificate_request = 4;
+	string token = 2;
+	string pem_certificate_request = 3;
 }
 
 message LoginResponse {
