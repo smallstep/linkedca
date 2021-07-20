@@ -40,12 +40,10 @@ service Majordomo {
 	// PostSSHCertificate sends a signed SSH certificate to majordomo.
 	rpc PostSSHCertificate(SSHCertificateRequest) returns (SSHCertificateResponse);
 	// RevokeCertificate marks an X.509 certificate as revoked.
-	rpc RevokeCertificate(TODO) returns (TODO);
+	rpc RevokeCertificate(RevokeCertificateRequest) returns (RevokeCertificateResponse);
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
-	rpc RevokeSSHCertificate(TODO) returns (TODO);
+	rpc RevokeSSHCertificate(RevokeSSHCertificateRequest) returns (RevokeSSHCertificateResponse);
 }
-
-message TODO {}
 
 message  LoginRequest {
 	string authority_id = 1;
@@ -128,4 +126,28 @@ message SSHCertificateRequest {
 
 message SSHCertificateResponse {
 	string id = 1;
+}
+
+message RevokeCertificateRequest {
+	string serial = 1;
+	string pem_certificate = 2;
+	string reason = 3;
+	int32 reason_code = 4;
+	bool passive = 5;
+}
+
+message RevokeCertificateResponse {
+	string status = 1;
+}
+
+message RevokeSSHCertificateRequest {
+	string serial = 1;
+	string certificate = 2;
+	string reason = 3;
+	string reason_code = 4;
+	bool passive = 5;
+}
+
+message RevokeSSHCertificateResponse {
+	string status = 1;
 }
