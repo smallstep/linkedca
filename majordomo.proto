@@ -114,6 +114,7 @@ message DeleteAdminRequest {
 message CertificateRequest {
 	string pem_certificate = 1;
 	string pem_certificate_chain = 2;
+	string parent_pem_certificate = 3;
 }
 
 message CertificateResponse {
@@ -122,6 +123,7 @@ message CertificateResponse {
 
 message SSHCertificateRequest {
 	string certificate = 1;
+	string parent_certificate = 2;
 }
 
 message SSHCertificateResponse {
