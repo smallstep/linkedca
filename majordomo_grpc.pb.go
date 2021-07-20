@@ -21,6 +21,8 @@ type MajordomoClient interface {
 	// Login creates signs a given CSR and returns the certificate that will be
 	// used for authentication.
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	// GetRootCertificate returns the root certificate for a given fingerprint.
+	GetRootCertificate(ctx context.Context, in *GetRootCertificateRequest, opts ...grpc.CallOption) (*GetRootCertificateResponse, error)
 	// GetConfiguration returns the full configuration of an authority.
 	GetConfiguration(ctx context.Context, in *ConfigurationRequest, opts ...grpc.CallOption) (*ConfigurationResponse, error)
 	// CreateProvisioner adds a new provisioner to the majordomo authority and
@@ -58,6 +60,15 @@ func NewMajordomoClient(cc grpc.ClientConnInterface) MajordomoClient {
 func (c *majordomoClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
 	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/Login", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *majordomoClient) GetRootCertificate(ctx context.Context, in *GetRootCertificateRequest, opts ...grpc.CallOption) (*GetRootCertificateResponse, error) {
+	out := new(GetRootCertificateResponse)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/GetRootCertificate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -170,6 +181,8 @@ type MajordomoServer interface {
 	// Login creates signs a given CSR and returns the certificate that will be
 	// used for authentication.
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
+	// GetRootCertificate returns the root certificate for a given fingerprint.
+	GetRootCertificate(context.Context, *GetRootCertificateRequest) (*GetRootCertificateResponse, error)
 	// GetConfiguration returns the full configuration of an authority.
 	GetConfiguration(context.Context, *ConfigurationRequest) (*ConfigurationResponse, error)
 	// CreateProvisioner adds a new provisioner to the majordomo authority and
@@ -203,6 +216,9 @@ type UnimplementedMajordomoServer struct {
 
 func (UnimplementedMajordomoServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedMajordomoServer) GetRootCertificate(context.Context, *GetRootCertificateRequest) (*GetRootCertificateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRootCertificate not implemented")
 }
 func (UnimplementedMajordomoServer) GetConfiguration(context.Context, *ConfigurationRequest) (*ConfigurationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConfiguration not implemented")
@@ -264,6 +280,24 @@ func _Majordomo_Login_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).Login(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Majordomo_GetRootCertificate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRootCertificateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).GetRootCertificate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/linkedca.Majordomo/GetRootCertificate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).GetRootCertificate(ctx, req.(*GetRootCertificateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -476,6 +510,10 @@ var Majordomo_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Login",
 			Handler:    _Majordomo_Login_Handler,
+		},
+		{
+			MethodName: "GetRootCertificate",
+			Handler:    _Majordomo_GetRootCertificate_Handler,
 		},
 		{
 			MethodName: "GetConfiguration",

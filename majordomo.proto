@@ -13,6 +13,8 @@ service Majordomo {
 	// Login creates signs a given CSR and returns the certificate that will be
 	// used for authentication.
 	rpc Login(LoginRequest) returns (LoginResponse);
+	// GetRootCertificate returns the root certificate for a given fingerprint.
+	rpc GetRootCertificate(GetRootCertificateRequest) returns (GetRootCertificateResponse);
 
 	// GetConfiguration returns the full configuration of an authority.
 	rpc GetConfiguration(ConfigurationRequest) returns (ConfigurationResponse);
@@ -54,6 +56,14 @@ message  LoginRequest {
 message LoginResponse {
 	string pem_certificate = 1;
 	string pem_certificate_chain = 2;
+}
+
+message GetRootCertificateRequest {
+	string fingerprint = 1;
+}
+
+message GetRootCertificateResponse {
+	string pem_certificate = 1;
 }
 
 message ConfigurationRequest {
