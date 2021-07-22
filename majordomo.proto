@@ -40,14 +40,16 @@ service Majordomo {
 	// PostSSHCertificate sends a signed SSH certificate to majordomo.
 	rpc PostSSHCertificate(SSHCertificateRequest) returns (SSHCertificateResponse);
 	// RevokeCertificate marks an X.509 certificate as revoked.
-	rpc RevokeCertificate(TODO) returns (TODO);
+	rpc RevokeCertificate(RevokeCertificateRequest) returns (RevokeCertificateResponse);
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
-	rpc RevokeSSHCertificate(TODO) returns (TODO);
+	rpc RevokeSSHCertificate(RevokeSSHCertificateRequest) returns (RevokeSSHCertificateResponse);
+	// GetCertificateStatus returns the status of an X.509 certificate by serial.
+	rpc GetCertificateStatus(GetCertificateStatusRequest) returns (GetCertificateStatusResponse);
+	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
+	rpc GetSSHCertificateStatus(GetSSHCertificateStatusRequest) returns (GetSSHCertificateStatusResponse);
 }
 
-message TODO {}
-
-message  LoginRequest {
+message LoginRequest {
 	string authority_id = 1;
 	string token = 2;
 	string pem_certificate_request = 3;
@@ -114,6 +116,7 @@ message DeleteAdminRequest {
 message CertificateRequest {
 	string pem_certificate = 1;
 	string pem_certificate_chain = 2;
+	string pem_parent_certificate = 3;
 }
 
 message CertificateResponse {
@@ -122,8 +125,74 @@ message CertificateResponse {
 
 message SSHCertificateRequest {
 	string certificate = 1;
+	string parent_certificate = 2;
 }
 
 message SSHCertificateResponse {
 	string id = 1;
+}
+
+enum RevocationReasonCode {
+	UNSPECIFIED = 0;
+	KEY_COMPROMISE = 1;
+	CA_COMPROMISE = 2;
+	AFFILIATION_CHANGED = 3;
+	SUPERSEDED = 4;
+	CESSATION_OF_OPERATION = 5;
+	CERTIFICATE_HOLD = 6;
+	REMOVE_FROM_CRL = 8;
+	PRIVILEGE_WITHDRAWN = 9;
+	AA_COMPROMISE = 10;
+}
+
+message RevokeCertificateRequest {
+	string serial = 1;
+	string pem_certificate = 2;
+	string reason = 3;
+	RevocationReasonCode reason_code = 4;
+	bool passive = 5;
+}
+
+message RevokeCertificateResponse {
+	string status = 1;
+}
+
+message RevokeSSHCertificateRequest {
+	string serial = 1;
+	string certificate = 2;
+	string reason = 3;
+	RevocationReasonCode reason_code = 4;
+	bool passive = 5;
+}
+
+message RevokeSSHCertificateResponse {
+	string status = 1;
+}
+
+message GetCertificateStatusRequest {
+	string serial = 1;
+}
+
+message GetCertificateStatusResponse {
+	enum Status {
+		UNKNOWN = 0;
+		ACTIVE = 1;
+		REVOKED = 2;
+		HOLD = 3;
+	}
+	Status status = 1;
+}
+
+message GetSSHCertificateStatusRequest {
+	string serial = 1;
+}
+
+message GetSSHCertificateStatusResponse {
+	enum Status {
+		UNKNOWN = 0;
+		ACTIVE = 1;
+		REVOKED = 2;
+		HOLD = 3;
+	}
+	Status status = 1;
 }

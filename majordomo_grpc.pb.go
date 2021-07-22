@@ -44,9 +44,13 @@ type MajordomoClient interface {
 	// PostSSHCertificate sends a signed SSH certificate to majordomo.
 	PostSSHCertificate(ctx context.Context, in *SSHCertificateRequest, opts ...grpc.CallOption) (*SSHCertificateResponse, error)
 	// RevokeCertificate marks an X.509 certificate as revoked.
-	RevokeCertificate(ctx context.Context, in *TODO, opts ...grpc.CallOption) (*TODO, error)
+	RevokeCertificate(ctx context.Context, in *RevokeCertificateRequest, opts ...grpc.CallOption) (*RevokeCertificateResponse, error)
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
-	RevokeSSHCertificate(ctx context.Context, in *TODO, opts ...grpc.CallOption) (*TODO, error)
+	RevokeSSHCertificate(ctx context.Context, in *RevokeSSHCertificateRequest, opts ...grpc.CallOption) (*RevokeSSHCertificateResponse, error)
+	// GetCertificateStatus returns the status of an X.509 certificate by serial.
+	GetCertificateStatus(ctx context.Context, in *GetCertificateStatusRequest, opts ...grpc.CallOption) (*GetCertificateStatusResponse, error)
+	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
+	GetSSHCertificateStatus(ctx context.Context, in *GetSSHCertificateStatusRequest, opts ...grpc.CallOption) (*GetSSHCertificateStatusResponse, error)
 }
 
 type majordomoClient struct {
@@ -156,8 +160,8 @@ func (c *majordomoClient) PostSSHCertificate(ctx context.Context, in *SSHCertifi
 	return out, nil
 }
 
-func (c *majordomoClient) RevokeCertificate(ctx context.Context, in *TODO, opts ...grpc.CallOption) (*TODO, error) {
-	out := new(TODO)
+func (c *majordomoClient) RevokeCertificate(ctx context.Context, in *RevokeCertificateRequest, opts ...grpc.CallOption) (*RevokeCertificateResponse, error) {
+	out := new(RevokeCertificateResponse)
 	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/RevokeCertificate", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -165,9 +169,27 @@ func (c *majordomoClient) RevokeCertificate(ctx context.Context, in *TODO, opts 
 	return out, nil
 }
 
-func (c *majordomoClient) RevokeSSHCertificate(ctx context.Context, in *TODO, opts ...grpc.CallOption) (*TODO, error) {
-	out := new(TODO)
+func (c *majordomoClient) RevokeSSHCertificate(ctx context.Context, in *RevokeSSHCertificateRequest, opts ...grpc.CallOption) (*RevokeSSHCertificateResponse, error) {
+	out := new(RevokeSSHCertificateResponse)
 	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/RevokeSSHCertificate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *majordomoClient) GetCertificateStatus(ctx context.Context, in *GetCertificateStatusRequest, opts ...grpc.CallOption) (*GetCertificateStatusResponse, error) {
+	out := new(GetCertificateStatusResponse)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/GetCertificateStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *majordomoClient) GetSSHCertificateStatus(ctx context.Context, in *GetSSHCertificateStatusRequest, opts ...grpc.CallOption) (*GetSSHCertificateStatusResponse, error) {
+	out := new(GetSSHCertificateStatusResponse)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/GetSSHCertificateStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -204,9 +226,13 @@ type MajordomoServer interface {
 	// PostSSHCertificate sends a signed SSH certificate to majordomo.
 	PostSSHCertificate(context.Context, *SSHCertificateRequest) (*SSHCertificateResponse, error)
 	// RevokeCertificate marks an X.509 certificate as revoked.
-	RevokeCertificate(context.Context, *TODO) (*TODO, error)
+	RevokeCertificate(context.Context, *RevokeCertificateRequest) (*RevokeCertificateResponse, error)
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
-	RevokeSSHCertificate(context.Context, *TODO) (*TODO, error)
+	RevokeSSHCertificate(context.Context, *RevokeSSHCertificateRequest) (*RevokeSSHCertificateResponse, error)
+	// GetCertificateStatus returns the status of an X.509 certificate by serial.
+	GetCertificateStatus(context.Context, *GetCertificateStatusRequest) (*GetCertificateStatusResponse, error)
+	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
+	GetSSHCertificateStatus(context.Context, *GetSSHCertificateStatusRequest) (*GetSSHCertificateStatusResponse, error)
 	mustEmbedUnimplementedMajordomoServer()
 }
 
@@ -247,11 +273,17 @@ func (UnimplementedMajordomoServer) PostCertificate(context.Context, *Certificat
 func (UnimplementedMajordomoServer) PostSSHCertificate(context.Context, *SSHCertificateRequest) (*SSHCertificateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostSSHCertificate not implemented")
 }
-func (UnimplementedMajordomoServer) RevokeCertificate(context.Context, *TODO) (*TODO, error) {
+func (UnimplementedMajordomoServer) RevokeCertificate(context.Context, *RevokeCertificateRequest) (*RevokeCertificateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeCertificate not implemented")
 }
-func (UnimplementedMajordomoServer) RevokeSSHCertificate(context.Context, *TODO) (*TODO, error) {
+func (UnimplementedMajordomoServer) RevokeSSHCertificate(context.Context, *RevokeSSHCertificateRequest) (*RevokeSSHCertificateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeSSHCertificate not implemented")
+}
+func (UnimplementedMajordomoServer) GetCertificateStatus(context.Context, *GetCertificateStatusRequest) (*GetCertificateStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCertificateStatus not implemented")
+}
+func (UnimplementedMajordomoServer) GetSSHCertificateStatus(context.Context, *GetSSHCertificateStatusRequest) (*GetSSHCertificateStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSSHCertificateStatus not implemented")
 }
 func (UnimplementedMajordomoServer) mustEmbedUnimplementedMajordomoServer() {}
 
@@ -465,7 +497,7 @@ func _Majordomo_PostSSHCertificate_Handler(srv interface{}, ctx context.Context,
 }
 
 func _Majordomo_RevokeCertificate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TODO)
+	in := new(RevokeCertificateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -477,13 +509,13 @@ func _Majordomo_RevokeCertificate_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/linkedca.Majordomo/RevokeCertificate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MajordomoServer).RevokeCertificate(ctx, req.(*TODO))
+		return srv.(MajordomoServer).RevokeCertificate(ctx, req.(*RevokeCertificateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Majordomo_RevokeSSHCertificate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TODO)
+	in := new(RevokeSSHCertificateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -495,7 +527,43 @@ func _Majordomo_RevokeSSHCertificate_Handler(srv interface{}, ctx context.Contex
 		FullMethod: "/linkedca.Majordomo/RevokeSSHCertificate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MajordomoServer).RevokeSSHCertificate(ctx, req.(*TODO))
+		return srv.(MajordomoServer).RevokeSSHCertificate(ctx, req.(*RevokeSSHCertificateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Majordomo_GetCertificateStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCertificateStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).GetCertificateStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/linkedca.Majordomo/GetCertificateStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).GetCertificateStatus(ctx, req.(*GetCertificateStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Majordomo_GetSSHCertificateStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSSHCertificateStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).GetSSHCertificateStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/linkedca.Majordomo/GetSSHCertificateStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).GetSSHCertificateStatus(ctx, req.(*GetSSHCertificateStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -558,6 +626,14 @@ var Majordomo_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RevokeSSHCertificate",
 			Handler:    _Majordomo_RevokeSSHCertificate_Handler,
+		},
+		{
+			MethodName: "GetCertificateStatus",
+			Handler:    _Majordomo_GetCertificateStatus_Handler,
+		},
+		{
+			MethodName: "GetSSHCertificateStatus",
+			Handler:    _Majordomo_GetSSHCertificateStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
