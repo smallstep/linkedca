@@ -47,8 +47,10 @@ type MajordomoClient interface {
 	RevokeCertificate(ctx context.Context, in *RevokeCertificateRequest, opts ...grpc.CallOption) (*RevokeCertificateResponse, error)
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
 	RevokeSSHCertificate(ctx context.Context, in *RevokeSSHCertificateRequest, opts ...grpc.CallOption) (*RevokeSSHCertificateResponse, error)
-	// GetCertificateStatus returns the status of a certificate by serial.
+	// GetCertificateStatus returns the status of an X.509 certificate by serial.
 	GetCertificateStatus(ctx context.Context, in *GetCertificateStatusRequest, opts ...grpc.CallOption) (*GetCertificateStatusResponse, error)
+	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
+	GetSSHCertificateStatus(ctx context.Context, in *GetSSHCertificateStatusRequest, opts ...grpc.CallOption) (*GetSSHCertificateStatusResponse, error)
 }
 
 type majordomoClient struct {
@@ -185,6 +187,15 @@ func (c *majordomoClient) GetCertificateStatus(ctx context.Context, in *GetCerti
 	return out, nil
 }
 
+func (c *majordomoClient) GetSSHCertificateStatus(ctx context.Context, in *GetSSHCertificateStatusRequest, opts ...grpc.CallOption) (*GetSSHCertificateStatusResponse, error) {
+	out := new(GetSSHCertificateStatusResponse)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/GetSSHCertificateStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MajordomoServer is the server API for Majordomo service.
 // All implementations must embed UnimplementedMajordomoServer
 // for forward compatibility
@@ -218,8 +229,10 @@ type MajordomoServer interface {
 	RevokeCertificate(context.Context, *RevokeCertificateRequest) (*RevokeCertificateResponse, error)
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
 	RevokeSSHCertificate(context.Context, *RevokeSSHCertificateRequest) (*RevokeSSHCertificateResponse, error)
-	// GetCertificateStatus returns the status of a certificate by serial.
+	// GetCertificateStatus returns the status of an X.509 certificate by serial.
 	GetCertificateStatus(context.Context, *GetCertificateStatusRequest) (*GetCertificateStatusResponse, error)
+	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
+	GetSSHCertificateStatus(context.Context, *GetSSHCertificateStatusRequest) (*GetSSHCertificateStatusResponse, error)
 	mustEmbedUnimplementedMajordomoServer()
 }
 
@@ -268,6 +281,9 @@ func (UnimplementedMajordomoServer) RevokeSSHCertificate(context.Context, *Revok
 }
 func (UnimplementedMajordomoServer) GetCertificateStatus(context.Context, *GetCertificateStatusRequest) (*GetCertificateStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCertificateStatus not implemented")
+}
+func (UnimplementedMajordomoServer) GetSSHCertificateStatus(context.Context, *GetSSHCertificateStatusRequest) (*GetSSHCertificateStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSSHCertificateStatus not implemented")
 }
 func (UnimplementedMajordomoServer) mustEmbedUnimplementedMajordomoServer() {}
 
@@ -534,6 +550,24 @@ func _Majordomo_GetCertificateStatus_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Majordomo_GetSSHCertificateStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSSHCertificateStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).GetSSHCertificateStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/linkedca.Majordomo/GetSSHCertificateStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).GetSSHCertificateStatus(ctx, req.(*GetSSHCertificateStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Majordomo_ServiceDesc is the grpc.ServiceDesc for Majordomo service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -596,6 +630,10 @@ var Majordomo_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCertificateStatus",
 			Handler:    _Majordomo_GetCertificateStatus_Handler,
+		},
+		{
+			MethodName: "GetSSHCertificateStatus",
+			Handler:    _Majordomo_GetSSHCertificateStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

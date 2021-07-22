@@ -43,11 +43,13 @@ service Majordomo {
 	rpc RevokeCertificate(RevokeCertificateRequest) returns (RevokeCertificateResponse);
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
 	rpc RevokeSSHCertificate(RevokeSSHCertificateRequest) returns (RevokeSSHCertificateResponse);
-	// GetCertificateStatus returns the status of a certificate by serial.
+	// GetCertificateStatus returns the status of an X.509 certificate by serial.
 	rpc GetCertificateStatus(GetCertificateStatusRequest) returns (GetCertificateStatusResponse);
+	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
+	rpc GetSSHCertificateStatus(GetSSHCertificateStatusRequest) returns (GetSSHCertificateStatusResponse);
 }
 
-message  LoginRequest {
+message LoginRequest {
 	string authority_id = 1;
 	string token = 2;
 	string pem_certificate_request = 3;
@@ -146,7 +148,7 @@ message RevokeSSHCertificateRequest {
 	string serial = 1;
 	string certificate = 2;
 	string reason = 3;
-	string reason_code = 4;
+	int32 reason_code = 4;
 	bool passive = 5;
 }
 
@@ -160,10 +162,24 @@ message GetCertificateStatusRequest {
 
 message GetCertificateStatusResponse {
 	enum Status {
-        UNKNOWN = 0;
-        ACTIVE = 1;
-        REVOKED = 2;
+		UNKNOWN = 0;
+		ACTIVE = 1;
+		REVOKED = 2;
 		HOLD = 3;
-    }
+	}
+	Status status = 1;
+}
+
+message GetSSHCertificateStatusRequest {
+	string serial = 1;
+}
+
+message GetSSHCertificateStatusResponse {
+	enum Status {
+		UNKNOWN = 0;
+		ACTIVE = 1;
+		REVOKED = 2;
+		HOLD = 3;
+	}
 	Status status = 1;
 }
