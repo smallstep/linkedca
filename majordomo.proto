@@ -132,7 +132,7 @@ message SSHCertificateResponse {
 	string id = 1;
 }
 
-enum ReasonCode {
+enum RevocationReasonCode {
 	UNSPECIFIED = 0;
 	KEY_COMPROMISE = 1;
 	CA_COMPROMISE = 2;
@@ -149,7 +149,7 @@ message RevokeCertificateRequest {
 	string serial = 1;
 	string pem_certificate = 2;
 	string reason = 3;
-	ReasonCode reason_code = 4;
+	RevocationReasonCode reason_code = 4;
 	bool passive = 5;
 }
 
@@ -161,7 +161,7 @@ message RevokeSSHCertificateRequest {
 	string serial = 1;
 	string certificate = 2;
 	string reason = 3;
-	ReasonCode reason_code = 4;
+	RevocationReasonCode reason_code = 4;
 	bool passive = 5;
 }
 
