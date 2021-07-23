@@ -132,6 +132,13 @@ message SSHCertificateResponse {
 	string id = 1;
 }
 
+enum RevocationStatus {
+	UNKNOWN = 0;
+	ACTIVE = 1;
+	REVOKED = 2;
+	HOLD = 3;
+}
+
 enum RevocationReasonCode {
 	UNSPECIFIED = 0;
 	KEY_COMPROMISE = 1;
@@ -154,7 +161,7 @@ message RevokeCertificateRequest {
 }
 
 message RevokeCertificateResponse {
-	string status = 1;
+	RevocationStatus status = 1;
 }
 
 message RevokeSSHCertificateRequest {
@@ -166,7 +173,7 @@ message RevokeSSHCertificateRequest {
 }
 
 message RevokeSSHCertificateResponse {
-	string status = 1;
+	RevocationStatus status = 1;
 }
 
 message GetCertificateStatusRequest {
@@ -174,13 +181,7 @@ message GetCertificateStatusRequest {
 }
 
 message GetCertificateStatusResponse {
-	enum Status {
-		UNKNOWN = 0;
-		ACTIVE = 1;
-		REVOKED = 2;
-		HOLD = 3;
-	}
-	Status status = 1;
+	RevocationStatus status = 1;
 }
 
 message GetSSHCertificateStatusRequest {
@@ -188,11 +189,5 @@ message GetSSHCertificateStatusRequest {
 }
 
 message GetSSHCertificateStatusResponse {
-	enum Status {
-		UNKNOWN = 0;
-		ACTIVE = 1;
-		REVOKED = 2;
-		HOLD = 3;
-	}
-	Status status = 1;
+	RevocationStatus status = 1;
 }
