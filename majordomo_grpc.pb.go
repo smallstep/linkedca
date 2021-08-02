@@ -28,6 +28,8 @@ type MajordomoClient interface {
 	// CreateProvisioner adds a new provisioner to the majordomo authority and
 	// returns the proto representation.
 	CreateProvisioner(ctx context.Context, in *CreateProvisionerRequest, opts ...grpc.CallOption) (*Provisioner, error)
+	// GetProvisioner returns a provisioner by its id.
+	GetProvisioner(ctx context.Context, in *GetProvisionerRequest, opts ...grpc.CallOption) (*Provisioner, error)
 	// UpdateProvisioners updates a previously created provisioner.
 	UpdateProvisioner(ctx context.Context, in *UpdateProvisionerRequest, opts ...grpc.CallOption) (*Provisioner, error)
 	// DeleteProvisioner deletes a previously created provisioner.
@@ -35,6 +37,8 @@ type MajordomoClient interface {
 	// CreateAdmin adds a new admin user to the majordomo authority. Admin users
 	// can add or delete provisioners.
 	CreateAdmin(ctx context.Context, in *CreateAdminRequest, opts ...grpc.CallOption) (*Admin, error)
+	// GetAdmin returns an admin by its id.
+	GetAdmin(ctx context.Context, in *GetAdminRequest, opts ...grpc.CallOption) (*Admin, error)
 	// UpdateAdmin updates a previously created admin.
 	UpdateAdmin(ctx context.Context, in *UpdateAdminRequest, opts ...grpc.CallOption) (*Admin, error)
 	// DeleteAdmin deletes a previously created admin user
@@ -97,6 +101,15 @@ func (c *majordomoClient) CreateProvisioner(ctx context.Context, in *CreateProvi
 	return out, nil
 }
 
+func (c *majordomoClient) GetProvisioner(ctx context.Context, in *GetProvisionerRequest, opts ...grpc.CallOption) (*Provisioner, error) {
+	out := new(Provisioner)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/GetProvisioner", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *majordomoClient) UpdateProvisioner(ctx context.Context, in *UpdateProvisionerRequest, opts ...grpc.CallOption) (*Provisioner, error) {
 	out := new(Provisioner)
 	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/UpdateProvisioner", in, out, opts...)
@@ -118,6 +131,15 @@ func (c *majordomoClient) DeleteProvisioner(ctx context.Context, in *DeleteProvi
 func (c *majordomoClient) CreateAdmin(ctx context.Context, in *CreateAdminRequest, opts ...grpc.CallOption) (*Admin, error) {
 	out := new(Admin)
 	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/CreateAdmin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *majordomoClient) GetAdmin(ctx context.Context, in *GetAdminRequest, opts ...grpc.CallOption) (*Admin, error) {
+	out := new(Admin)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/GetAdmin", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -210,6 +232,8 @@ type MajordomoServer interface {
 	// CreateProvisioner adds a new provisioner to the majordomo authority and
 	// returns the proto representation.
 	CreateProvisioner(context.Context, *CreateProvisionerRequest) (*Provisioner, error)
+	// GetProvisioner returns a provisioner by its id.
+	GetProvisioner(context.Context, *GetProvisionerRequest) (*Provisioner, error)
 	// UpdateProvisioners updates a previously created provisioner.
 	UpdateProvisioner(context.Context, *UpdateProvisionerRequest) (*Provisioner, error)
 	// DeleteProvisioner deletes a previously created provisioner.
@@ -217,6 +241,8 @@ type MajordomoServer interface {
 	// CreateAdmin adds a new admin user to the majordomo authority. Admin users
 	// can add or delete provisioners.
 	CreateAdmin(context.Context, *CreateAdminRequest) (*Admin, error)
+	// GetAdmin returns an admin by its id.
+	GetAdmin(context.Context, *GetAdminRequest) (*Admin, error)
 	// UpdateAdmin updates a previously created admin.
 	UpdateAdmin(context.Context, *UpdateAdminRequest) (*Admin, error)
 	// DeleteAdmin deletes a previously created admin user
@@ -252,6 +278,9 @@ func (UnimplementedMajordomoServer) GetConfiguration(context.Context, *Configura
 func (UnimplementedMajordomoServer) CreateProvisioner(context.Context, *CreateProvisionerRequest) (*Provisioner, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateProvisioner not implemented")
 }
+func (UnimplementedMajordomoServer) GetProvisioner(context.Context, *GetProvisionerRequest) (*Provisioner, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProvisioner not implemented")
+}
 func (UnimplementedMajordomoServer) UpdateProvisioner(context.Context, *UpdateProvisionerRequest) (*Provisioner, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProvisioner not implemented")
 }
@@ -260,6 +289,9 @@ func (UnimplementedMajordomoServer) DeleteProvisioner(context.Context, *DeletePr
 }
 func (UnimplementedMajordomoServer) CreateAdmin(context.Context, *CreateAdminRequest) (*Admin, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAdmin not implemented")
+}
+func (UnimplementedMajordomoServer) GetAdmin(context.Context, *GetAdminRequest) (*Admin, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAdmin not implemented")
 }
 func (UnimplementedMajordomoServer) UpdateAdmin(context.Context, *UpdateAdminRequest) (*Admin, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAdmin not implemented")
@@ -370,6 +402,24 @@ func _Majordomo_CreateProvisioner_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Majordomo_GetProvisioner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProvisionerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).GetProvisioner(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/linkedca.Majordomo/GetProvisioner",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).GetProvisioner(ctx, req.(*GetProvisionerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Majordomo_UpdateProvisioner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateProvisionerRequest)
 	if err := dec(in); err != nil {
@@ -420,6 +470,24 @@ func _Majordomo_CreateAdmin_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MajordomoServer).CreateAdmin(ctx, req.(*CreateAdminRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Majordomo_GetAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAdminRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).GetAdmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/linkedca.Majordomo/GetAdmin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).GetAdmin(ctx, req.(*GetAdminRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -592,6 +660,10 @@ var Majordomo_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Majordomo_CreateProvisioner_Handler,
 		},
 		{
+			MethodName: "GetProvisioner",
+			Handler:    _Majordomo_GetProvisioner_Handler,
+		},
+		{
 			MethodName: "UpdateProvisioner",
 			Handler:    _Majordomo_UpdateProvisioner_Handler,
 		},
@@ -602,6 +674,10 @@ var Majordomo_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateAdmin",
 			Handler:    _Majordomo_CreateAdmin_Handler,
+		},
+		{
+			MethodName: "GetAdmin",
+			Handler:    _Majordomo_GetAdmin_Handler,
 		},
 		{
 			MethodName: "UpdateAdmin",
