@@ -22,6 +22,8 @@ service Majordomo {
 	// CreateProvisioner adds a new provisioner to the majordomo authority and
 	// returns the proto representation.
 	rpc CreateProvisioner(CreateProvisionerRequest) returns (linkedca.Provisioner);
+	// GetProvisioner returns a provisioner by its id.
+	rpc GetProvisioner(GetProvisionerRequest) returns (linkedca.Provisioner);
 	// UpdateProvisioners updates a previously created provisioner.
 	rpc UpdateProvisioner(UpdateProvisionerRequest) returns (linkedca.Provisioner);
 	// DeleteProvisioner deletes a previously created provisioner.
@@ -30,6 +32,8 @@ service Majordomo {
 	// CreateAdmin adds a new admin user to the majordomo authority. Admin users
 	// can add or delete provisioners.
 	rpc CreateAdmin(CreateAdminRequest) returns (linkedca.Admin);
+	// GetAdmin returns an admin by its id.
+	rpc GetAdmin(GetAdminRequest) returns (linkedca.Admin);
 	// UpdateAdmin updates a previously created admin.
 	rpc UpdateAdmin(UpdateAdminRequest) returns (linkedca.Admin);
 	// DeleteAdmin deletes a previously created admin user
@@ -86,6 +90,10 @@ message CreateProvisionerRequest {
 	linkedca.Template ssh_template = 6;
 }
 
+message GetProvisionerRequest {
+	string id = 1;
+}
+
 message UpdateProvisionerRequest {
 	string id = 1;
 	string name = 2;
@@ -103,6 +111,10 @@ message CreateAdminRequest {
 	string subject = 1;
 	string provisioner_id = 2;
 	linkedca.Admin.Type type = 3;
+}
+
+message GetAdminRequest {
+	string id = 1;
 }
 
 message UpdateAdminRequest {
