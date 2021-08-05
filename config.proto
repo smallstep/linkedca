@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package config;
 
-option go_package = "go.step.sm/linkedca/config";
+option go_package = "go.step.sm/linkedca";
 
 import "admin.proto";
 import "provisioners.proto";
@@ -10,10 +10,10 @@ import "google/protobuf/struct.proto";
 
 message Configuration {
     string version = 1;
-    repeated string root = 2;            // pem representation
-    repeated string federated_roots = 3; // pem representation
-    string intermediate = 4;             // pem representation
-    string intermediate_key = 5;         // pem representation
+    repeated string root = 2;            // pem representation in files
+    repeated string federated_roots = 3; // pem representation in files
+    string intermediate = 4;             // pem representation in files
+    string intermediate_key = 5;         // pem representation in files
     string address = 6;
     string insecure_address = 7;
     repeated string dns_names = 8;
@@ -24,7 +24,7 @@ message Configuration {
     google.protobuf.Struct monitoring = 13; // json representation
     Authority authority = 14;
     TLS tls = 15;
-    Templates templates = 16;
+    ConfigTemplate templates = 16;
     bytes password = 17;
     map<string, bytes> files = 18;
 }
@@ -82,8 +82,8 @@ message CertificateIssuer {
 }
 
 message SSH {
-    string host_key = 1;
-    string user_key = 2;
+    string host_key = 1; // pem representation in files
+    string user_key = 2; // pem representation in files
     repeated SSHPublicKey keys = 3;
     string add_user_principal = 4;
     string add_user_command = 5;
@@ -167,17 +167,17 @@ message TLS {
     bool renegotiation = 4;
 }
 
-message Templates {
-    SSHTemplate ssh = 1;
+message ConfigTemplates {
+    SSHConfigTemplate ssh = 1;
     google.protobuf.Struct data = 2;
 }
 
-message SSHTemplate {
-    repeated Template users = 1;
-    repeated Template hosts = 2;
+message SSHConfigTemplate {
+    repeated ConfigTemplate users = 1;
+    repeated ConfigTemplate hosts = 2;
 }
 
-message Template {
+message ConfigTemplate {
     enum Type {
         UNKNOWN   = 0;
         SNIPPET   = 1;
