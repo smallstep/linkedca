@@ -11,22 +11,23 @@ import "google/protobuf/struct.proto";
 message Configuration {
     string version = 1;
     repeated string root = 2;            // pem representation in files
-    repeated string federated_roots = 3; // pem representation in files
-    string intermediate = 4;             // pem representation in files
-    string intermediate_key = 5;         // pem representation in files
-    string address = 6;
-    string insecure_address = 7;
-    repeated string dns_names = 8;
-    SSH ssh = 9;
-    KMS kms = 10;
-    google.protobuf.Struct logger = 11;     // json representation
-    google.protobuf.Struct db = 12;         // json representation
-    google.protobuf.Struct monitoring = 13; // json representation
-    Authority authority = 14;
-    TLS tls = 15;
-    ConfigTemplates templates = 16;
-    bytes password = 17;
-    map<string, bytes> files = 18;
+    repeated string root_key = 3;        // pem representation in files
+    repeated string federated_roots = 4; // pem representation in files
+    string intermediate = 5;             // pem representation in files
+    string intermediate_key = 6;         // pem representation in files
+    string address = 7;
+    string insecure_address = 8;
+    repeated string dns_names = 9;
+    SSH ssh = 10;
+    KMS kms = 11;
+    google.protobuf.Struct logger = 12;     // json representation
+    google.protobuf.Struct db = 13;         // json representation
+    google.protobuf.Struct monitoring = 14; // json representation
+    Authority authority = 15;
+    TLS tls = 16;
+    ConfigTemplates templates = 17;
+    bytes password = 18;
+    map<string, bytes> files = 19;
 }
 
 message Authority {
