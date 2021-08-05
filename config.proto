@@ -8,6 +8,9 @@ import "admin.proto";
 import "provisioners.proto";
 import "google/protobuf/struct.proto";
 
+// Configuration is the proto representation of a ca.json. Root keys and SSH
+// public keys are not present in the ca.json but have been added here to be
+// used in the initialization of a PKI.
 message Configuration {
     string version = 1;
     repeated string root = 2;            // pem representation in files
@@ -28,6 +31,15 @@ message Configuration {
     ConfigTemplates templates = 17;
     bytes password = 18;
     map<string, bytes> files = 19;
+}
+
+// Defaults is the proto representation of the defaults.json, this file can be
+// extended, so it will only contain the default fields.
+message Defaults {
+    string ca_url = 1;
+    string ca_config = 2;
+    string fingerprint = 3;
+    string root = 4;
 }
 
 message Authority {
