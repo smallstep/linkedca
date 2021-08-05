@@ -24,7 +24,7 @@ message Configuration {
     google.protobuf.Struct monitoring = 13; // json representation
     Authority authority = 14;
     TLS tls = 15;
-    ConfigTemplate templates = 16;
+    ConfigTemplates templates = 16;
     bytes password = 17;
     map<string, bytes> files = 18;
 }
