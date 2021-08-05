@@ -83,12 +83,14 @@ message CertificateIssuer {
 }
 
 message SSH {
-    string host_key = 1; // pem representation in files
-    string user_key = 2; // pem representation in files
-    repeated SSHPublicKey keys = 3;
-    string add_user_principal = 4;
-    string add_user_command = 5;
-    Bastion bastion = 6;
+    string host_key = 1;        // pem representation in files
+    string user_key = 2;        // pem representation in files
+    string host_public_key = 3; // ssh representation in files
+    string user_public_key = 4; // ssh representation in files
+    repeated SSHPublicKey keys = 5;
+    string add_user_principal = 6;
+    string add_user_command = 7;
+    Bastion bastion = 8;
 }
 
 message SSHPublicKey {
