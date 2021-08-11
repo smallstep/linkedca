@@ -68,6 +68,7 @@ message Authority {
     linkedca.Claims claims = 11;
     bool disable_issued_at_check = 12;
     string backdate = 13;
+    string deployment_type = 14;
 }
 
 message DistinguishedName {
