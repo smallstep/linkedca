@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package eab;
+
+option go_package = "go.step.sm/linkedca";
+
+message EABKey {
+    string eab_kid = 1;             // the KeyID
+    bytes eab_hmac_key = 2;         // the key bytes
+    string provisioner_name = 3;    // the provisioner for which to create the key
+    string name = 4;                // name/reference to the key; can be linked to external system
+}
