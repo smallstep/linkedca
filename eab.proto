@@ -7,8 +7,8 @@ option go_package = "go.step.sm/linkedca";
 import "google/protobuf/timestamp.proto";
 
 message EABKey {
-    string eab_kid = 1;                         // the KeyID
-    bytes eab_hmac_key = 2;                     // the key bytes
+    string id = 1;                              // the KeyID
+    bytes hmac_key = 2;                         // the key bytes
     string provisioner_name = 3;                // the provisioner for which to create the key
     string name = 4;                            // name/reference to the key; can be linked to external system
     string account = 5;                         // account the key is bound to
