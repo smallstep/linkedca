@@ -120,6 +120,7 @@ message AzureProvisioner {
 
 message ACMEProvisioner {
 	bool force_cn = 1;
+	bool require_eab = 2;
 }
 
 message X5CProvisioner {
