@@ -134,6 +134,7 @@ message KMS {
         PKCS11      = 4;
         YUBIKEY     = 5;
         SSHAGENTKMS = 6;
+        AZUREKMS    = 7;
     }
     Type type = 1;
     string credentialsFile = 2;
