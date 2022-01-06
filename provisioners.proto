@@ -19,6 +19,7 @@ message Provisioner {
 		K8SSA = 8;
 		SSHPOP = 9;
 		SCEP = 10;
+		NEBULA = 11;
 	}
 	string id = 1;
 	string authority_id = 2;
@@ -44,6 +45,7 @@ message ProvisionerDetails {
 		K8sSAProvisioner K8sSA = 27;
 		SSHPOPProvisioner SSHPOP = 28;
 		SCEPProvisioner SCEP = 29;
+		NebulaProvisioner Nebula = 30;
 	}
 }
 
@@ -138,4 +140,8 @@ message SCEPProvisioner {
 	string challenge = 2;
 	repeated string capabilities = 3;
 	int32 minimum_public_key_length = 4;
+}
+
+message NebulaProvisioner {
+	repeated bytes roots = 1;
 }
