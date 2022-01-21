@@ -140,6 +140,8 @@ message SCEPProvisioner {
 	string challenge = 2;
 	repeated string capabilities = 3;
 	int32 minimum_public_key_length = 4;
+	bool include_root = 5;
+	int32 encryption_algorithm_identifier = 6;
 }
 
 message NebulaProvisioner {
