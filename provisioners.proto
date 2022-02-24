@@ -119,7 +119,7 @@ message AzureProvisioner {
 	bool disable_custom_sans = 4;
 	bool disable_trust_on_first_use = 5;
 	repeated string subscription_ids = 6;
-	repeated string aad_object_ids = 7;
+	repeated string object_ids = 7;
 }
 
 message ACMEProvisioner {
