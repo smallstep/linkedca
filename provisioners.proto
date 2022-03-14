@@ -57,7 +57,7 @@ message Claims {
 	X509Claims x509 = 1;
 	SSHClaims ssh = 2;
 	bool disable_renewal = 3;
-	bool enable_renew_after_expiry = 4;
+	bool allow_renew_after_expiry = 4;
 }
 
 message X509Claims {
