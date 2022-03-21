@@ -79,6 +79,13 @@ message ConfigurationRequest {
 message ConfigurationResponse {
 	repeated linkedca.Provisioner provisioners = 1;
 	repeated linkedca.Admin admins = 2;
+	RegistrationAuthorityConfig ra_config = 3;
+}
+
+message RegistrationAuthorityConfig {
+	string ca_url = 1;
+	string fingerprint = 2;
+	linkedca.ProvisionerIdentity provisioner = 3;
 }
 
 message CreateProvisionerRequest {
