@@ -33,6 +33,12 @@ message Provisioner {
 	google.protobuf.Timestamp deleted_at = 10;
 }
 
+message ProvisionerIdentity {
+	string id = 1;
+	Provisioner.Type type = 2;
+	string name = 3;
+}
+
 message ProvisionerDetails {
 	oneof data {
 		JWKProvisioner JWK = 20;
