@@ -125,6 +125,7 @@ message UpdateAdminRequest {
 message DeleteAdminRequest {
 	string id = 1;
 }
+
 message CertificateRequest {
 	string pem_certificate = 1;
 	string pem_certificate_chain = 2;
