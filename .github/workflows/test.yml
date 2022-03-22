@@ -1,4 +1,4 @@
-name: Lint, Test, Build
+name: Lint, Test
 
 on:
   push:
@@ -9,8 +9,8 @@ on:
   pull_request:
 
 jobs:
-  lintTestBuild:
-    name: Lint, Test, Build
+  lintTest:
+    name: Lint, Test
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -50,8 +50,8 @@ jobs:
           # skip-build-cache: true
       -
         name: Test
-        id: lint_test_build
-        run: go test ./...
+        id: lint_test
+        run: go test -short -coverprofile=coverage.out ./...
       -
         name: Codecov
         if: matrix.go == '1.18'
