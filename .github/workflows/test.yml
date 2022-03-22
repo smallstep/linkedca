@@ -51,7 +51,7 @@ jobs:
       -
         name: Test
         id: lint_test
-        run: go test -short -coverprofile=coverage.out ./...
+        run: go test -race -coverpkg=./... -coverprofile=coverage.out -covermode=atomic ./...
       -
         name: Codecov
         if: matrix.go == '1.18'
