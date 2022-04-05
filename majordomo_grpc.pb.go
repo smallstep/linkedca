@@ -47,6 +47,8 @@ type MajordomoClient interface {
 	UpdateAdmin(ctx context.Context, in *UpdateAdminRequest, opts ...grpc.CallOption) (*Admin, error)
 	// DeleteAdmin deletes a previously created admin user
 	DeleteAdmin(ctx context.Context, in *DeleteAdminRequest, opts ...grpc.CallOption) (*Admin, error)
+	// IsAdmin returns if the given certificate is an admin certificate.
+	IsAdmin(ctx context.Context, in *IsAdminRequest, opts ...grpc.CallOption) (*IsAdminResponse, error)
 	// PostCertificate sends a signed X.509 certificate to majordomo.
 	PostCertificate(ctx context.Context, in *CertificateRequest, opts ...grpc.CallOption) (*CertificateResponse, error)
 	// PostSSHCertificate sends a signed SSH certificate to majordomo.
@@ -168,6 +170,15 @@ func (c *majordomoClient) DeleteAdmin(ctx context.Context, in *DeleteAdminReques
 	return out, nil
 }
 
+func (c *majordomoClient) IsAdmin(ctx context.Context, in *IsAdminRequest, opts ...grpc.CallOption) (*IsAdminResponse, error) {
+	out := new(IsAdminResponse)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/IsAdmin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *majordomoClient) PostCertificate(ctx context.Context, in *CertificateRequest, opts ...grpc.CallOption) (*CertificateResponse, error) {
 	out := new(CertificateResponse)
 	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/PostCertificate", in, out, opts...)
@@ -251,6 +262,8 @@ type MajordomoServer interface {
 	UpdateAdmin(context.Context, *UpdateAdminRequest) (*Admin, error)
 	// DeleteAdmin deletes a previously created admin user
 	DeleteAdmin(context.Context, *DeleteAdminRequest) (*Admin, error)
+	// IsAdmin returns if the given certificate is an admin certificate.
+	IsAdmin(context.Context, *IsAdminRequest) (*IsAdminResponse, error)
 	// PostCertificate sends a signed X.509 certificate to majordomo.
 	PostCertificate(context.Context, *CertificateRequest) (*CertificateResponse, error)
 	// PostSSHCertificate sends a signed SSH certificate to majordomo.
@@ -302,6 +315,9 @@ func (UnimplementedMajordomoServer) UpdateAdmin(context.Context, *UpdateAdminReq
 }
 func (UnimplementedMajordomoServer) DeleteAdmin(context.Context, *DeleteAdminRequest) (*Admin, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAdmin not implemented")
+}
+func (UnimplementedMajordomoServer) IsAdmin(context.Context, *IsAdminRequest) (*IsAdminResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsAdmin not implemented")
 }
 func (UnimplementedMajordomoServer) PostCertificate(context.Context, *CertificateRequest) (*CertificateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostCertificate not implemented")
@@ -532,6 +548,24 @@ func _Majordomo_DeleteAdmin_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Majordomo_IsAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsAdminRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).IsAdmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/linkedca.Majordomo/IsAdmin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).IsAdmin(ctx, req.(*IsAdminRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Majordomo_PostCertificate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CertificateRequest)
 	if err := dec(in); err != nil {
@@ -690,6 +724,10 @@ var Majordomo_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAdmin",
 			Handler:    _Majordomo_DeleteAdmin_Handler,
+		},
+		{
+			MethodName: "IsAdmin",
+			Handler:    _Majordomo_IsAdmin_Handler,
 		},
 		{
 			MethodName: "PostCertificate",

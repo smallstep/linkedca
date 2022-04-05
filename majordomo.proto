@@ -38,6 +38,8 @@ service Majordomo {
 	rpc UpdateAdmin(UpdateAdminRequest) returns (linkedca.Admin);
 	// DeleteAdmin deletes a previously created admin user
 	rpc DeleteAdmin(DeleteAdminRequest) returns (linkedca.Admin);
+	// IsAdmin returns if the given certificate is an admin certificate.
+	rpc IsAdmin(IsAdminRequest) returns (IsAdminResponse);
 
 	// PostCertificate sends a signed X.509 certificate to majordomo.
 	rpc PostCertificate(CertificateRequest) returns (CertificateResponse);
@@ -131,6 +133,14 @@ message UpdateAdminRequest {
 
 message DeleteAdminRequest {
 	string id = 1;
+}
+
+message IsAdminRequest {
+	string pem_certificate = 1;
+}
+
+message IsAdminResponse {
+	bool is_admin = 1;
 }
 
 message CertificateRequest {
