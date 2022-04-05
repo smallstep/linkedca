@@ -8,6 +8,7 @@ const (
 	_ contextKeyType = iota
 	adminContextKey
 	provisionerContextKey
+	externalAccountKeyContextKey
 )
 
 // NewContextWithAdmin returns a copy of ctx which carries an Admin.
@@ -32,4 +33,16 @@ func NewContextWithProvisioner(ctx context.Context, provisioner *Provisioner) co
 // ProvisionerFromContext panics in case ctx carries no Provisioner.
 func ProvisionerFromContext(ctx context.Context) *Provisioner {
 	return ctx.Value(provisionerContextKey).(*Provisioner)
+}
+
+// NewContextWithExternalAccountKey returns a copy of ctx which carries an EABKey.
+func NewContextWithExternalAccountKey(ctx context.Context, k *EABKey) context.Context {
+	return context.WithValue(ctx, externalAccountKeyContextKey, k)
+}
+
+// ExternalAccountKeyFromContext returns the EABKey ctx carries.
+//
+// ExternalAccountKeyFromContext panics in case ctx carries no EABKey.
+func ExternalAccountKeyFromContext(ctx context.Context) *EABKey {
+	return ctx.Value(externalAccountKeyContextKey).(*EABKey)
 }

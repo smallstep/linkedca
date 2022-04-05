@@ -36,3 +36,18 @@ func TestProvisionerFromContextPanics(t *testing.T) {
 
 	assert.Panics(t, func() { ProvisionerFromContext(context.Background()) })
 }
+
+func TestExternalAccountKeyFromContext(t *testing.T) {
+	t.Parallel()
+
+	exp := new(EABKey)
+
+	got := ExternalAccountKeyFromContext(NewContextWithExternalAccountKey(context.Background(), exp))
+	assert.Same(t, exp, got)
+}
+
+func TestExternalAccountKeyFromContextPanics(t *testing.T) {
+	t.Parallel()
+
+	assert.Panics(t, func() { ExternalAccountKeyFromContext(context.Background()) })
+}
