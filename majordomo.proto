@@ -206,8 +206,7 @@ message GetCertificateRequest {
 
 message GetCertificateResponse {
 	string pem_certificate = 1;
-	string pem_certificate_chain = 2;
-	linkedca.ProvisionerIdentity provisioner = 3;
+	linkedca.ProvisionerIdentity provisioner = 2;
 }
 
 message GetCertificateStatusRequest {
