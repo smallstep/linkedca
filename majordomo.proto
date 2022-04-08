@@ -38,8 +38,6 @@ service Majordomo {
 	rpc UpdateAdmin(UpdateAdminRequest) returns (linkedca.Admin);
 	// DeleteAdmin deletes a previously created admin user
 	rpc DeleteAdmin(DeleteAdminRequest) returns (linkedca.Admin);
-	// IsAdmin returns if the given certificate is an admin certificate.
-	rpc IsAdmin(IsAdminRequest) returns (IsAdminResponse);
 
 	// PostCertificate sends a signed X.509 certificate to majordomo.
 	rpc PostCertificate(CertificateRequest) returns (CertificateResponse);
@@ -49,6 +47,8 @@ service Majordomo {
 	rpc RevokeCertificate(RevokeCertificateRequest) returns (RevokeCertificateResponse);
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
 	rpc RevokeSSHCertificate(RevokeSSHCertificateRequest) returns (RevokeSSHCertificateResponse);
+	// GetCertificate returns the X.509 certificate by serial.
+	rpc GetCertificate(GetCertificateRequest) returns (GetCertificateResponse);
 	// GetCertificateStatus returns the status of an X.509 certificate by serial.
 	rpc GetCertificateStatus(GetCertificateStatusRequest) returns (GetCertificateStatusResponse);
 	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
@@ -135,14 +135,6 @@ message DeleteAdminRequest {
 	string id = 1;
 }
 
-message IsAdminRequest {
-	string pem_certificate = 1;
-}
-
-message IsAdminResponse {
-	bool is_admin = 1;
-}
-
 message CertificateRequest {
 	string pem_certificate = 1;
 	string pem_certificate_chain = 2;
@@ -206,6 +198,16 @@ message RevokeSSHCertificateRequest {
 
 message RevokeSSHCertificateResponse {
 	RevocationStatus status = 1;
+}
+
+message GetCertificateRequest {
+	string serial = 1;
+}
+
+message GetCertificateResponse {
+	string pem_certificate = 1;
+	string pem_certificate_chain = 2;
+	linkedca.ProvisionerIdentity provisioner = 3;
 }
 
 message GetCertificateStatusRequest {
