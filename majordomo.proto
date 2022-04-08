@@ -47,6 +47,8 @@ service Majordomo {
 	rpc RevokeCertificate(RevokeCertificateRequest) returns (RevokeCertificateResponse);
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
 	rpc RevokeSSHCertificate(RevokeSSHCertificateRequest) returns (RevokeSSHCertificateResponse);
+	// GetCertificate returns the X.509 certificate by serial.
+	rpc GetCertificate(GetCertificateRequest) returns (GetCertificateResponse);
 	// GetCertificateStatus returns the status of an X.509 certificate by serial.
 	rpc GetCertificateStatus(GetCertificateStatusRequest) returns (GetCertificateStatusResponse);
 	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
@@ -196,6 +198,15 @@ message RevokeSSHCertificateRequest {
 
 message RevokeSSHCertificateResponse {
 	RevocationStatus status = 1;
+}
+
+message GetCertificateRequest {
+	string serial = 1;
+}
+
+message GetCertificateResponse {
+	string pem_certificate = 1;
+	linkedca.ProvisionerIdentity provisioner = 2;
 }
 
 message GetCertificateStatusRequest {

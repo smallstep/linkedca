@@ -55,6 +55,8 @@ type MajordomoClient interface {
 	RevokeCertificate(ctx context.Context, in *RevokeCertificateRequest, opts ...grpc.CallOption) (*RevokeCertificateResponse, error)
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
 	RevokeSSHCertificate(ctx context.Context, in *RevokeSSHCertificateRequest, opts ...grpc.CallOption) (*RevokeSSHCertificateResponse, error)
+	// GetCertificate returns the X.509 certificate by serial.
+	GetCertificate(ctx context.Context, in *GetCertificateRequest, opts ...grpc.CallOption) (*GetCertificateResponse, error)
 	// GetCertificateStatus returns the status of an X.509 certificate by serial.
 	GetCertificateStatus(ctx context.Context, in *GetCertificateStatusRequest, opts ...grpc.CallOption) (*GetCertificateStatusResponse, error)
 	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
@@ -204,6 +206,15 @@ func (c *majordomoClient) RevokeSSHCertificate(ctx context.Context, in *RevokeSS
 	return out, nil
 }
 
+func (c *majordomoClient) GetCertificate(ctx context.Context, in *GetCertificateRequest, opts ...grpc.CallOption) (*GetCertificateResponse, error) {
+	out := new(GetCertificateResponse)
+	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/GetCertificate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *majordomoClient) GetCertificateStatus(ctx context.Context, in *GetCertificateStatusRequest, opts ...grpc.CallOption) (*GetCertificateStatusResponse, error) {
 	out := new(GetCertificateStatusResponse)
 	err := c.cc.Invoke(ctx, "/linkedca.Majordomo/GetCertificateStatus", in, out, opts...)
@@ -259,6 +270,8 @@ type MajordomoServer interface {
 	RevokeCertificate(context.Context, *RevokeCertificateRequest) (*RevokeCertificateResponse, error)
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
 	RevokeSSHCertificate(context.Context, *RevokeSSHCertificateRequest) (*RevokeSSHCertificateResponse, error)
+	// GetCertificate returns the X.509 certificate by serial.
+	GetCertificate(context.Context, *GetCertificateRequest) (*GetCertificateResponse, error)
 	// GetCertificateStatus returns the status of an X.509 certificate by serial.
 	GetCertificateStatus(context.Context, *GetCertificateStatusRequest) (*GetCertificateStatusResponse, error)
 	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
@@ -314,6 +327,9 @@ func (UnimplementedMajordomoServer) RevokeCertificate(context.Context, *RevokeCe
 }
 func (UnimplementedMajordomoServer) RevokeSSHCertificate(context.Context, *RevokeSSHCertificateRequest) (*RevokeSSHCertificateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeSSHCertificate not implemented")
+}
+func (UnimplementedMajordomoServer) GetCertificate(context.Context, *GetCertificateRequest) (*GetCertificateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCertificate not implemented")
 }
 func (UnimplementedMajordomoServer) GetCertificateStatus(context.Context, *GetCertificateStatusRequest) (*GetCertificateStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCertificateStatus not implemented")
@@ -604,6 +620,24 @@ func _Majordomo_RevokeSSHCertificate_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Majordomo_GetCertificate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCertificateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).GetCertificate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/linkedca.Majordomo/GetCertificate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).GetCertificate(ctx, req.(*GetCertificateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Majordomo_GetCertificateStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetCertificateStatusRequest)
 	if err := dec(in); err != nil {
@@ -706,6 +740,10 @@ var Majordomo_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RevokeSSHCertificate",
 			Handler:    _Majordomo_RevokeSSHCertificate_Handler,
+		},
+		{
+			MethodName: "GetCertificate",
+			Handler:    _Majordomo_GetCertificate_Handler,
 		},
 		{
 			MethodName: "GetCertificateStatus",
