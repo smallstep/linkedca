@@ -5,6 +5,7 @@ package linkedca;
 option go_package = "go.step.sm/linkedca";
 
 import "google/protobuf/timestamp.proto";
+import "policy.proto";
 
 message Provisioner {
 	enum Type {
@@ -31,6 +32,7 @@ message Provisioner {
 	Template ssh_template = 8;
 	google.protobuf.Timestamp created_at = 9;
 	google.protobuf.Timestamp deleted_at = 10;
+	Policy policy = 11;
 }
 
 message ProvisionerIdentity {

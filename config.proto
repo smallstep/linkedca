@@ -6,6 +6,7 @@ option go_package = "go.step.sm/linkedca";
 
 import "admin.proto";
 import "provisioners.proto";
+import "policy.proto";
 import "google/protobuf/struct.proto";
 
 // Configuration is the proto representation of a ca.json. Root keys and SSH
@@ -69,6 +70,7 @@ message Authority {
     bool disable_issued_at_check = 12;
     string backdate = 13;
     string deployment_type = 14;
+    linkedca.Policy policy = 15;
 }
 
 message DistinguishedName {
