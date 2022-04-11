@@ -31,18 +31,18 @@ message SSHUserPolicy {
 
 message X509Names {
 	repeated string dns = 1;
-    repeated string ips = 2;
-    repeated string emails = 3;
-    repeated string uris = 4;
+	repeated string ips = 2;
+	repeated string emails = 3;
+	repeated string uris = 4;
 }
 
 message SSHHostNames {
 	repeated string dns = 1;
-    repeated string ips = 2;
-    repeated string principals = 3;
+	repeated string ips = 2;
+	repeated string principals = 3;
 }
 
 message SSHUserNames {
-    repeated string emails = 1;
-    repeated string principals = 2;
+	repeated string emails = 1;
+	repeated string principals = 2;
 }
