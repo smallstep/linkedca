@@ -4,6 +4,8 @@ package linkedca;
 
 option go_package = "go.step.sm/linkedca";
 
+import "google/protobuf/wrappers.proto";
+
 message Policy {
 	X509Policy x509 = 1;
 	SSHPolicy ssh = 2;
@@ -12,6 +14,8 @@ message Policy {
 message X509Policy {
 	X509Names allow = 1;
 	X509Names deny = 2;
+	google.protobuf.BoolValue allow_wildcard_literal = 3;
+	google.protobuf.BoolValue verify_subject_common_name = 4;
 }
 
 message SSHPolicy {
