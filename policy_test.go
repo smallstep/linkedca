@@ -19,6 +19,11 @@ func Test_removeDuplicates(t *testing.T) {
 			want:  []string{},
 		},
 		{
+			name:  "single-item",
+			input: []string{"x"},
+			want:  []string{"x"},
+		},
+		{
 			name:  "ok",
 			input: []string{"x", "y", "x", "z", "x", "z", "y"},
 			want:  []string{"x", "y", "z"},
