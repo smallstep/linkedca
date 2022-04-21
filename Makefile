@@ -1,4 +1,4 @@
-all: test generate
+all: generate test
 
 test:
 	go test -race -coverpkg=./... -covermode=atomic ./... 
