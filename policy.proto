@@ -12,8 +12,7 @@ message Policy {
 message X509Policy {
 	X509Names allow = 1;
 	X509Names deny = 2;
-	bool allow_wildcard_literal = 3;
-	bool disable_subject_common_name_verification = 4;
+	bool allow_wildcard_names = 3;
 }
 
 message SSHPolicy {
@@ -36,6 +35,7 @@ message X509Names {
 	repeated string ips = 2;
 	repeated string emails = 3;
 	repeated string uris = 4;
+	repeated string common_names = 5;
 }
 
 message SSHHostNames {
