@@ -16,10 +16,19 @@ func NewContextWithAdmin(ctx context.Context, admin *Admin) context.Context {
 	return context.WithValue(ctx, adminContextKey, admin)
 }
 
-// AdminFromContext returns the Admin ctx carries.
+// AdminFromContext returns an Admin if the ctx carries one and a
+// bool indicating if an Admin is carried by the ctx.
+func AdminFromContext(ctx context.Context) (a *Admin, ok bool) {
+	if a, ok = ctx.Value(adminContextKey).(*Admin); a == nil {
+		return nil, false
+	}
+	return
+}
+
+// MustAdminFromContext returns the Admin ctx carries.
 //
-// AdminFromContext panics in case ctx carries no Admin.
-func AdminFromContext(ctx context.Context) *Admin {
+// MustAdminFromContext panics in case ctx carries no Admin.
+func MustAdminFromContext(ctx context.Context) *Admin {
 	return ctx.Value(adminContextKey).(*Admin)
 }
 
@@ -28,10 +37,19 @@ func NewContextWithProvisioner(ctx context.Context, provisioner *Provisioner) co
 	return context.WithValue(ctx, provisionerContextKey, provisioner)
 }
 
-// ProvisionerFromContext returns the Provisioner ctx carries.
+// ProvisionerFromContext returns a Provisioner if the ctx carries one and a
+// bool indicating if a Provisioner is carried by the ctx.
+func ProvisionerFromContext(ctx context.Context) (p *Provisioner, ok bool) {
+	if p, ok = ctx.Value(provisionerContextKey).(*Provisioner); p == nil {
+		return nil, false
+	}
+	return
+}
+
+// MustProvisionerFromContext returns the Provisioner ctx carries.
 //
-// ProvisionerFromContext panics in case ctx carries no Provisioner.
-func ProvisionerFromContext(ctx context.Context) *Provisioner {
+// MustProvisionerFromContext panics in case ctx carries no Provisioner.
+func MustProvisionerFromContext(ctx context.Context) *Provisioner {
 	return ctx.Value(provisionerContextKey).(*Provisioner)
 }
 
@@ -40,9 +58,18 @@ func NewContextWithExternalAccountKey(ctx context.Context, k *EABKey) context.Co
 	return context.WithValue(ctx, externalAccountKeyContextKey, k)
 }
 
-// ExternalAccountKeyFromContext returns the EABKey ctx carries.
+// ExternalAccountKeyFromContext returns the EABKey if the ctx carries
+// one and a bool indicating if an EABKey is carried by the ctx.
+func ExternalAccountKeyFromContext(ctx context.Context) (k *EABKey, ok bool) {
+	if k, ok = ctx.Value(externalAccountKeyContextKey).(*EABKey); k == nil {
+		return nil, false
+	}
+	return
+}
+
+// MustExternalAccountKeyFromContext returns the EABKey ctx carries.
 //
-// ExternalAccountKeyFromContext panics in case ctx carries no EABKey.
-func ExternalAccountKeyFromContext(ctx context.Context) *EABKey {
+// MustExternalAccountKeyFromContext panics in case ctx carries no EABKey.
+func MustExternalAccountKeyFromContext(ctx context.Context) *EABKey {
 	return ctx.Value(externalAccountKeyContextKey).(*EABKey)
 }
