@@ -11,12 +11,14 @@ func (p *Policy) Deduplicate() {
 			allow.Ips = removeDuplicates(allow.Ips)
 			allow.Emails = removeDuplicates(allow.Emails)
 			allow.Uris = removeDuplicates(allow.Uris)
+			allow.CommonNames = removeDuplicates(allow.CommonNames)
 		}
 		if deny := p.GetX509().GetDeny(); deny != nil {
 			deny.Dns = removeDuplicates(deny.Dns)
 			deny.Ips = removeDuplicates(deny.Ips)
 			deny.Emails = removeDuplicates(deny.Emails)
 			deny.Uris = removeDuplicates(deny.Uris)
+			deny.CommonNames = removeDuplicates(deny.CommonNames)
 		}
 	}
 	if ssh := p.GetSsh(); ssh != nil {
