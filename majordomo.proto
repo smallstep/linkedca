@@ -90,6 +90,11 @@ message RegistrationAuthorityConfig {
 	linkedca.ProvisionerIdentity provisioner = 3;
 }
 
+message RegistrationAuthorityProvisioner {
+	string authority_id = 1;
+	linkedca.ProvisionerIdentity provisioner = 4;
+}
+
 message CreateProvisionerRequest {
 	linkedca.Provisioner.Type type = 1;
 	string name = 2;
@@ -140,6 +145,7 @@ message CertificateRequest {
 	string pem_certificate_chain = 2;
 	string pem_parent_certificate = 3;
 	linkedca.ProvisionerIdentity provisioner = 4;
+	RegistrationAuthorityProvisioner ra_provisioner = 5;
 }
 
 message CertificateResponse {
