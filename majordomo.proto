@@ -92,7 +92,7 @@ message RegistrationAuthorityConfig {
 
 message RegistrationAuthorityProvisioner {
 	string authority_id = 1;
-	linkedca.ProvisionerIdentity provisioner = 4;
+	linkedca.ProvisionerIdentity provisioner = 2;
 }
 
 message CreateProvisionerRequest {
@@ -146,6 +146,7 @@ message CertificateRequest {
 	string pem_parent_certificate = 3;
 	linkedca.ProvisionerIdentity provisioner = 4;
 	RegistrationAuthorityProvisioner ra_provisioner = 5;
+	string endpoint_id = 6;
 }
 
 message CertificateResponse {
