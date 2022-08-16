@@ -82,6 +82,12 @@ message ConfigurationResponse {
 	repeated linkedca.Provisioner provisioners = 1;
 	repeated linkedca.Admin admins = 2;
 	RegistrationAuthorityConfig ra_config = 3;
+	ServerConfiguration server_config = 4;
+}
+
+message ServerConfiguration {
+	string address = 1;
+	repeated string dns_names = 2;
 }
 
 message RegistrationAuthorityConfig {
