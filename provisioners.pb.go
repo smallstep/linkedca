@@ -247,7 +247,7 @@ func (x Webhook_Kind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Webhook_Kind.Descriptor instead.
 func (Webhook_Kind) EnumDescriptor() ([]byte, []int) {
-	return file_provisioners_proto_rawDescGZIP(), []int{20, 0}
+	return file_provisioners_proto_rawDescGZIP(), []int{22, 0}
 }
 
 type Provisioner struct {
@@ -1756,6 +1756,108 @@ func (x *NebulaProvisioner) GetRoots() [][]byte {
 	return nil
 }
 
+type BasicAuth struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+}
+
+func (x *BasicAuth) Reset() {
+	*x = BasicAuth{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_provisioners_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BasicAuth) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BasicAuth) ProtoMessage() {}
+
+func (x *BasicAuth) ProtoReflect() protoreflect.Message {
+	mi := &file_provisioners_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BasicAuth.ProtoReflect.Descriptor instead.
+func (*BasicAuth) Descriptor() ([]byte, []int) {
+	return file_provisioners_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *BasicAuth) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *BasicAuth) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type BearerToken struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	BearerToken string `protobuf:"bytes,1,opt,name=bearer_token,json=bearerToken,proto3" json:"bearer_token,omitempty"`
+}
+
+func (x *BearerToken) Reset() {
+	*x = BearerToken{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_provisioners_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BearerToken) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BearerToken) ProtoMessage() {}
+
+func (x *BearerToken) ProtoReflect() protoreflect.Message {
+	mi := &file_provisioners_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BearerToken.ProtoReflect.Descriptor instead.
+func (*BearerToken) Descriptor() ([]byte, []int) {
+	return file_provisioners_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *BearerToken) GetBearerToken() string {
+	if x != nil {
+		return x.BearerToken
+	}
+	return ""
+}
+
 type Webhook struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1768,14 +1870,14 @@ type Webhook struct {
 	Secret string       `protobuf:"bytes,5,opt,name=secret,proto3" json:"secret,omitempty"`
 	// Types that are assignable to Auth:
 	//	*Webhook_BearerToken
-	//	*Webhook_Basic
+	//	*Webhook_BasicAuth
 	Auth isWebhook_Auth `protobuf_oneof:"auth"`
 }
 
 func (x *Webhook) Reset() {
 	*x = Webhook{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_provisioners_proto_msgTypes[20]
+		mi := &file_provisioners_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1788,7 +1890,7 @@ func (x *Webhook) String() string {
 func (*Webhook) ProtoMessage() {}
 
 func (x *Webhook) ProtoReflect() protoreflect.Message {
-	mi := &file_provisioners_proto_msgTypes[20]
+	mi := &file_provisioners_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1801,7 +1903,7 @@ func (x *Webhook) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Webhook.ProtoReflect.Descriptor instead.
 func (*Webhook) Descriptor() ([]byte, []int) {
-	return file_provisioners_proto_rawDescGZIP(), []int{20}
+	return file_provisioners_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *Webhook) GetName() string {
@@ -1846,16 +1948,16 @@ func (m *Webhook) GetAuth() isWebhook_Auth {
 	return nil
 }
 
-func (x *Webhook) GetBearerToken() string {
+func (x *Webhook) GetBearerToken() *BearerToken {
 	if x, ok := x.GetAuth().(*Webhook_BearerToken); ok {
 		return x.BearerToken
 	}
-	return ""
+	return nil
 }
 
-func (x *Webhook) GetBasic() *Webhook_BasicAuth {
-	if x, ok := x.GetAuth().(*Webhook_Basic); ok {
-		return x.Basic
+func (x *Webhook) GetBasicAuth() *BasicAuth {
+	if x, ok := x.GetAuth().(*Webhook_BasicAuth); ok {
+		return x.BasicAuth
 	}
 	return nil
 }
@@ -1865,71 +1967,16 @@ type isWebhook_Auth interface {
 }
 
 type Webhook_BearerToken struct {
-	BearerToken string `protobuf:"bytes,6,opt,name=bearer_token,json=bearerToken,proto3,oneof"`
+	BearerToken *BearerToken `protobuf:"bytes,6,opt,name=bearer_token,json=bearerToken,proto3,oneof"`
 }
 
-type Webhook_Basic struct {
-	Basic *Webhook_BasicAuth `protobuf:"bytes,7,opt,name=basic,proto3,oneof"`
+type Webhook_BasicAuth struct {
+	BasicAuth *BasicAuth `protobuf:"bytes,7,opt,name=basic_auth,json=basicAuth,proto3,oneof"`
 }
 
 func (*Webhook_BearerToken) isWebhook_Auth() {}
 
-func (*Webhook_Basic) isWebhook_Auth() {}
-
-type Webhook_BasicAuth struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
-}
-
-func (x *Webhook_BasicAuth) Reset() {
-	*x = Webhook_BasicAuth{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_provisioners_proto_msgTypes[21]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Webhook_BasicAuth) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Webhook_BasicAuth) ProtoMessage() {}
-
-func (x *Webhook_BasicAuth) ProtoReflect() protoreflect.Message {
-	mi := &file_provisioners_proto_msgTypes[21]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Webhook_BasicAuth.ProtoReflect.Descriptor instead.
-func (*Webhook_BasicAuth) Descriptor() ([]byte, []int) {
-	return file_provisioners_proto_rawDescGZIP(), []int{20, 0}
-}
-
-func (x *Webhook_BasicAuth) GetUsername() string {
-	if x != nil {
-		return x.Username
-	}
-	return ""
-}
-
-func (x *Webhook_BasicAuth) GetPassword() string {
-	if x != nil {
-		return x.Password
-	}
-	return ""
-}
+func (*Webhook_BasicAuth) isWebhook_Auth() {}
 
 var File_provisioners_proto protoreflect.FileDescriptor
 
@@ -2186,30 +2233,35 @@ var file_provisioners_proto_rawDesc = []byte{
 	0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x66, 0x69,
 	0x65, 0x72, 0x22, 0x29, 0x0a, 0x11, 0x4e, 0x65, 0x62, 0x75, 0x6c, 0x61, 0x50, 0x72, 0x6f, 0x76,
 	0x69, 0x73, 0x69, 0x6f, 0x6e, 0x65, 0x72, 0x12, 0x14, 0x0a, 0x05, 0x72, 0x6f, 0x6f, 0x74, 0x73,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x05, 0x72, 0x6f, 0x6f, 0x74, 0x73, 0x22, 0xce, 0x02,
-	0x0a, 0x07, 0x57, 0x65, 0x62, 0x68, 0x6f, 0x6f, 0x6b, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
-	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x0e, 0x0a,
-	0x02, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x10, 0x0a,
-	0x03, 0x75, 0x72, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72, 0x6c, 0x12,
-	0x2a, 0x0a, 0x04, 0x6b, 0x69, 0x6e, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x16, 0x2e,
-	0x6c, 0x69, 0x6e, 0x6b, 0x65, 0x64, 0x63, 0x61, 0x2e, 0x57, 0x65, 0x62, 0x68, 0x6f, 0x6f, 0x6b,
-	0x2e, 0x4b, 0x69, 0x6e, 0x64, 0x52, 0x04, 0x6b, 0x69, 0x6e, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x73,
-	0x65, 0x63, 0x72, 0x65, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x65, 0x63,
-	0x72, 0x65, 0x74, 0x12, 0x23, 0x0a, 0x0c, 0x62, 0x65, 0x61, 0x72, 0x65, 0x72, 0x5f, 0x74, 0x6f,
-	0x6b, 0x65, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x0b, 0x62, 0x65, 0x61,
-	0x72, 0x65, 0x72, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x33, 0x0a, 0x05, 0x62, 0x61, 0x73, 0x69,
-	0x63, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6c, 0x69, 0x6e, 0x6b, 0x65, 0x64,
-	0x63, 0x61, 0x2e, 0x57, 0x65, 0x62, 0x68, 0x6f, 0x6f, 0x6b, 0x2e, 0x42, 0x61, 0x73, 0x69, 0x63,
-	0x41, 0x75, 0x74, 0x68, 0x48, 0x00, 0x52, 0x05, 0x62, 0x61, 0x73, 0x69, 0x63, 0x1a, 0x43, 0x0a,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x05, 0x72, 0x6f, 0x6f, 0x74, 0x73, 0x22, 0x43, 0x0a,
 	0x09, 0x42, 0x61, 0x73, 0x69, 0x63, 0x41, 0x75, 0x74, 0x68, 0x12, 0x1a, 0x0a, 0x08, 0x75, 0x73,
 	0x65, 0x72, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x75, 0x73,
 	0x65, 0x72, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f,
 	0x72, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f,
-	0x72, 0x64, 0x22, 0x22, 0x0a, 0x04, 0x4b, 0x69, 0x6e, 0x64, 0x12, 0x0b, 0x0a, 0x07, 0x4e, 0x4f,
-	0x5f, 0x4b, 0x49, 0x4e, 0x44, 0x10, 0x00, 0x12, 0x0d, 0x0a, 0x09, 0x45, 0x4e, 0x52, 0x49, 0x43,
-	0x48, 0x49, 0x4e, 0x47, 0x10, 0x01, 0x42, 0x06, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x42, 0x15,
-	0x5a, 0x13, 0x67, 0x6f, 0x2e, 0x73, 0x74, 0x65, 0x70, 0x2e, 0x73, 0x6d, 0x2f, 0x6c, 0x69, 0x6e,
-	0x6b, 0x65, 0x64, 0x63, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x64, 0x22, 0x30, 0x0a, 0x0b, 0x42, 0x65, 0x61, 0x72, 0x65, 0x72, 0x54, 0x6f, 0x6b, 0x65,
+	0x6e, 0x12, 0x21, 0x0a, 0x0c, 0x62, 0x65, 0x61, 0x72, 0x65, 0x72, 0x5f, 0x74, 0x6f, 0x6b, 0x65,
+	0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x62, 0x65, 0x61, 0x72, 0x65, 0x72, 0x54,
+	0x6f, 0x6b, 0x65, 0x6e, 0x22, 0xa1, 0x02, 0x0a, 0x07, 0x57, 0x65, 0x62, 0x68, 0x6f, 0x6f, 0x6b,
+	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x02, 0x69, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x75, 0x72, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x03, 0x75, 0x72, 0x6c, 0x12, 0x2a, 0x0a, 0x04, 0x6b, 0x69, 0x6e, 0x64, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x0e, 0x32, 0x16, 0x2e, 0x6c, 0x69, 0x6e, 0x6b, 0x65, 0x64, 0x63, 0x61, 0x2e,
+	0x57, 0x65, 0x62, 0x68, 0x6f, 0x6f, 0x6b, 0x2e, 0x4b, 0x69, 0x6e, 0x64, 0x52, 0x04, 0x6b, 0x69,
+	0x6e, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x72, 0x65, 0x74, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x73, 0x65, 0x63, 0x72, 0x65, 0x74, 0x12, 0x3a, 0x0a, 0x0c, 0x62, 0x65,
+	0x61, 0x72, 0x65, 0x72, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x15, 0x2e, 0x6c, 0x69, 0x6e, 0x6b, 0x65, 0x64, 0x63, 0x61, 0x2e, 0x42, 0x65, 0x61, 0x72,
+	0x65, 0x72, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x48, 0x00, 0x52, 0x0b, 0x62, 0x65, 0x61, 0x72, 0x65,
+	0x72, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x34, 0x0a, 0x0a, 0x62, 0x61, 0x73, 0x69, 0x63, 0x5f,
+	0x61, 0x75, 0x74, 0x68, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x6c, 0x69, 0x6e,
+	0x6b, 0x65, 0x64, 0x63, 0x61, 0x2e, 0x42, 0x61, 0x73, 0x69, 0x63, 0x41, 0x75, 0x74, 0x68, 0x48,
+	0x00, 0x52, 0x09, 0x62, 0x61, 0x73, 0x69, 0x63, 0x41, 0x75, 0x74, 0x68, 0x22, 0x22, 0x0a, 0x04,
+	0x4b, 0x69, 0x6e, 0x64, 0x12, 0x0b, 0x0a, 0x07, 0x4e, 0x4f, 0x5f, 0x4b, 0x49, 0x4e, 0x44, 0x10,
+	0x00, 0x12, 0x0d, 0x0a, 0x09, 0x45, 0x4e, 0x52, 0x49, 0x43, 0x48, 0x49, 0x4e, 0x47, 0x10, 0x01,
+	0x42, 0x06, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x42, 0x15, 0x5a, 0x13, 0x67, 0x6f, 0x2e, 0x73,
+	0x74, 0x65, 0x70, 0x2e, 0x73, 0x6d, 0x2f, 0x6c, 0x69, 0x6e, 0x6b, 0x65, 0x64, 0x63, 0x61, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2225,7 +2277,7 @@ func file_provisioners_proto_rawDescGZIP() []byte {
 }
 
 var file_provisioners_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_provisioners_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_provisioners_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_provisioners_proto_goTypes = []interface{}{
 	(Provisioner_Type)(0),              // 0: linkedca.Provisioner.Type
 	(ACMEProvisioner_ChallengeType)(0), // 1: linkedca.ACMEProvisioner.ChallengeType
@@ -2251,10 +2303,11 @@ var file_provisioners_proto_goTypes = []interface{}{
 	(*SSHPOPProvisioner)(nil),          // 21: linkedca.SSHPOPProvisioner
 	(*SCEPProvisioner)(nil),            // 22: linkedca.SCEPProvisioner
 	(*NebulaProvisioner)(nil),          // 23: linkedca.NebulaProvisioner
-	(*Webhook)(nil),                    // 24: linkedca.Webhook
-	(*Webhook_BasicAuth)(nil),          // 25: linkedca.Webhook.BasicAuth
-	(*timestamppb.Timestamp)(nil),      // 26: google.protobuf.Timestamp
-	(*Policy)(nil),                     // 27: linkedca.Policy
+	(*BasicAuth)(nil),                  // 24: linkedca.BasicAuth
+	(*BearerToken)(nil),                // 25: linkedca.BearerToken
+	(*Webhook)(nil),                    // 26: linkedca.Webhook
+	(*timestamppb.Timestamp)(nil),      // 27: google.protobuf.Timestamp
+	(*Policy)(nil),                     // 28: linkedca.Policy
 }
 var file_provisioners_proto_depIdxs = []int32{
 	0,  // 0: linkedca.Provisioner.type:type_name -> linkedca.Provisioner.Type
@@ -2262,10 +2315,10 @@ var file_provisioners_proto_depIdxs = []int32{
 	8,  // 2: linkedca.Provisioner.claims:type_name -> linkedca.Claims
 	12, // 3: linkedca.Provisioner.x509_template:type_name -> linkedca.Template
 	12, // 4: linkedca.Provisioner.ssh_template:type_name -> linkedca.Template
-	26, // 5: linkedca.Provisioner.created_at:type_name -> google.protobuf.Timestamp
-	26, // 6: linkedca.Provisioner.deleted_at:type_name -> google.protobuf.Timestamp
-	27, // 7: linkedca.Provisioner.policy:type_name -> linkedca.Policy
-	24, // 8: linkedca.Provisioner.webhooks:type_name -> linkedca.Webhook
+	27, // 5: linkedca.Provisioner.created_at:type_name -> google.protobuf.Timestamp
+	27, // 6: linkedca.Provisioner.deleted_at:type_name -> google.protobuf.Timestamp
+	28, // 7: linkedca.Provisioner.policy:type_name -> linkedca.Policy
+	26, // 8: linkedca.Provisioner.webhooks:type_name -> linkedca.Webhook
 	0,  // 9: linkedca.ProvisionerIdentity.type:type_name -> linkedca.Provisioner.Type
 	13, // 10: linkedca.ProvisionerDetails.JWK:type_name -> linkedca.JWKProvisioner
 	14, // 11: linkedca.ProvisionerDetails.OIDC:type_name -> linkedca.OIDCProvisioner
@@ -2287,12 +2340,13 @@ var file_provisioners_proto_depIdxs = []int32{
 	1,  // 27: linkedca.ACMEProvisioner.challenges:type_name -> linkedca.ACMEProvisioner.ChallengeType
 	2,  // 28: linkedca.ACMEProvisioner.platforms:type_name -> linkedca.ACMEProvisioner.PlatformType
 	3,  // 29: linkedca.Webhook.kind:type_name -> linkedca.Webhook.Kind
-	25, // 30: linkedca.Webhook.basic:type_name -> linkedca.Webhook.BasicAuth
-	31, // [31:31] is the sub-list for method output_type
-	31, // [31:31] is the sub-list for method input_type
-	31, // [31:31] is the sub-list for extension type_name
-	31, // [31:31] is the sub-list for extension extendee
-	0,  // [0:31] is the sub-list for field type_name
+	25, // 30: linkedca.Webhook.bearer_token:type_name -> linkedca.BearerToken
+	24, // 31: linkedca.Webhook.basic_auth:type_name -> linkedca.BasicAuth
+	32, // [32:32] is the sub-list for method output_type
+	32, // [32:32] is the sub-list for method input_type
+	32, // [32:32] is the sub-list for extension type_name
+	32, // [32:32] is the sub-list for extension extendee
+	0,  // [0:32] is the sub-list for field type_name
 }
 
 func init() { file_provisioners_proto_init() }
@@ -2543,7 +2597,7 @@ func file_provisioners_proto_init() {
 			}
 		}
 		file_provisioners_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Webhook); i {
+			switch v := v.(*BasicAuth); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2555,7 +2609,19 @@ func file_provisioners_proto_init() {
 			}
 		}
 		file_provisioners_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Webhook_BasicAuth); i {
+			switch v := v.(*BearerToken); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_provisioners_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Webhook); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2580,9 +2646,9 @@ func file_provisioners_proto_init() {
 		(*ProvisionerDetails_SCEP)(nil),
 		(*ProvisionerDetails_Nebula)(nil),
 	}
-	file_provisioners_proto_msgTypes[20].OneofWrappers = []interface{}{
+	file_provisioners_proto_msgTypes[22].OneofWrappers = []interface{}{
 		(*Webhook_BearerToken)(nil),
-		(*Webhook_Basic)(nil),
+		(*Webhook_BasicAuth)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2590,7 +2656,7 @@ func file_provisioners_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_provisioners_proto_rawDesc,
 			NumEnums:      4,
-			NumMessages:   22,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

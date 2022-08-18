@@ -176,6 +176,15 @@ message NebulaProvisioner {
 	repeated bytes roots = 1;
 }
 
+message BasicAuth {
+	string username = 1;
+	string password = 2;
+}
+
+message BearerToken {
+	string bearer_token = 1;
+}
+
 message Webhook {
 	string name = 1;
 	string id = 2;
@@ -187,12 +196,8 @@ message Webhook {
 	Kind kind = 4;
 	string secret = 5;
 
-	message BasicAuth {
-		string username = 1;
-		string password = 2;
-	}
 	oneof auth {
-		string bearer_token = 6;
-		BasicAuth basic = 7;
+		BearerToken bearer_token = 6;
+		BasicAuth basic_auth = 7;
 	}
 }
