@@ -178,14 +178,21 @@ message NebulaProvisioner {
 
 message Webhook {
 	string name = 1;
-	string url = 2;
+	string id = 2;
+	string url = 3;
 	enum Kind {
 		NO_KIND = 0;
 		ENRICHING = 1;
 	}
-	Kind kind = 3;
-	string secret = 4;
-	string bearer_token = 5;
-	string username = 6;
-	string password = 7;
+	Kind kind = 4;
+	string secret = 5;
+
+	message BasicAuth {
+		string username = 1;
+		string password = 2;
+	}
+	oneof auth {
+		string bearer_token = 6;
+		BasicAuth basic = 7;
+	}
 }
