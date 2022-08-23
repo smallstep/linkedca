@@ -132,8 +132,15 @@ message AzureProvisioner {
 }
 
 message ACMEProvisioner {
+	enum Challenge {
+		UNKNOWN     = 0;
+		HTTP_01     = 1;
+		DNS_01      = 2;
+		TLS_ALPN_O1 = 3;
+	}
 	bool force_cn = 1;
 	bool require_eab = 2;
+	repeated Challenge challenges = 3;
 }
 
 message X5CProvisioner {
