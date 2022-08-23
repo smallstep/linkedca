@@ -132,7 +132,7 @@ message AzureProvisioner {
 }
 
 message ACMEProvisioner {
-	enum Challenge {
+	enum ChallengeType {
 		UNKNOWN     = 0;
 		HTTP_01     = 1;
 		DNS_01      = 2;
@@ -141,7 +141,7 @@ message ACMEProvisioner {
 	}
 	bool force_cn = 1;
 	bool require_eab = 2;
-	repeated Challenge challenges = 3;
+	repeated ChallengeType challenges = 3;
 }
 
 message X5CProvisioner {
