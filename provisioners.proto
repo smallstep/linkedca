@@ -200,4 +200,6 @@ message Webhook {
 		BearerToken bearer_token = 6;
 		BasicAuth basic_auth = 7;
 	}
+
+	bool disable_tls_client_auth = 8;
 }
