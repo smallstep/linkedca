@@ -192,6 +192,7 @@ message Webhook {
 	enum Kind {
 		NO_KIND = 0;
 		ENRICHING = 1;
+		AUTHORIZING = 2;
 	}
 	Kind kind = 4;
 	string secret = 5;
