@@ -139,9 +139,17 @@ message ACMEProvisioner {
 		TLS_ALPN_O1 = 3;
 		DEVICE_ATTEST_01 = 4;
 	}
+	enum PlatformType {
+		NONE = 0;
+		APPLE = 1;
+		STEP  = 2;
+		TPM   = 3;
+	}
 	bool force_cn = 1;
 	bool require_eab = 2;
 	repeated ChallengeType challenges = 3;
+	repeated PlatformType platforms = 4;
+	repeated bytes roots = 5;
 }
 
 message X5CProvisioner {
