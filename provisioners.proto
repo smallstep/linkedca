@@ -33,6 +33,7 @@ message Provisioner {
 	google.protobuf.Timestamp created_at = 9;
 	google.protobuf.Timestamp deleted_at = 10;
 	Policy policy = 11;
+	repeated Webhook webhooks = 12;
 }
 
 message ProvisionerIdentity {
@@ -173,4 +174,33 @@ message SCEPProvisioner {
 
 message NebulaProvisioner {
 	repeated bytes roots = 1;
+}
+
+message BasicAuth {
+	string username = 1;
+	string password = 2;
+}
+
+message BearerToken {
+	string bearer_token = 1;
+}
+
+message Webhook {
+	string name = 1;
+	string id = 2;
+	string url = 3;
+	enum Kind {
+		NO_KIND = 0;
+		ENRICHING = 1;
+		AUTHORIZING = 2;
+	}
+	Kind kind = 4;
+	string secret = 5;
+
+	oneof auth {
+		BearerToken bearer_token = 6;
+		BasicAuth basic_auth = 7;
+	}
+
+	bool disable_tls_client_auth = 8;
 }
