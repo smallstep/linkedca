@@ -137,7 +137,7 @@ message ACMEProvisioner {
 		UNKNOWN     = 0;
 		HTTP_01     = 1;
 		DNS_01      = 2;
-		TLS_ALPN_O1 = 3;
+		TLS_ALPN_01 = 3;
 		DEVICE_ATTEST_01 = 4;
 	}
 	enum AttestationFormatType {
