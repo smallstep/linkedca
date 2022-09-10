@@ -51,7 +51,6 @@ func (p *Policy) Deduplicate() {
 // duplicate values removed. It retains the order of elements
 // in the source slice.
 func removeDuplicates(tokens []string) (ret []string) {
-
 	// no need to remove dupes; return original
 	if len(tokens) <= 1 {
 		return tokens

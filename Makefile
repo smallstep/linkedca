@@ -21,6 +21,7 @@ build: ;
 bootstra%:
 	$Q curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.49
 	$Q go install golang.org/x/vuln/cmd/govulncheck@latest
+	$Q go install gotest.tools/gotestsum@v1.8.1
 
 .PHONY: bootstrap
 
@@ -29,7 +30,7 @@ bootstra%:
 #########################################
 
 test:
-	go test -race -coverpkg=./... -covermode=atomic ./...
+	$Q gotestsum -- -race -coverpkg=./... -coverprofile=coverage.out -covermode=atomic ./...
 
 race:
 	$Q $(GOFLAGS) go test -race ./...
