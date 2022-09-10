@@ -1,6 +1,6 @@
 # Set V to 1 for verbose output from the Makefile
 Q=$(if $V,,@)
-SRC=$(shell find . -type f -name '*.go' -not -path "./vendor/*")
+SRC=$(shell find . -type f -name '*.go')
 
 all: lint generate test
 
@@ -30,10 +30,10 @@ bootstra%:
 #########################################
 
 test:
-	$Q gotestsum -- -race -coverpkg=./... -coverprofile=coverage.out -covermode=atomic ./...
+	$Q $(GOFLAGS) gotestsum -- -coverpkg=./... -coverprofile=coverage.out -covermode=atomic ./...
 
 race:
-	$Q $(GOFLAGS) go test -race ./...
+	$Q $(GOFLAGS) gotestsum -- -race ./...
 
 .PHONY: test race
 
