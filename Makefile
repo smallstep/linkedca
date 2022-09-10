@@ -19,7 +19,7 @@ build: ;
 #########################################
 
 bootstra%:
-	$Q curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.49
+	$Q curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.49.0
 	$Q go install golang.org/x/vuln/cmd/govulncheck@latest
 	$Q go install gotest.tools/gotestsum@v1.8.1
 
