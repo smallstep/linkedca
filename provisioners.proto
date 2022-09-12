@@ -137,10 +137,10 @@ message ACMEProvisioner {
 		UNKNOWN     = 0;
 		HTTP_01     = 1;
 		DNS_01      = 2;
-		TLS_ALPN_O1 = 3;
+		TLS_ALPN_01 = 3;
 		DEVICE_ATTEST_01 = 4;
 	}
-	enum PlatformType {
+	enum AttestationFormatType {
 		NONE = 0;
 		APPLE = 1;
 		STEP  = 2;
@@ -149,7 +149,7 @@ message ACMEProvisioner {
 	bool force_cn = 1;
 	bool require_eab = 2;
 	repeated ChallengeType challenges = 3;
-	repeated PlatformType platforms = 4;
+	repeated AttestationFormatType attestation_formats = 4;
 	repeated bytes roots = 5;
 }
 
