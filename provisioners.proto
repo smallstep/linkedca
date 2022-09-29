@@ -150,7 +150,7 @@ message ACMEProvisioner {
 	bool require_eab = 2;
 	repeated ChallengeType challenges = 3;
 	repeated AttestationFormatType attestation_formats = 4;
-	repeated bytes roots = 5;
+	repeated bytes attestation_roots = 5;
 }
 
 message X5CProvisioner {
