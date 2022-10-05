@@ -153,6 +153,14 @@ message CertificateRequest {
 	linkedca.ProvisionerIdentity provisioner = 4;
 	RegistrationAuthorityProvisioner ra_provisioner = 5;
 	string endpoint_id = 6;
+	AttestationData attestation_data = 7;
+}
+
+// AttestationData holds the information available at certificate sign time.
+// Currently only the permanent identifier (UDID or SerialNumber, not both) is
+// available.
+message AttestationData {
+	string permanent_identifier = 1;
 }
 
 message CertificateResponse {
