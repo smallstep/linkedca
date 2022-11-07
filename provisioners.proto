@@ -151,6 +151,9 @@ message ACMEProvisioner {
 	repeated ChallengeType challenges = 3;
 	repeated AttestationFormatType attestation_formats = 4;
 	repeated bytes attestation_roots = 5;
+	string terms_of_service = 6;
+	string website = 7;
+	repeated string caa_identities = 8;
 }
 
 message X5CProvisioner {
