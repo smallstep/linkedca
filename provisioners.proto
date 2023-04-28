@@ -193,6 +193,7 @@ message Webhook {
 		NO_KIND = 0;
 		ENRICHING = 1;
 		AUTHORIZING = 2;
+		SCEPCHALLENGE = 3;
 	}
 	enum CertType {
 		ALL = 0;
