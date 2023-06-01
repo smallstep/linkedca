@@ -6,6 +6,7 @@ option go_package = "go.step.sm/linkedca";
 
 import "google/protobuf/timestamp.proto";
 import "policy.proto";
+import "kms.proto";
 
 message Provisioner {
 	enum Type {
@@ -166,6 +167,13 @@ message K8sSAProvisioner {
 
 message SSHPOPProvisioner {}
 
+message SCEPDecrypter {
+	config.KMS kms = 1;
+	bytes decrypterCertificate = 2;
+	string decrypterKey = 3;
+	string decrypterKeyPassword = 4;
+}
+
 message SCEPProvisioner {
 	bool force_cn = 1;
 	string challenge = 2;
@@ -173,6 +181,7 @@ message SCEPProvisioner {
 	int32 minimum_public_key_length = 4;
 	bool include_root = 5;
 	int32 encryption_algorithm_identifier = 6;
+	SCEPDecrypter decrypter = 7;
 }
 
 message NebulaProvisioner {
