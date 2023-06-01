@@ -56,6 +56,6 @@ lint:
 #########################################
 
 generate:
-	protoc --proto_path=. --go_out=. --go-grpc_out=. --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative provisioners.proto admin.proto config.proto eab.proto majordomo.proto policy.proto
+	protoc --proto_path=. --go_out=. --go-grpc_out=. --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative kms.proto provisioners.proto admin.proto config.proto eab.proto majordomo.proto policy.proto
 
 .PHONY: generate

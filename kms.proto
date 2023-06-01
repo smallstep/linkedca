@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package config;
+
+option go_package = "go.step.sm/linkedca";
+
+message KMS {
+    enum Type {
+        DEFAULT     = 0;
+        SOFTKMS     = 1;
+        CLOUDKMS    = 2;
+        AMAZONKMS   = 3;
+        PKCS11      = 4;
+        YUBIKEY     = 5;
+        SSHAGENTKMS = 6;
+        AZUREKMS    = 7;
+    }
+    Type type = 1;
+    string credentialsFile = 2;
+    string uri = 3;
+    string pin = 4;
+    string managementKey = 5;
+    string region = 6;
+    string profile = 7;
+}
