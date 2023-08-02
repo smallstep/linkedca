@@ -68,6 +68,7 @@ message Claims {
 	SSHClaims ssh = 2;
 	bool disable_renewal = 3;
 	bool allow_renewal_after_expiry = 4;
+	bool disable_smallstep_extensions = 5;
 }
 
 message X509Claims {
