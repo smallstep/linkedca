@@ -21,23 +21,23 @@ service Majordomo {
 
 	// CreateProvisioner adds a new provisioner to the majordomo authority and
 	// returns the proto representation.
-	rpc CreateProvisioner(CreateProvisionerRequest) returns (linkedca.Provisioner);
+	rpc CreateProvisioner(CreateProvisionerRequest) returns (Provisioner);
 	// GetProvisioner returns a provisioner by its id.
-	rpc GetProvisioner(GetProvisionerRequest) returns (linkedca.Provisioner);
+	rpc GetProvisioner(GetProvisionerRequest) returns (Provisioner);
 	// UpdateProvisioners updates a previously created provisioner.
-	rpc UpdateProvisioner(UpdateProvisionerRequest) returns (linkedca.Provisioner);
+	rpc UpdateProvisioner(UpdateProvisionerRequest) returns (Provisioner);
 	// DeleteProvisioner deletes a previously created provisioner.
-	rpc DeleteProvisioner(DeleteProvisionerRequest) returns (linkedca.Provisioner);
+	rpc DeleteProvisioner(DeleteProvisionerRequest) returns (Provisioner);
 
 	// CreateAdmin adds a new admin user to the majordomo authority. Admin users
 	// can add or delete provisioners.
-	rpc CreateAdmin(CreateAdminRequest) returns (linkedca.Admin);
+	rpc CreateAdmin(CreateAdminRequest) returns (Admin);
 	// GetAdmin returns an admin by its id.
-	rpc GetAdmin(GetAdminRequest) returns (linkedca.Admin);
+	rpc GetAdmin(GetAdminRequest) returns (Admin);
 	// UpdateAdmin updates a previously created admin.
-	rpc UpdateAdmin(UpdateAdminRequest) returns (linkedca.Admin);
+	rpc UpdateAdmin(UpdateAdminRequest) returns (Admin);
 	// DeleteAdmin deletes a previously created admin user
-	rpc DeleteAdmin(DeleteAdminRequest) returns (linkedca.Admin);
+	rpc DeleteAdmin(DeleteAdminRequest) returns (Admin);
 
 	// PostCertificate sends a signed X.509 certificate to majordomo.
 	rpc PostCertificate(CertificateRequest) returns (CertificateResponse);
@@ -79,8 +79,8 @@ message ConfigurationRequest {
 }
 
 message ConfigurationResponse {
-	repeated linkedca.Provisioner provisioners = 1;
-	repeated linkedca.Admin admins = 2;
+	repeated Provisioner provisioners = 1;
+	repeated Admin admins = 2;
 	RegistrationAuthorityConfig ra_config = 3;
 	ServerConfiguration server_config = 4;
 }
@@ -93,21 +93,21 @@ message ServerConfiguration {
 message RegistrationAuthorityConfig {
 	string ca_url = 1;
 	string fingerprint = 2;
-	linkedca.ProvisionerIdentity provisioner = 3;
+	ProvisionerIdentity provisioner = 3;
 }
 
 message RegistrationAuthorityProvisioner {
 	string authority_id = 1;
-	linkedca.ProvisionerIdentity provisioner = 2;
+	ProvisionerIdentity provisioner = 2;
 }
 
 message CreateProvisionerRequest {
-	linkedca.Provisioner.Type type = 1;
+	Provisioner.Type type = 1;
 	string name = 2;
-	linkedca.ProvisionerDetails details = 3;
-	linkedca.Claims claims = 4;
-	linkedca.Template x509_template = 5;
-	linkedca.Template ssh_template = 6;
+	ProvisionerDetails details = 3;
+	Claims claims = 4;
+	Template x509_template = 5;
+	Template ssh_template = 6;
 }
 
 message GetProvisionerRequest {
@@ -117,10 +117,10 @@ message GetProvisionerRequest {
 message UpdateProvisionerRequest {
 	string id = 1;
 	string name = 2;
-	linkedca.ProvisionerDetails details = 3;
-	linkedca.Claims claims = 4;
-	linkedca.Template x509_template = 5;
-	linkedca.Template ssh_template = 6;
+	ProvisionerDetails details = 3;
+	Claims claims = 4;
+	Template x509_template = 5;
+	Template ssh_template = 6;
 }
 
 message DeleteProvisionerRequest {
@@ -130,7 +130,7 @@ message DeleteProvisionerRequest {
 message CreateAdminRequest {
 	string subject = 1;
 	string provisioner_id = 2;
-	linkedca.Admin.Type type = 3;
+	Admin.Type type = 3;
 }
 
 message GetAdminRequest {
@@ -139,7 +139,7 @@ message GetAdminRequest {
 
 message UpdateAdminRequest {
 	string id = 1;
-	linkedca.Admin.Type type = 2;
+	Admin.Type type = 2;
 }
 
 message DeleteAdminRequest {
@@ -150,7 +150,7 @@ message CertificateRequest {
 	string pem_certificate = 1;
 	string pem_certificate_chain = 2;
 	string pem_parent_certificate = 3;
-	linkedca.ProvisionerIdentity provisioner = 4;
+	ProvisionerIdentity provisioner = 4;
 	RegistrationAuthorityProvisioner ra_provisioner = 5;
 	string endpoint_id = 6;
 	AttestationData attestation_data = 7;
@@ -170,7 +170,7 @@ message CertificateResponse {
 message SSHCertificateRequest {
 	string certificate = 1;
 	string parent_certificate = 2;
-	linkedca.ProvisionerIdentity provisioner = 3;
+	ProvisionerIdentity provisioner = 3;
 }
 
 message SSHCertificateResponse {
@@ -227,7 +227,7 @@ message GetCertificateRequest {
 
 message GetCertificateResponse {
 	string pem_certificate = 1;
-	linkedca.ProvisionerIdentity provisioner = 2;
+	ProvisionerIdentity provisioner = 2;
 	RegistrationAuthorityProvisioner ra_provisioner = 3;
 }
 

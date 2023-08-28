@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package eab;
+package linkedca;
 
 option go_package = "go.step.sm/linkedca";
 
@@ -15,5 +15,5 @@ message EABKey {
     string account = 5;                         // account the key is bound to
     google.protobuf.Timestamp created_at = 6;   // time the key was created_at
     google.protobuf.Timestamp bound_at = 7;     // time the key was bound to an account
-    linkedca.Policy policy = 8;
+    Policy policy = 8;
 }
