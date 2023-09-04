@@ -183,6 +183,7 @@ message SCEPProvisioner {
 	bool include_root = 5;
 	int32 encryption_algorithm_identifier = 6;
 	SCEPDecrypter decrypter = 7;
+	bool exclude_intermediate = 8;
 }
 
 message NebulaProvisioner {
