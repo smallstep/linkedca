@@ -66,7 +66,12 @@ lint:
 #########################################
 
 generate: check-gen-go-version check-gen-grpc-version
-	@protoc --proto_path=. --go_out=. --go-grpc_out=. --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative provisioners.proto admin.proto config.proto eab.proto majordomo.proto policy.proto
+	@protoc \
+		--go_out=. \
+		--go_opt=paths=source_relative \
+		--go-grpc_out=. \
+		--go-grpc_opt=paths=source_relative \
+		*.proto
 
 .PHONY: generate
 
