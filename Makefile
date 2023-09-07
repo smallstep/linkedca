@@ -79,7 +79,7 @@ generate: check-gen-go-version check-gen-grpc-version
 		-delete
 
 	@# generate the corresponding protobufs & gRPC code files
-	find spec -name "*.proto" -print0 | xargs -0 protoc \
+	find spec -type f -name "*.proto" -print0 | xargs -0 protoc \
 		--proto_path=spec \
 		--go_opt=paths=source_relative \
 		--go_out=.. \
