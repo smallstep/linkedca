@@ -10,7 +10,7 @@ GEN_GO_VERSION ?= $(shell $(GEN_GO_BIN) --version | awk -F ' v' '{print $$NF}')
 # protoc-gen-go-grpc constraints
 GEN_GRPC_BIN ?= protoc-gen-go-grpc
 GEN_GRPC_MIN_VERSION ?= 1.3.0
-GEN_GRPC_VERSION ?= $(shell $(GEN_GRPC_BIN) --version | awk --field-separator=' ' '{print $$NF}')
+GEN_GRPC_VERSION ?= $(shell $(GEN_GRPC_BIN) --version | awk -F ' ' '{print $$NF}')
 
 all: lint generate test
 
