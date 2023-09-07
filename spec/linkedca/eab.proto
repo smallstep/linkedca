@@ -5,7 +5,8 @@ package linkedca;
 option go_package = "go.step.sm/linkedca";
 
 import "google/protobuf/timestamp.proto";
-import "policy.proto";
+
+import "linkedca/policy.proto";
 
 message EABKey {
     string id = 1;                              // the KeyID

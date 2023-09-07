@@ -4,8 +4,8 @@ package linkedca;
 
 option go_package = "go.step.sm/linkedca";
 
-import "admin.proto";
-import "provisioners.proto";
+import "linkedca/admin.proto";
+import "linkedca/provisioners.proto";
 
 // Majordomo is the public service used to sync configurations to CA's and post
 // certificates.

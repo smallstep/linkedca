@@ -4,10 +4,11 @@ package linkedca;
 
 option go_package = "go.step.sm/linkedca";
 
-import "admin.proto";
-import "provisioners.proto";
-import "policy.proto";
 import "google/protobuf/struct.proto";
+
+import "linkedca/admin.proto";
+import "linkedca/provisioners.proto";
+import "linkedca/policy.proto";
 
 // Configuration is the proto representation of a ca.json. Root keys and SSH
 // public keys are not present in the ca.json but have been added here to be
