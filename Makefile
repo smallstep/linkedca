@@ -2,6 +2,12 @@
 Q=$(if $V,,@)
 SRC=$(shell find . -type f -name '*.go')
 
+# Temporary directory
+TMP_DIR := .tmp
+SPEC_DIR = $(TMP_DIR)/spec/linkedca
+CODE_DIR = $(TMP_DIR)/code/linkedca
+DEST_DIR = $(shell dirname $(TMP_DIR))
+
 # protoc-gen-go constraints
 GEN_GO_BIN ?= protoc-gen-go
 GEN_GO_MIN_VERSION ?= 1.31.0
@@ -66,12 +72,19 @@ lint:
 #########################################
 
 generate: check-gen-go-version check-gen-grpc-version
-	@protoc \
-		--go_out=. \
+	@# remove any previously generated protobufs & gRPC files
+	@find . \
+		-type f \
+		-name "*.pb.go" \
+		-delete
+
+	@# generate the corresponding protobufs & gRPC code files
+	find spec -name "*.proto" -print0 | xargs -0 protoc \
+		--proto_path=spec \
 		--go_opt=paths=source_relative \
-		--go-grpc_out=. \
+		--go_out=.. \
 		--go-grpc_opt=paths=source_relative \
-		*.proto
+		--go-grpc_out=..
 
 .PHONY: generate
 
