@@ -2,12 +2,6 @@
 Q=$(if $V,,@)
 SRC=$(shell find . -type f -name '*.go')
 
-# Temporary directory
-TMP_DIR := .tmp
-SPEC_DIR = $(TMP_DIR)/spec/linkedca
-CODE_DIR = $(TMP_DIR)/code/linkedca
-DEST_DIR = $(shell dirname $(TMP_DIR))
-
 # protoc-gen-go constraints
 GEN_GO_BIN ?= protoc-gen-go
 GEN_GO_MIN_VERSION ?= 1.31.0
