@@ -5,7 +5,7 @@ SRC=$(shell find . -type f -name '*.go')
 # protoc-gen-go constraints
 GEN_GO_BIN ?= protoc-gen-go
 GEN_GO_MIN_VERSION ?= 1.31.0
-GEN_GO_VERSION ?= $(shell $(GEN_GO_BIN) --version | awk --field-separator=' v' '{print $$NF}')
+GEN_GO_VERSION ?= $(shell $(GEN_GO_BIN) --version | awk -F ' v' '{print $$NF}')
 
 # protoc-gen-go-grpc constraints
 GEN_GRPC_BIN ?= protoc-gen-go-grpc
