@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package linkedca;
 
-option go_package = "go.step.sm/linkedca";
+option go_package = "./linkedca";
 
 import "linkedca/admin.proto";
 import "linkedca/provisioners.proto";
