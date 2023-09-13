@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package linkedca;
 
-option go_package = "./linkedca";
-
 import "google/protobuf/timestamp.proto";
 
 message Admin {
