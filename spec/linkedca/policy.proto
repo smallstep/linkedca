@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package linkedca;
 
+option go_package = "go.step.sm/linkedca";
+
 message Policy {
 	X509Policy x509 = 1;
 	SSHPolicy ssh = 2;
