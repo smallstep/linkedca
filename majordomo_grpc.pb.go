@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.23.4
-// source: majordomo.proto
+// source: linkedca/majordomo.proto
 
 package linkedca
 
@@ -776,5 +776,5 @@ var Majordomo_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "majordomo.proto",
+	Metadata: "linkedca/majordomo.proto",
 }

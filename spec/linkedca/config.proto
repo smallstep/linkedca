@@ -1,14 +1,15 @@
 syntax = "proto3";
 
-package config;
+package linkedca;
 
 option go_package = "go.step.sm/linkedca";
 
-import "admin.proto";
-import "provisioners.proto";
-import "policy.proto";
-import "kms.proto";
 import "google/protobuf/struct.proto";
+
+import "linkedca/admin.proto";
+import "linkedca/provisioners.proto";
+import "linkedca/policy.proto";
+import "linkedca/kms.proto";
 
 // Configuration is the proto representation of a ca.json. Root keys and SSH
 // public keys are not present in the ca.json but have been added here to be
@@ -64,14 +65,14 @@ message Authority {
     
     // Authority configuration.
     bool enable_admin = 7;
-    repeated linkedca.Provisioner provisioners = 8;
-    repeated linkedca.Admin admins = 9;
+    repeated Provisioner provisioners = 8;
+    repeated Admin admins = 9;
     DistinguishedName template = 10;
-    linkedca.Claims claims = 11;
+    Claims claims = 11;
     bool disable_issued_at_check = 12;
     string backdate = 13;
     string deployment_type = 14;
-    linkedca.Policy policy = 15;
+    Policy policy = 15;
 }
 
 message DistinguishedName {

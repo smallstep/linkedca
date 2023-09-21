@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package config;
+package linkedca;
 
 option go_package = "go.step.sm/linkedca";
 
