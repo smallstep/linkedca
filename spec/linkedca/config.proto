@@ -9,7 +9,6 @@ import "google/protobuf/struct.proto";
 import "linkedca/admin.proto";
 import "linkedca/provisioners.proto";
 import "linkedca/policy.proto";
-import "linkedca/kms.proto";
 
 // Configuration is the proto representation of a ca.json. Root keys and SSH
 // public keys are not present in the ca.json but have been added here to be
@@ -127,6 +126,26 @@ message Bastion {
     string port = 3;
     string command = 4;
     string flags = 5;
+}
+
+message KMS {
+    enum Type {
+        DEFAULT     = 0;
+        SOFTKMS     = 1;
+        CLOUDKMS    = 2;
+        AMAZONKMS   = 3;
+        PKCS11      = 4;
+        YUBIKEY     = 5;
+        SSHAGENTKMS = 6;
+        AZUREKMS    = 7;
+    }
+    Type type = 1;
+    string credentialsFile = 2;
+    string uri = 3;
+    string pin = 4;
+    string managementKey = 5;
+    string region = 6;
+    string profile = 7;
 }
 
 message TLS {

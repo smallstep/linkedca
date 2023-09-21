@@ -7,7 +7,6 @@ option go_package = "go.step.sm/linkedca";
 import "google/protobuf/timestamp.proto";
 
 import "linkedca/policy.proto";
-import "linkedca/kms.proto";
 
 message Provisioner {
 	enum Type {
@@ -170,7 +169,6 @@ message K8sSAProvisioner {
 message SSHPOPProvisioner {}
 
 message SCEPDecrypter {
-	KMS kms = 1;
 	bytes decrypterCertificate = 2;
 	string decrypterKey = 3;
 	string decrypterKeyPassword = 4;
