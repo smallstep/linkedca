@@ -169,10 +169,10 @@ message K8sSAProvisioner {
 message SSHPOPProvisioner {}
 
 message SCEPDecrypter {
-	bytes decrypter_certificate = 1;
-	bytes decrypter_key = 2;
-	string decrypter_key_uri = 3;
-	bytes decrypter_key_password = 4;
+	bytes certificate = 1;
+	bytes key = 2;
+	string key_uri = 3;
+	bytes key_password = 4;
 }
 
 message SCEPProvisioner {
