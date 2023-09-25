@@ -168,6 +168,13 @@ message K8sSAProvisioner {
 
 message SSHPOPProvisioner {}
 
+message SCEPDecrypter {
+	bytes certificate = 1;
+	bytes key = 2;
+	string key_uri = 3;
+	bytes key_password = 4;
+}
+
 message SCEPProvisioner {
 	bool force_cn = 1;
 	string challenge = 2;
@@ -175,6 +182,8 @@ message SCEPProvisioner {
 	int32 minimum_public_key_length = 4;
 	bool include_root = 5;
 	int32 encryption_algorithm_identifier = 6;
+	SCEPDecrypter decrypter = 7;
+	bool exclude_intermediate = 8;
 }
 
 message NebulaProvisioner {
@@ -196,6 +205,7 @@ message Webhook {
 		ENRICHING = 1;
 		AUTHORIZING = 2;
 		SCEPCHALLENGE = 3;
+		NOTIFYING = 4;
 	}
 	enum CertType {
 		ALL = 0;
