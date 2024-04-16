@@ -108,7 +108,7 @@ message OIDCProvisioner {
 	string listen_address = 7;
 	string tenant_id = 8;
 	repeated string scopes = 9;
-	repeated string authparams = 10;
+	repeated string auth_params = 10;
 }
 
 message GCPProvisioner {
