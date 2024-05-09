@@ -6,6 +6,7 @@ option go_package = "go.step.sm/linkedca";
 
 import "linkedca/admin.proto";
 import "linkedca/provisioners.proto";
+import "google/protobuf/timestamp.proto";
 
 // Majordomo is the public service used to sync configurations to CA's and post
 // certificates.
@@ -43,6 +44,8 @@ service Majordomo {
 	rpc PostCertificate(CertificateRequest) returns (CertificateResponse);
 	// PostSSHCertificate sends a signed SSH certificate to majordomo.
 	rpc PostSSHCertificate(SSHCertificateRequest) returns (SSHCertificateResponse);
+	// PostOneTimeToken sends a one time token to majordomo.
+	rpc PostOneTimeToken(OneTimeTokenRequest) returns (OneTimeTokenResponse);
 	// RevokeCertificate marks an X.509 certificate as revoked.
 	rpc RevokeCertificate(RevokeCertificateRequest) returns (RevokeCertificateResponse);
 	// RevokeSSHCertificate marks an SSH certificate as revoked.
@@ -177,6 +180,15 @@ message SSHCertificateResponse {
 	string id = 1;
 }
 
+message OneTimeTokenRequest {
+	string jti = 1;
+	string token = 2;
+}
+
+message OneTimeTokenResponse {
+	string id = 1;
+}
+
 enum RevocationStatus {
 	UNKNOWN = 0;
 	ACTIVE = 1;
@@ -203,6 +215,7 @@ message RevokeCertificateRequest {
 	string reason = 3;
 	RevocationReasonCode reason_code = 4;
 	bool passive = 5;
+	google.protobuf.Timestamp revoked_at = 6;
 }
 
 message RevokeCertificateResponse {
@@ -215,6 +228,7 @@ message RevokeSSHCertificateRequest {
 	string reason = 3;
 	RevocationReasonCode reason_code = 4;
 	bool passive = 5;
+	google.protobuf.Timestamp revoked_at = 6;
 }
 
 message RevokeSSHCertificateResponse {
@@ -237,6 +251,8 @@ message GetCertificateStatusRequest {
 
 message GetCertificateStatusResponse {
 	RevocationStatus status = 1;
+	RevocationReasonCode reason_code = 2;
+	google.protobuf.Timestamp revoked_at = 3;
 }
 
 message GetSSHCertificateStatusRequest {
@@ -245,4 +261,6 @@ message GetSSHCertificateStatusRequest {
 
 message GetSSHCertificateStatusResponse {
 	RevocationStatus status = 1;
+	RevocationReasonCode reason_code = 2;
+	google.protobuf.Timestamp revoked_at = 3;
 }
