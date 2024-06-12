@@ -1143,6 +1143,8 @@ type OIDCProvisioner struct {
 	Groups                []string `protobuf:"bytes,6,rep,name=groups,proto3" json:"groups,omitempty"`
 	ListenAddress         string   `protobuf:"bytes,7,opt,name=listen_address,json=listenAddress,proto3" json:"listen_address,omitempty"`
 	TenantId              string   `protobuf:"bytes,8,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	Scopes                []string `protobuf:"bytes,9,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	AuthParams            []string `protobuf:"bytes,10,rep,name=auth_params,proto3" json:"authParams,omitempty"`
 }
 
 func (x *OIDCProvisioner) Reset() {
@@ -1231,6 +1233,20 @@ func (x *OIDCProvisioner) GetTenantId() string {
 		return x.TenantId
 	}
 	return ""
+}
+
+func (x *OIDCProvisioner) GetScopes() []string {
+	if x != nil {
+		return x.Scopes
+	}
+	return nil
+}
+
+func (x *OIDCProvisioner) GetAuthParams() []string {
+	if x != nil {
+		return x.AuthParams
+	}
+	return nil
 }
 
 type GCPProvisioner struct {
