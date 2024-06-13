@@ -251,8 +251,9 @@ message GetCertificateStatusRequest {
 
 message GetCertificateStatusResponse {
 	RevocationStatus status = 1;
-	RevocationReasonCode reason_code = 2;
-	google.protobuf.Timestamp revoked_at = 3;
+	string reason = 2;
+	RevocationReasonCode reason_code = 3;
+	google.protobuf.Timestamp revoked_at = 4;
 }
 
 message GetSSHCertificateStatusRequest {
@@ -261,6 +262,7 @@ message GetSSHCertificateStatusRequest {
 
 message GetSSHCertificateStatusResponse {
 	RevocationStatus status = 1;
-	RevocationReasonCode reason_code = 2;
-	google.protobuf.Timestamp revoked_at = 3;
+	string reason = 2;
+	RevocationReasonCode reason_code = 3;
+	google.protobuf.Timestamp revoked_at = 4;
 }
