@@ -111,6 +111,7 @@ message CreateProvisionerRequest {
 	Claims claims = 4;
 	Template x509_template = 5;
 	Template ssh_template = 6;
+	string preferred_id = 7;
 }
 
 message GetProvisionerRequest {
@@ -134,6 +135,7 @@ message CreateAdminRequest {
 	string subject = 1;
 	string provisioner_id = 2;
 	Admin.Type type = 3;
+	string preferred_id = 4;
 }
 
 message GetAdminRequest {
