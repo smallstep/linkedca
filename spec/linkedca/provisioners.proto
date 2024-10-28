@@ -117,8 +117,8 @@ message GCPProvisioner {
 	bool disable_custom_sans = 3;
 	bool disable_trust_on_first_use = 4;
 	string instance_age = 5;
-        optional bool disableSSHCAUser = 6;
-        optional bool disableSSHCAHost = 7;
+        optional bool disable_ssh_ca_user = 6;
+        optional bool disable_ssh_ca_host = 7;
 }
 
 message AWSProvisioner {
