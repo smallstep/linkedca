@@ -109,6 +109,7 @@ message OIDCProvisioner {
 	string tenant_id = 8;
 	repeated string scopes = 9;
 	repeated string auth_params = 10;
+	bool disable_trust_on_first_use = 11;
 }
 
 message GCPProvisioner {
