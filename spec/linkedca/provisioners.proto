@@ -160,6 +160,7 @@ message ACMEProvisioner {
 	string terms_of_service = 6;
 	string website = 7;
 	repeated string caa_identities = 8;
+	string verified_access_service_account_key = 9;
 }
 
 message X5CProvisioner {
