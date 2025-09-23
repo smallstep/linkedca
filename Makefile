@@ -12,6 +12,12 @@ GEN_GRPC_BIN ?= protoc-gen-go-grpc
 GEN_GRPC_MIN_VERSION ?= 1.5.1
 GEN_GRPC_VERSION ?= $(shell $(GEN_GRPC_BIN) --version | awk -F ' ' '{print $$NF}')
 
+# Go tools
+GOIMPORTS=golang.org/x/tools/cmd/goimports
+GOLANGCI_LINT=github.com/golangci/golangci-lint/v2/cmd/golangci-lint
+GOTESTSUM=gotest.tools/gotestsum
+GOVULNCHECK=golang.org/x/vuln/cmd/govulncheck
+
 all: lint generate test
 
 ci: test
@@ -29,9 +35,6 @@ build: ;
 #########################################
 
 bootstra%:
-	$Q curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.49.0
-	$Q go install golang.org/x/vuln/cmd/govulncheck@latest
-	$Q go install gotest.tools/gotestsum@v1.8.1
 	$Q go install -mod=readonly google.golang.org/protobuf/cmd/protoc-gen-go
 	$Q go install -mod=readonly google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
@@ -42,10 +45,10 @@ bootstra%:
 #########################################
 
 test:
-	$Q $(GOFLAGS) gotestsum -- -coverpkg=./... -coverprofile=coverage.out -covermode=atomic ./...
+	$Q $(GOFLAGS) go tool $(GOTESTSUM) -- -coverpkg=./... -coverprofile=coverage.out -covermode=atomic ./...
 
 race:
-	$Q $(GOFLAGS) gotestsum -- -race ./...
+	$Q $(GOFLAGS) go tool $(GOTESTSUM) -- -race ./...
 
 .PHONY: test race
 
@@ -54,12 +57,12 @@ race:
 #########################################
 
 fmt:
-	$Q goimports -local github.com/golangci/golangci-lint -l -w $(SRC)
+	$Q go tool $(GOIMPORTS) -local github.com/smallstep/linkedca -l -w $(SRC)
 
 lint: SHELL:=/bin/bash
 lint:
-	$Q LOG_LEVEL=error golangci-lint run --config <(curl -s https://raw.githubusercontent.com/smallstep/workflows/master/.golangci.yml) --timeout=30m
-	$Q govulncheck ./...
+	$Q LOG_LEVEL=error go tool $(GOLANGCI_LINT) run --config <(curl -s https://raw.githubusercontent.com/smallstep/workflows/master/.golangci.yml) --timeout=30m
+	$Q go tool $(GOVULNCHECK) ./...
 
 .PHONY: fmt lint
 
