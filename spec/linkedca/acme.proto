@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package linkedca;
+
+option go_package = "github.com/smallstep/linkedca";
+
+import "google/protobuf/timestamp.proto";
+
+// import "linkedca/eab.proto";
+
+message ACMEAccount {
+    enum Status {
+        UNDEFINED = 0;
+        VALID = 1;
+        DEACTIVATED = 2;
+        REVOKED = 3;
+    }
+    string id = 1;
+    bytes jwk = 2;
+    Status status = 3;
+    repeated string contact = 4;
+    bool terms_of_service_agreed = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp deleted_at = 7;
+}

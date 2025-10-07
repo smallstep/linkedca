@@ -2059,11 +2059,289 @@ func (x *GetSSHCertificateStatusResponse) GetRevokedAt() *timestamppb.Timestamp 
 	return nil
 }
 
+type GetACMEAccountRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Identifier:
+	//
+	//	*GetACMEAccountRequest_Id
+	//	*GetACMEAccountRequest_Kid
+	Identifier    isGetACMEAccountRequest_Identifier `protobuf_oneof:"identifier"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetACMEAccountRequest) Reset() {
+	*x = GetACMEAccountRequest{}
+	mi := &file_linkedca_majordomo_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetACMEAccountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetACMEAccountRequest) ProtoMessage() {}
+
+func (x *GetACMEAccountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_linkedca_majordomo_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetACMEAccountRequest.ProtoReflect.Descriptor instead.
+func (*GetACMEAccountRequest) Descriptor() ([]byte, []int) {
+	return file_linkedca_majordomo_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *GetACMEAccountRequest) GetIdentifier() isGetACMEAccountRequest_Identifier {
+	if x != nil {
+		return x.Identifier
+	}
+	return nil
+}
+
+func (x *GetACMEAccountRequest) GetId() string {
+	if x != nil {
+		if x, ok := x.Identifier.(*GetACMEAccountRequest_Id); ok {
+			return x.Id
+		}
+	}
+	return ""
+}
+
+func (x *GetACMEAccountRequest) GetKid() string {
+	if x != nil {
+		if x, ok := x.Identifier.(*GetACMEAccountRequest_Kid); ok {
+			return x.Kid
+		}
+	}
+	return ""
+}
+
+type isGetACMEAccountRequest_Identifier interface {
+	isGetACMEAccountRequest_Identifier()
+}
+
+type GetACMEAccountRequest_Id struct {
+	Id string `protobuf:"bytes,1,opt,name=id,proto3,oneof"`
+}
+
+type GetACMEAccountRequest_Kid struct {
+	Kid string `protobuf:"bytes,2,opt,name=kid,proto3,oneof"`
+}
+
+func (*GetACMEAccountRequest_Id) isGetACMEAccountRequest_Identifier() {}
+
+func (*GetACMEAccountRequest_Kid) isGetACMEAccountRequest_Identifier() {}
+
+type CreateACMEAccountRequest struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	PreferredId          string                 `protobuf:"bytes,1,opt,name=preferred_id,json=preferredId,proto3" json:"preferred_id,omitempty"`
+	Jwk                  []byte                 `protobuf:"bytes,2,opt,name=jwk,proto3" json:"jwk,omitempty"`
+	Status               ACMEAccount_Status     `protobuf:"varint,3,opt,name=status,proto3,enum=linkedca.ACMEAccount_Status" json:"status,omitempty"`
+	Contact              []string               `protobuf:"bytes,4,rep,name=contact,proto3" json:"contact,omitempty"`
+	TermsOfServiceAgreed bool                   `protobuf:"varint,5,opt,name=terms_of_service_agreed,json=termsOfServiceAgreed,proto3" json:"terms_of_service_agreed,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *CreateACMEAccountRequest) Reset() {
+	*x = CreateACMEAccountRequest{}
+	mi := &file_linkedca_majordomo_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateACMEAccountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateACMEAccountRequest) ProtoMessage() {}
+
+func (x *CreateACMEAccountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_linkedca_majordomo_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateACMEAccountRequest.ProtoReflect.Descriptor instead.
+func (*CreateACMEAccountRequest) Descriptor() ([]byte, []int) {
+	return file_linkedca_majordomo_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *CreateACMEAccountRequest) GetPreferredId() string {
+	if x != nil {
+		return x.PreferredId
+	}
+	return ""
+}
+
+func (x *CreateACMEAccountRequest) GetJwk() []byte {
+	if x != nil {
+		return x.Jwk
+	}
+	return nil
+}
+
+func (x *CreateACMEAccountRequest) GetStatus() ACMEAccount_Status {
+	if x != nil {
+		return x.Status
+	}
+	return ACMEAccount_UNDEFINED
+}
+
+func (x *CreateACMEAccountRequest) GetContact() []string {
+	if x != nil {
+		return x.Contact
+	}
+	return nil
+}
+
+func (x *CreateACMEAccountRequest) GetTermsOfServiceAgreed() bool {
+	if x != nil {
+		return x.TermsOfServiceAgreed
+	}
+	return false
+}
+
+type UpdateACMEAccountRequest struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Id                   string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Jwk                  []byte                 `protobuf:"bytes,2,opt,name=jwk,proto3" json:"jwk,omitempty"`
+	Status               ACMEAccount_Status     `protobuf:"varint,3,opt,name=status,proto3,enum=linkedca.ACMEAccount_Status" json:"status,omitempty"`
+	Contact              []string               `protobuf:"bytes,4,rep,name=contact,proto3" json:"contact,omitempty"`
+	TermsOfServiceAgreed bool                   `protobuf:"varint,5,opt,name=terms_of_service_agreed,json=termsOfServiceAgreed,proto3" json:"terms_of_service_agreed,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *UpdateACMEAccountRequest) Reset() {
+	*x = UpdateACMEAccountRequest{}
+	mi := &file_linkedca_majordomo_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateACMEAccountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateACMEAccountRequest) ProtoMessage() {}
+
+func (x *UpdateACMEAccountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_linkedca_majordomo_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateACMEAccountRequest.ProtoReflect.Descriptor instead.
+func (*UpdateACMEAccountRequest) Descriptor() ([]byte, []int) {
+	return file_linkedca_majordomo_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *UpdateACMEAccountRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateACMEAccountRequest) GetJwk() []byte {
+	if x != nil {
+		return x.Jwk
+	}
+	return nil
+}
+
+func (x *UpdateACMEAccountRequest) GetStatus() ACMEAccount_Status {
+	if x != nil {
+		return x.Status
+	}
+	return ACMEAccount_UNDEFINED
+}
+
+func (x *UpdateACMEAccountRequest) GetContact() []string {
+	if x != nil {
+		return x.Contact
+	}
+	return nil
+}
+
+func (x *UpdateACMEAccountRequest) GetTermsOfServiceAgreed() bool {
+	if x != nil {
+		return x.TermsOfServiceAgreed
+	}
+	return false
+}
+
+type DeleteACMEAccountRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteACMEAccountRequest) Reset() {
+	*x = DeleteACMEAccountRequest{}
+	mi := &file_linkedca_majordomo_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteACMEAccountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteACMEAccountRequest) ProtoMessage() {}
+
+func (x *DeleteACMEAccountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_linkedca_majordomo_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteACMEAccountRequest.ProtoReflect.Descriptor instead.
+func (*DeleteACMEAccountRequest) Descriptor() ([]byte, []int) {
+	return file_linkedca_majordomo_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *DeleteACMEAccountRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 var File_linkedca_majordomo_proto protoreflect.FileDescriptor
 
 const file_linkedca_majordomo_proto_rawDesc = "" +
 	"\n" +
-	"\x18linkedca/majordomo.proto\x12\blinkedca\x1a\x14linkedca/admin.proto\x1a\x1blinkedca/provisioners.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x7f\n" +
+	"\x18linkedca/majordomo.proto\x12\blinkedca\x1a\x14linkedca/admin.proto\x1a\x1blinkedca/provisioners.proto\x1a\x13linkedca/acme.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x7f\n" +
 	"\fLoginRequest\x12!\n" +
 	"\fauthority_id\x18\x01 \x01(\tR\vauthorityId\x12\x14\n" +
 	"\x05token\x18\x02 \x01(\tR\x05token\x126\n" +
@@ -2192,7 +2470,26 @@ const file_linkedca_majordomo_proto_rawDesc = "" +
 	"\vreason_code\x18\x03 \x01(\x0e2\x1e.linkedca.RevocationReasonCodeR\n" +
 	"reasonCode\x129\n" +
 	"\n" +
-	"revoked_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt*B\n" +
+	"revoked_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\"K\n" +
+	"\x15GetACMEAccountRequest\x12\x10\n" +
+	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x12\x12\n" +
+	"\x03kid\x18\x02 \x01(\tH\x00R\x03kidB\f\n" +
+	"\n" +
+	"identifier\"\xd6\x01\n" +
+	"\x18CreateACMEAccountRequest\x12!\n" +
+	"\fpreferred_id\x18\x01 \x01(\tR\vpreferredId\x12\x10\n" +
+	"\x03jwk\x18\x02 \x01(\fR\x03jwk\x124\n" +
+	"\x06status\x18\x03 \x01(\x0e2\x1c.linkedca.ACMEAccount.StatusR\x06status\x12\x18\n" +
+	"\acontact\x18\x04 \x03(\tR\acontact\x125\n" +
+	"\x17terms_of_service_agreed\x18\x05 \x01(\bR\x14termsOfServiceAgreed\"\xc3\x01\n" +
+	"\x18UpdateACMEAccountRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x10\n" +
+	"\x03jwk\x18\x02 \x01(\fR\x03jwk\x124\n" +
+	"\x06status\x18\x03 \x01(\x0e2\x1c.linkedca.ACMEAccount.StatusR\x06status\x12\x18\n" +
+	"\acontact\x18\x04 \x03(\tR\acontact\x125\n" +
+	"\x17terms_of_service_agreed\x18\x05 \x01(\bR\x14termsOfServiceAgreed\"*\n" +
+	"\x18DeleteACMEAccountRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id*B\n" +
 	"\x10RevocationStatus\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\n" +
 	"\n" +
@@ -2211,7 +2508,7 @@ const file_linkedca_majordomo_proto_rawDesc = "" +
 	"\x0fREMOVE_FROM_CRL\x10\b\x12\x17\n" +
 	"\x13PRIVILEGE_WITHDRAWN\x10\t\x12\x11\n" +
 	"\rAA_COMPROMISE\x10\n" +
-	"2\x94\f\n" +
+	"2\xce\x0e\n" +
 	"\tMajordomo\x128\n" +
 	"\x05Login\x12\x16.linkedca.LoginRequest\x1a\x17.linkedca.LoginResponse\x12_\n" +
 	"\x12GetRootCertificate\x12#.linkedca.GetRootCertificateRequest\x1a$.linkedca.GetRootCertificateResponse\x12S\n" +
@@ -2231,7 +2528,11 @@ const file_linkedca_majordomo_proto_rawDesc = "" +
 	"\x14RevokeSSHCertificate\x12%.linkedca.RevokeSSHCertificateRequest\x1a&.linkedca.RevokeSSHCertificateResponse\x12S\n" +
 	"\x0eGetCertificate\x12\x1f.linkedca.GetCertificateRequest\x1a .linkedca.GetCertificateResponse\x12e\n" +
 	"\x14GetCertificateStatus\x12%.linkedca.GetCertificateStatusRequest\x1a&.linkedca.GetCertificateStatusResponse\x12n\n" +
-	"\x17GetSSHCertificateStatus\x12(.linkedca.GetSSHCertificateStatusRequest\x1a).linkedca.GetSSHCertificateStatusResponseB\x1fZ\x1dgithub.com/smallstep/linkedcab\x06proto3"
+	"\x17GetSSHCertificateStatus\x12(.linkedca.GetSSHCertificateStatusRequest\x1a).linkedca.GetSSHCertificateStatusResponse\x12H\n" +
+	"\x0eGetACMEAccount\x12\x1f.linkedca.GetACMEAccountRequest\x1a\x15.linkedca.ACMEAccount\x12N\n" +
+	"\x11CreateACMEAccount\x12\".linkedca.CreateACMEAccountRequest\x1a\x15.linkedca.ACMEAccount\x12N\n" +
+	"\x11UpdateACMEAccount\x12\".linkedca.UpdateACMEAccountRequest\x1a\x15.linkedca.ACMEAccount\x12N\n" +
+	"\x11DeleteACMEAccount\x12\".linkedca.DeleteACMEAccountRequest\x1a\x15.linkedca.ACMEAccountB\x1fZ\x1dgithub.com/smallstep/linkedcab\x06proto3"
 
 var (
 	file_linkedca_majordomo_proto_rawDescOnce sync.Once
@@ -2246,7 +2547,7 @@ func file_linkedca_majordomo_proto_rawDescGZIP() []byte {
 }
 
 var file_linkedca_majordomo_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_linkedca_majordomo_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
+var file_linkedca_majordomo_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_linkedca_majordomo_proto_goTypes = []any{
 	(RevocationStatus)(0),                    // 0: linkedca.RevocationStatus
 	(RevocationReasonCode)(0),                // 1: linkedca.RevocationReasonCode
@@ -2284,95 +2585,111 @@ var file_linkedca_majordomo_proto_goTypes = []any{
 	(*GetCertificateStatusResponse)(nil),     // 33: linkedca.GetCertificateStatusResponse
 	(*GetSSHCertificateStatusRequest)(nil),   // 34: linkedca.GetSSHCertificateStatusRequest
 	(*GetSSHCertificateStatusResponse)(nil),  // 35: linkedca.GetSSHCertificateStatusResponse
-	(*Provisioner)(nil),                      // 36: linkedca.Provisioner
-	(*Admin)(nil),                            // 37: linkedca.Admin
-	(*ProvisionerIdentity)(nil),              // 38: linkedca.ProvisionerIdentity
-	(Provisioner_Type)(0),                    // 39: linkedca.Provisioner.Type
-	(*ProvisionerDetails)(nil),               // 40: linkedca.ProvisionerDetails
-	(*Claims)(nil),                           // 41: linkedca.Claims
-	(*Template)(nil),                         // 42: linkedca.Template
-	(Admin_Type)(0),                          // 43: linkedca.Admin.Type
-	(*timestamppb.Timestamp)(nil),            // 44: google.protobuf.Timestamp
+	(*GetACMEAccountRequest)(nil),            // 36: linkedca.GetACMEAccountRequest
+	(*CreateACMEAccountRequest)(nil),         // 37: linkedca.CreateACMEAccountRequest
+	(*UpdateACMEAccountRequest)(nil),         // 38: linkedca.UpdateACMEAccountRequest
+	(*DeleteACMEAccountRequest)(nil),         // 39: linkedca.DeleteACMEAccountRequest
+	(*Provisioner)(nil),                      // 40: linkedca.Provisioner
+	(*Admin)(nil),                            // 41: linkedca.Admin
+	(*ProvisionerIdentity)(nil),              // 42: linkedca.ProvisionerIdentity
+	(Provisioner_Type)(0),                    // 43: linkedca.Provisioner.Type
+	(*ProvisionerDetails)(nil),               // 44: linkedca.ProvisionerDetails
+	(*Claims)(nil),                           // 45: linkedca.Claims
+	(*Template)(nil),                         // 46: linkedca.Template
+	(Admin_Type)(0),                          // 47: linkedca.Admin.Type
+	(*timestamppb.Timestamp)(nil),            // 48: google.protobuf.Timestamp
+	(ACMEAccount_Status)(0),                  // 49: linkedca.ACMEAccount.Status
+	(*ACMEAccount)(nil),                      // 50: linkedca.ACMEAccount
 }
 var file_linkedca_majordomo_proto_depIdxs = []int32{
-	36, // 0: linkedca.ConfigurationResponse.provisioners:type_name -> linkedca.Provisioner
-	37, // 1: linkedca.ConfigurationResponse.admins:type_name -> linkedca.Admin
+	40, // 0: linkedca.ConfigurationResponse.provisioners:type_name -> linkedca.Provisioner
+	41, // 1: linkedca.ConfigurationResponse.admins:type_name -> linkedca.Admin
 	9,  // 2: linkedca.ConfigurationResponse.ra_config:type_name -> linkedca.RegistrationAuthorityConfig
 	8,  // 3: linkedca.ConfigurationResponse.server_config:type_name -> linkedca.ServerConfiguration
-	38, // 4: linkedca.RegistrationAuthorityConfig.provisioner:type_name -> linkedca.ProvisionerIdentity
-	38, // 5: linkedca.RegistrationAuthorityProvisioner.provisioner:type_name -> linkedca.ProvisionerIdentity
-	39, // 6: linkedca.CreateProvisionerRequest.type:type_name -> linkedca.Provisioner.Type
-	40, // 7: linkedca.CreateProvisionerRequest.details:type_name -> linkedca.ProvisionerDetails
-	41, // 8: linkedca.CreateProvisionerRequest.claims:type_name -> linkedca.Claims
-	42, // 9: linkedca.CreateProvisionerRequest.x509_template:type_name -> linkedca.Template
-	42, // 10: linkedca.CreateProvisionerRequest.ssh_template:type_name -> linkedca.Template
-	40, // 11: linkedca.UpdateProvisionerRequest.details:type_name -> linkedca.ProvisionerDetails
-	41, // 12: linkedca.UpdateProvisionerRequest.claims:type_name -> linkedca.Claims
-	42, // 13: linkedca.UpdateProvisionerRequest.x509_template:type_name -> linkedca.Template
-	42, // 14: linkedca.UpdateProvisionerRequest.ssh_template:type_name -> linkedca.Template
-	43, // 15: linkedca.CreateAdminRequest.type:type_name -> linkedca.Admin.Type
-	43, // 16: linkedca.UpdateAdminRequest.type:type_name -> linkedca.Admin.Type
-	38, // 17: linkedca.CertificateRequest.provisioner:type_name -> linkedca.ProvisionerIdentity
+	42, // 4: linkedca.RegistrationAuthorityConfig.provisioner:type_name -> linkedca.ProvisionerIdentity
+	42, // 5: linkedca.RegistrationAuthorityProvisioner.provisioner:type_name -> linkedca.ProvisionerIdentity
+	43, // 6: linkedca.CreateProvisionerRequest.type:type_name -> linkedca.Provisioner.Type
+	44, // 7: linkedca.CreateProvisionerRequest.details:type_name -> linkedca.ProvisionerDetails
+	45, // 8: linkedca.CreateProvisionerRequest.claims:type_name -> linkedca.Claims
+	46, // 9: linkedca.CreateProvisionerRequest.x509_template:type_name -> linkedca.Template
+	46, // 10: linkedca.CreateProvisionerRequest.ssh_template:type_name -> linkedca.Template
+	44, // 11: linkedca.UpdateProvisionerRequest.details:type_name -> linkedca.ProvisionerDetails
+	45, // 12: linkedca.UpdateProvisionerRequest.claims:type_name -> linkedca.Claims
+	46, // 13: linkedca.UpdateProvisionerRequest.x509_template:type_name -> linkedca.Template
+	46, // 14: linkedca.UpdateProvisionerRequest.ssh_template:type_name -> linkedca.Template
+	47, // 15: linkedca.CreateAdminRequest.type:type_name -> linkedca.Admin.Type
+	47, // 16: linkedca.UpdateAdminRequest.type:type_name -> linkedca.Admin.Type
+	42, // 17: linkedca.CertificateRequest.provisioner:type_name -> linkedca.ProvisionerIdentity
 	10, // 18: linkedca.CertificateRequest.ra_provisioner:type_name -> linkedca.RegistrationAuthorityProvisioner
 	20, // 19: linkedca.CertificateRequest.attestation_data:type_name -> linkedca.AttestationData
-	38, // 20: linkedca.SSHCertificateRequest.provisioner:type_name -> linkedca.ProvisionerIdentity
+	42, // 20: linkedca.SSHCertificateRequest.provisioner:type_name -> linkedca.ProvisionerIdentity
 	1,  // 21: linkedca.RevokeCertificateRequest.reason_code:type_name -> linkedca.RevocationReasonCode
-	44, // 22: linkedca.RevokeCertificateRequest.revoked_at:type_name -> google.protobuf.Timestamp
+	48, // 22: linkedca.RevokeCertificateRequest.revoked_at:type_name -> google.protobuf.Timestamp
 	0,  // 23: linkedca.RevokeCertificateResponse.status:type_name -> linkedca.RevocationStatus
 	1,  // 24: linkedca.RevokeSSHCertificateRequest.reason_code:type_name -> linkedca.RevocationReasonCode
-	44, // 25: linkedca.RevokeSSHCertificateRequest.revoked_at:type_name -> google.protobuf.Timestamp
+	48, // 25: linkedca.RevokeSSHCertificateRequest.revoked_at:type_name -> google.protobuf.Timestamp
 	0,  // 26: linkedca.RevokeSSHCertificateResponse.status:type_name -> linkedca.RevocationStatus
-	38, // 27: linkedca.GetCertificateResponse.provisioner:type_name -> linkedca.ProvisionerIdentity
+	42, // 27: linkedca.GetCertificateResponse.provisioner:type_name -> linkedca.ProvisionerIdentity
 	10, // 28: linkedca.GetCertificateResponse.ra_provisioner:type_name -> linkedca.RegistrationAuthorityProvisioner
 	0,  // 29: linkedca.GetCertificateStatusResponse.status:type_name -> linkedca.RevocationStatus
 	1,  // 30: linkedca.GetCertificateStatusResponse.reason_code:type_name -> linkedca.RevocationReasonCode
-	44, // 31: linkedca.GetCertificateStatusResponse.revoked_at:type_name -> google.protobuf.Timestamp
+	48, // 31: linkedca.GetCertificateStatusResponse.revoked_at:type_name -> google.protobuf.Timestamp
 	0,  // 32: linkedca.GetSSHCertificateStatusResponse.status:type_name -> linkedca.RevocationStatus
 	1,  // 33: linkedca.GetSSHCertificateStatusResponse.reason_code:type_name -> linkedca.RevocationReasonCode
-	44, // 34: linkedca.GetSSHCertificateStatusResponse.revoked_at:type_name -> google.protobuf.Timestamp
-	2,  // 35: linkedca.Majordomo.Login:input_type -> linkedca.LoginRequest
-	4,  // 36: linkedca.Majordomo.GetRootCertificate:input_type -> linkedca.GetRootCertificateRequest
-	6,  // 37: linkedca.Majordomo.GetConfiguration:input_type -> linkedca.ConfigurationRequest
-	11, // 38: linkedca.Majordomo.CreateProvisioner:input_type -> linkedca.CreateProvisionerRequest
-	12, // 39: linkedca.Majordomo.GetProvisioner:input_type -> linkedca.GetProvisionerRequest
-	13, // 40: linkedca.Majordomo.UpdateProvisioner:input_type -> linkedca.UpdateProvisionerRequest
-	14, // 41: linkedca.Majordomo.DeleteProvisioner:input_type -> linkedca.DeleteProvisionerRequest
-	15, // 42: linkedca.Majordomo.CreateAdmin:input_type -> linkedca.CreateAdminRequest
-	16, // 43: linkedca.Majordomo.GetAdmin:input_type -> linkedca.GetAdminRequest
-	17, // 44: linkedca.Majordomo.UpdateAdmin:input_type -> linkedca.UpdateAdminRequest
-	18, // 45: linkedca.Majordomo.DeleteAdmin:input_type -> linkedca.DeleteAdminRequest
-	19, // 46: linkedca.Majordomo.PostCertificate:input_type -> linkedca.CertificateRequest
-	22, // 47: linkedca.Majordomo.PostSSHCertificate:input_type -> linkedca.SSHCertificateRequest
-	24, // 48: linkedca.Majordomo.PostOneTimeToken:input_type -> linkedca.OneTimeTokenRequest
-	26, // 49: linkedca.Majordomo.RevokeCertificate:input_type -> linkedca.RevokeCertificateRequest
-	28, // 50: linkedca.Majordomo.RevokeSSHCertificate:input_type -> linkedca.RevokeSSHCertificateRequest
-	30, // 51: linkedca.Majordomo.GetCertificate:input_type -> linkedca.GetCertificateRequest
-	32, // 52: linkedca.Majordomo.GetCertificateStatus:input_type -> linkedca.GetCertificateStatusRequest
-	34, // 53: linkedca.Majordomo.GetSSHCertificateStatus:input_type -> linkedca.GetSSHCertificateStatusRequest
-	3,  // 54: linkedca.Majordomo.Login:output_type -> linkedca.LoginResponse
-	5,  // 55: linkedca.Majordomo.GetRootCertificate:output_type -> linkedca.GetRootCertificateResponse
-	7,  // 56: linkedca.Majordomo.GetConfiguration:output_type -> linkedca.ConfigurationResponse
-	36, // 57: linkedca.Majordomo.CreateProvisioner:output_type -> linkedca.Provisioner
-	36, // 58: linkedca.Majordomo.GetProvisioner:output_type -> linkedca.Provisioner
-	36, // 59: linkedca.Majordomo.UpdateProvisioner:output_type -> linkedca.Provisioner
-	36, // 60: linkedca.Majordomo.DeleteProvisioner:output_type -> linkedca.Provisioner
-	37, // 61: linkedca.Majordomo.CreateAdmin:output_type -> linkedca.Admin
-	37, // 62: linkedca.Majordomo.GetAdmin:output_type -> linkedca.Admin
-	37, // 63: linkedca.Majordomo.UpdateAdmin:output_type -> linkedca.Admin
-	37, // 64: linkedca.Majordomo.DeleteAdmin:output_type -> linkedca.Admin
-	21, // 65: linkedca.Majordomo.PostCertificate:output_type -> linkedca.CertificateResponse
-	23, // 66: linkedca.Majordomo.PostSSHCertificate:output_type -> linkedca.SSHCertificateResponse
-	25, // 67: linkedca.Majordomo.PostOneTimeToken:output_type -> linkedca.OneTimeTokenResponse
-	27, // 68: linkedca.Majordomo.RevokeCertificate:output_type -> linkedca.RevokeCertificateResponse
-	29, // 69: linkedca.Majordomo.RevokeSSHCertificate:output_type -> linkedca.RevokeSSHCertificateResponse
-	31, // 70: linkedca.Majordomo.GetCertificate:output_type -> linkedca.GetCertificateResponse
-	33, // 71: linkedca.Majordomo.GetCertificateStatus:output_type -> linkedca.GetCertificateStatusResponse
-	35, // 72: linkedca.Majordomo.GetSSHCertificateStatus:output_type -> linkedca.GetSSHCertificateStatusResponse
-	54, // [54:73] is the sub-list for method output_type
-	35, // [35:54] is the sub-list for method input_type
-	35, // [35:35] is the sub-list for extension type_name
-	35, // [35:35] is the sub-list for extension extendee
-	0,  // [0:35] is the sub-list for field type_name
+	48, // 34: linkedca.GetSSHCertificateStatusResponse.revoked_at:type_name -> google.protobuf.Timestamp
+	49, // 35: linkedca.CreateACMEAccountRequest.status:type_name -> linkedca.ACMEAccount.Status
+	49, // 36: linkedca.UpdateACMEAccountRequest.status:type_name -> linkedca.ACMEAccount.Status
+	2,  // 37: linkedca.Majordomo.Login:input_type -> linkedca.LoginRequest
+	4,  // 38: linkedca.Majordomo.GetRootCertificate:input_type -> linkedca.GetRootCertificateRequest
+	6,  // 39: linkedca.Majordomo.GetConfiguration:input_type -> linkedca.ConfigurationRequest
+	11, // 40: linkedca.Majordomo.CreateProvisioner:input_type -> linkedca.CreateProvisionerRequest
+	12, // 41: linkedca.Majordomo.GetProvisioner:input_type -> linkedca.GetProvisionerRequest
+	13, // 42: linkedca.Majordomo.UpdateProvisioner:input_type -> linkedca.UpdateProvisionerRequest
+	14, // 43: linkedca.Majordomo.DeleteProvisioner:input_type -> linkedca.DeleteProvisionerRequest
+	15, // 44: linkedca.Majordomo.CreateAdmin:input_type -> linkedca.CreateAdminRequest
+	16, // 45: linkedca.Majordomo.GetAdmin:input_type -> linkedca.GetAdminRequest
+	17, // 46: linkedca.Majordomo.UpdateAdmin:input_type -> linkedca.UpdateAdminRequest
+	18, // 47: linkedca.Majordomo.DeleteAdmin:input_type -> linkedca.DeleteAdminRequest
+	19, // 48: linkedca.Majordomo.PostCertificate:input_type -> linkedca.CertificateRequest
+	22, // 49: linkedca.Majordomo.PostSSHCertificate:input_type -> linkedca.SSHCertificateRequest
+	24, // 50: linkedca.Majordomo.PostOneTimeToken:input_type -> linkedca.OneTimeTokenRequest
+	26, // 51: linkedca.Majordomo.RevokeCertificate:input_type -> linkedca.RevokeCertificateRequest
+	28, // 52: linkedca.Majordomo.RevokeSSHCertificate:input_type -> linkedca.RevokeSSHCertificateRequest
+	30, // 53: linkedca.Majordomo.GetCertificate:input_type -> linkedca.GetCertificateRequest
+	32, // 54: linkedca.Majordomo.GetCertificateStatus:input_type -> linkedca.GetCertificateStatusRequest
+	34, // 55: linkedca.Majordomo.GetSSHCertificateStatus:input_type -> linkedca.GetSSHCertificateStatusRequest
+	36, // 56: linkedca.Majordomo.GetACMEAccount:input_type -> linkedca.GetACMEAccountRequest
+	37, // 57: linkedca.Majordomo.CreateACMEAccount:input_type -> linkedca.CreateACMEAccountRequest
+	38, // 58: linkedca.Majordomo.UpdateACMEAccount:input_type -> linkedca.UpdateACMEAccountRequest
+	39, // 59: linkedca.Majordomo.DeleteACMEAccount:input_type -> linkedca.DeleteACMEAccountRequest
+	3,  // 60: linkedca.Majordomo.Login:output_type -> linkedca.LoginResponse
+	5,  // 61: linkedca.Majordomo.GetRootCertificate:output_type -> linkedca.GetRootCertificateResponse
+	7,  // 62: linkedca.Majordomo.GetConfiguration:output_type -> linkedca.ConfigurationResponse
+	40, // 63: linkedca.Majordomo.CreateProvisioner:output_type -> linkedca.Provisioner
+	40, // 64: linkedca.Majordomo.GetProvisioner:output_type -> linkedca.Provisioner
+	40, // 65: linkedca.Majordomo.UpdateProvisioner:output_type -> linkedca.Provisioner
+	40, // 66: linkedca.Majordomo.DeleteProvisioner:output_type -> linkedca.Provisioner
+	41, // 67: linkedca.Majordomo.CreateAdmin:output_type -> linkedca.Admin
+	41, // 68: linkedca.Majordomo.GetAdmin:output_type -> linkedca.Admin
+	41, // 69: linkedca.Majordomo.UpdateAdmin:output_type -> linkedca.Admin
+	41, // 70: linkedca.Majordomo.DeleteAdmin:output_type -> linkedca.Admin
+	21, // 71: linkedca.Majordomo.PostCertificate:output_type -> linkedca.CertificateResponse
+	23, // 72: linkedca.Majordomo.PostSSHCertificate:output_type -> linkedca.SSHCertificateResponse
+	25, // 73: linkedca.Majordomo.PostOneTimeToken:output_type -> linkedca.OneTimeTokenResponse
+	27, // 74: linkedca.Majordomo.RevokeCertificate:output_type -> linkedca.RevokeCertificateResponse
+	29, // 75: linkedca.Majordomo.RevokeSSHCertificate:output_type -> linkedca.RevokeSSHCertificateResponse
+	31, // 76: linkedca.Majordomo.GetCertificate:output_type -> linkedca.GetCertificateResponse
+	33, // 77: linkedca.Majordomo.GetCertificateStatus:output_type -> linkedca.GetCertificateStatusResponse
+	35, // 78: linkedca.Majordomo.GetSSHCertificateStatus:output_type -> linkedca.GetSSHCertificateStatusResponse
+	50, // 79: linkedca.Majordomo.GetACMEAccount:output_type -> linkedca.ACMEAccount
+	50, // 80: linkedca.Majordomo.CreateACMEAccount:output_type -> linkedca.ACMEAccount
+	50, // 81: linkedca.Majordomo.UpdateACMEAccount:output_type -> linkedca.ACMEAccount
+	50, // 82: linkedca.Majordomo.DeleteACMEAccount:output_type -> linkedca.ACMEAccount
+	60, // [60:83] is the sub-list for method output_type
+	37, // [37:60] is the sub-list for method input_type
+	37, // [37:37] is the sub-list for extension type_name
+	37, // [37:37] is the sub-list for extension extendee
+	0,  // [0:37] is the sub-list for field type_name
 }
 
 func init() { file_linkedca_majordomo_proto_init() }
@@ -2382,13 +2699,18 @@ func file_linkedca_majordomo_proto_init() {
 	}
 	file_linkedca_admin_proto_init()
 	file_linkedca_provisioners_proto_init()
+	file_linkedca_acme_proto_init()
+	file_linkedca_majordomo_proto_msgTypes[34].OneofWrappers = []any{
+		(*GetACMEAccountRequest_Id)(nil),
+		(*GetACMEAccountRequest_Kid)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_linkedca_majordomo_proto_rawDesc), len(file_linkedca_majordomo_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   34,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

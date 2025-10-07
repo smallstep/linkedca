@@ -6,6 +6,7 @@ option go_package = "github.com/smallstep/linkedca";
 
 import "linkedca/admin.proto";
 import "linkedca/provisioners.proto";
+import "linkedca/acme.proto";
 import "google/protobuf/timestamp.proto";
 
 // Majordomo is the public service used to sync configurations to CA's and post
@@ -56,6 +57,15 @@ service Majordomo {
 	rpc GetCertificateStatus(GetCertificateStatusRequest) returns (GetCertificateStatusResponse);
 	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
 	rpc GetSSHCertificateStatus(GetSSHCertificateStatusRequest) returns (GetSSHCertificateStatusResponse);
+
+	// GetACMEAccount returns the ACMEAccount by its id or kid.
+	rpc GetACMEAccount(GetACMEAccountRequest) returns (ACMEAccount);
+	// CreateACMEAccount adds a new ACMEAccount to the majordomo team.
+	rpc CreateACMEAccount(CreateACMEAccountRequest) returns (ACMEAccount);
+	// UpdateACMEAccount updates a previously existing ACMEAccount.
+	rpc UpdateACMEAccount(UpdateACMEAccountRequest) returns (ACMEAccount);
+	// DeleteACMEAccount deletes a previously existing ACMEAccount.
+	rpc DeleteACMEAccount(DeleteACMEAccountRequest) returns (ACMEAccount);
 }
 
 message LoginRequest {
@@ -267,4 +277,31 @@ message GetSSHCertificateStatusResponse {
 	string reason = 2;
 	RevocationReasonCode reason_code = 3;
 	google.protobuf.Timestamp revoked_at = 4;
+}
+
+message GetACMEAccountRequest {
+	oneof identifier {
+		string id = 1;
+		string kid = 2;
+	}
+}
+
+message CreateACMEAccountRequest {
+	string preferred_id = 1;
+	bytes jwk = 2;
+    ACMEAccount.Status status = 3;
+    repeated string contact = 4;
+    bool terms_of_service_agreed = 5;
+}
+
+message UpdateACMEAccountRequest {
+	string id = 1;
+	bytes jwk = 2;
+    ACMEAccount.Status status = 3;
+    repeated string contact = 4;
+    bool terms_of_service_agreed = 5;
+}
+
+message DeleteACMEAccountRequest {
+	string id = 1;
 }
