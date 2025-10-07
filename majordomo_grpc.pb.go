@@ -38,6 +38,10 @@ const (
 	Majordomo_GetCertificate_FullMethodName          = "/linkedca.Majordomo/GetCertificate"
 	Majordomo_GetCertificateStatus_FullMethodName    = "/linkedca.Majordomo/GetCertificateStatus"
 	Majordomo_GetSSHCertificateStatus_FullMethodName = "/linkedca.Majordomo/GetSSHCertificateStatus"
+	Majordomo_GetACMEAccount_FullMethodName          = "/linkedca.Majordomo/GetACMEAccount"
+	Majordomo_CreateACMEAccount_FullMethodName       = "/linkedca.Majordomo/CreateACMEAccount"
+	Majordomo_UpdateACMEAccount_FullMethodName       = "/linkedca.Majordomo/UpdateACMEAccount"
+	Majordomo_DeleteACMEAccount_FullMethodName       = "/linkedca.Majordomo/DeleteACMEAccount"
 )
 
 // MajordomoClient is the client API for Majordomo service.
@@ -88,6 +92,14 @@ type MajordomoClient interface {
 	GetCertificateStatus(ctx context.Context, in *GetCertificateStatusRequest, opts ...grpc.CallOption) (*GetCertificateStatusResponse, error)
 	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
 	GetSSHCertificateStatus(ctx context.Context, in *GetSSHCertificateStatusRequest, opts ...grpc.CallOption) (*GetSSHCertificateStatusResponse, error)
+	// GetACMEAccount returns the ACMEAccount by its id or kid.
+	GetACMEAccount(ctx context.Context, in *GetACMEAccountRequest, opts ...grpc.CallOption) (*ACMEAccount, error)
+	// CreateACMEAccount adds a new ACMEAccount to the majordomo team.
+	CreateACMEAccount(ctx context.Context, in *CreateACMEAccountRequest, opts ...grpc.CallOption) (*ACMEAccount, error)
+	// UpdateACMEAccount updates a previously existing ACMEAccount.
+	UpdateACMEAccount(ctx context.Context, in *UpdateACMEAccountRequest, opts ...grpc.CallOption) (*ACMEAccount, error)
+	// DeleteACMEAccount deletes a previously existing ACMEAccount.
+	DeleteACMEAccount(ctx context.Context, in *DeleteACMEAccountRequest, opts ...grpc.CallOption) (*ACMEAccount, error)
 }
 
 type majordomoClient struct {
@@ -288,6 +300,46 @@ func (c *majordomoClient) GetSSHCertificateStatus(ctx context.Context, in *GetSS
 	return out, nil
 }
 
+func (c *majordomoClient) GetACMEAccount(ctx context.Context, in *GetACMEAccountRequest, opts ...grpc.CallOption) (*ACMEAccount, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ACMEAccount)
+	err := c.cc.Invoke(ctx, Majordomo_GetACMEAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *majordomoClient) CreateACMEAccount(ctx context.Context, in *CreateACMEAccountRequest, opts ...grpc.CallOption) (*ACMEAccount, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ACMEAccount)
+	err := c.cc.Invoke(ctx, Majordomo_CreateACMEAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *majordomoClient) UpdateACMEAccount(ctx context.Context, in *UpdateACMEAccountRequest, opts ...grpc.CallOption) (*ACMEAccount, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ACMEAccount)
+	err := c.cc.Invoke(ctx, Majordomo_UpdateACMEAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *majordomoClient) DeleteACMEAccount(ctx context.Context, in *DeleteACMEAccountRequest, opts ...grpc.CallOption) (*ACMEAccount, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ACMEAccount)
+	err := c.cc.Invoke(ctx, Majordomo_DeleteACMEAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MajordomoServer is the server API for Majordomo service.
 // All implementations must embed UnimplementedMajordomoServer
 // for forward compatibility.
@@ -336,6 +388,14 @@ type MajordomoServer interface {
 	GetCertificateStatus(context.Context, *GetCertificateStatusRequest) (*GetCertificateStatusResponse, error)
 	// GetSSHCertificateStatus returns the status of an SSH certificate by serial.
 	GetSSHCertificateStatus(context.Context, *GetSSHCertificateStatusRequest) (*GetSSHCertificateStatusResponse, error)
+	// GetACMEAccount returns the ACMEAccount by its id or kid.
+	GetACMEAccount(context.Context, *GetACMEAccountRequest) (*ACMEAccount, error)
+	// CreateACMEAccount adds a new ACMEAccount to the majordomo team.
+	CreateACMEAccount(context.Context, *CreateACMEAccountRequest) (*ACMEAccount, error)
+	// UpdateACMEAccount updates a previously existing ACMEAccount.
+	UpdateACMEAccount(context.Context, *UpdateACMEAccountRequest) (*ACMEAccount, error)
+	// DeleteACMEAccount deletes a previously existing ACMEAccount.
+	DeleteACMEAccount(context.Context, *DeleteACMEAccountRequest) (*ACMEAccount, error)
 	mustEmbedUnimplementedMajordomoServer()
 }
 
@@ -402,6 +462,18 @@ func (UnimplementedMajordomoServer) GetCertificateStatus(context.Context, *GetCe
 }
 func (UnimplementedMajordomoServer) GetSSHCertificateStatus(context.Context, *GetSSHCertificateStatusRequest) (*GetSSHCertificateStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSSHCertificateStatus not implemented")
+}
+func (UnimplementedMajordomoServer) GetACMEAccount(context.Context, *GetACMEAccountRequest) (*ACMEAccount, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetACMEAccount not implemented")
+}
+func (UnimplementedMajordomoServer) CreateACMEAccount(context.Context, *CreateACMEAccountRequest) (*ACMEAccount, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateACMEAccount not implemented")
+}
+func (UnimplementedMajordomoServer) UpdateACMEAccount(context.Context, *UpdateACMEAccountRequest) (*ACMEAccount, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateACMEAccount not implemented")
+}
+func (UnimplementedMajordomoServer) DeleteACMEAccount(context.Context, *DeleteACMEAccountRequest) (*ACMEAccount, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteACMEAccount not implemented")
 }
 func (UnimplementedMajordomoServer) mustEmbedUnimplementedMajordomoServer() {}
 func (UnimplementedMajordomoServer) testEmbeddedByValue()                   {}
@@ -766,6 +838,78 @@ func _Majordomo_GetSSHCertificateStatus_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Majordomo_GetACMEAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetACMEAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).GetACMEAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Majordomo_GetACMEAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).GetACMEAccount(ctx, req.(*GetACMEAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Majordomo_CreateACMEAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateACMEAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).CreateACMEAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Majordomo_CreateACMEAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).CreateACMEAccount(ctx, req.(*CreateACMEAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Majordomo_UpdateACMEAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateACMEAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).UpdateACMEAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Majordomo_UpdateACMEAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).UpdateACMEAccount(ctx, req.(*UpdateACMEAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Majordomo_DeleteACMEAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteACMEAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MajordomoServer).DeleteACMEAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Majordomo_DeleteACMEAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MajordomoServer).DeleteACMEAccount(ctx, req.(*DeleteACMEAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Majordomo_ServiceDesc is the grpc.ServiceDesc for Majordomo service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -848,6 +992,22 @@ var Majordomo_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSSHCertificateStatus",
 			Handler:    _Majordomo_GetSSHCertificateStatus_Handler,
+		},
+		{
+			MethodName: "GetACMEAccount",
+			Handler:    _Majordomo_GetACMEAccount_Handler,
+		},
+		{
+			MethodName: "CreateACMEAccount",
+			Handler:    _Majordomo_CreateACMEAccount_Handler,
+		},
+		{
+			MethodName: "UpdateACMEAccount",
+			Handler:    _Majordomo_UpdateACMEAccount_Handler,
+		},
+		{
+			MethodName: "DeleteACMEAccount",
+			Handler:    _Majordomo_DeleteACMEAccount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
