@@ -4,9 +4,10 @@ package linkedca;
 
 option go_package = "github.com/smallstep/linkedca";
 
+import "google/protobuf/timestamp.proto";
+
 import "linkedca/admin.proto";
 import "linkedca/provisioners.proto";
-import "google/protobuf/timestamp.proto";
 
 // Majordomo is the public service used to sync configurations to CA's and post
 // certificates.
