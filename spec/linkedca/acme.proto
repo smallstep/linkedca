@@ -6,8 +6,6 @@ option go_package = "github.com/smallstep/linkedca";
 
 import "google/protobuf/timestamp.proto";
 
-// import "linkedca/eab.proto";
-
 message ACMEAccount {
     enum Status {
         UNDEFINED = 0;
