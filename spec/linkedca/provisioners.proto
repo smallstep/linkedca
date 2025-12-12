@@ -161,6 +161,13 @@ message ACMEProvisioner {
 	string terms_of_service = 6;
 	string website = 7;
 	repeated string caa_identities = 8;
+	// Networking options (per‑provisioner)
+	// Explicit proxy URL for outbound ACME validation requests (http-01, etc.).
+	string proxy_url = 9;
+	// Disable any proxy usage (ignores environment variables like HTTP_PROXY/HTTPS_PROXY).
+	bool disable_proxy = 10;
+	// Force a specific DNS resolver for ACME operations, format "host:port" (e.g., "8.8.8.8:53").
+	string dns_resolver = 11;
 }
 
 message X5CProvisioner {
