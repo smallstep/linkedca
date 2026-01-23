@@ -1500,17 +1500,20 @@ func (x *AzureProvisioner) GetObjectIds() []string {
 }
 
 type ACMEProvisioner struct {
-	state              protoimpl.MessageState                  `protogen:"open.v1"`
-	ForceCn            bool                                    `protobuf:"varint,1,opt,name=force_cn,json=forceCn,proto3" json:"force_cn,omitempty"`
-	RequireEab         bool                                    `protobuf:"varint,2,opt,name=require_eab,json=requireEab,proto3" json:"require_eab,omitempty"`
-	Challenges         []ACMEProvisioner_ChallengeType         `protobuf:"varint,3,rep,packed,name=challenges,proto3,enum=linkedca.ACMEProvisioner_ChallengeType" json:"challenges,omitempty"`
-	AttestationFormats []ACMEProvisioner_AttestationFormatType `protobuf:"varint,4,rep,packed,name=attestation_formats,json=attestationFormats,proto3,enum=linkedca.ACMEProvisioner_AttestationFormatType" json:"attestation_formats,omitempty"`
-	AttestationRoots   [][]byte                                `protobuf:"bytes,5,rep,name=attestation_roots,json=attestationRoots,proto3" json:"attestation_roots,omitempty"`
-	TermsOfService     string                                  `protobuf:"bytes,6,opt,name=terms_of_service,json=termsOfService,proto3" json:"terms_of_service,omitempty"`
-	Website            string                                  `protobuf:"bytes,7,opt,name=website,proto3" json:"website,omitempty"`
-	CaaIdentities      []string                                `protobuf:"bytes,8,rep,name=caa_identities,json=caaIdentities,proto3" json:"caa_identities,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+    state              protoimpl.MessageState                  `protogen:"open.v1"`
+    ForceCn            bool                                    `protobuf:"varint,1,opt,name=force_cn,json=forceCn,proto3" json:"force_cn,omitempty"`
+    RequireEab         bool                                    `protobuf:"varint,2,opt,name=require_eab,json=requireEab,proto3" json:"require_eab,omitempty"`
+    Challenges         []ACMEProvisioner_ChallengeType         `protobuf:"varint,3,rep,packed,name=challenges,proto3,enum=linkedca.ACMEProvisioner_ChallengeType" json:"challenges,omitempty"`
+    AttestationFormats []ACMEProvisioner_AttestationFormatType `protobuf:"varint,4,rep,packed,name=attestation_formats,json=attestationFormats,proto3,enum=linkedca.ACMEProvisioner_AttestationFormatType" json:"attestation_formats,omitempty"`
+    AttestationRoots   [][]byte                                `protobuf:"bytes,5,rep,name=attestation_roots,json=attestationRoots,proto3" json:"attestation_roots,omitempty"`
+    TermsOfService     string                                  `protobuf:"bytes,6,opt,name=terms_of_service,json=termsOfService,proto3" json:"terms_of_service,omitempty"`
+    Website            string                                  `protobuf:"bytes,7,opt,name=website,proto3" json:"website,omitempty"`
+    CaaIdentities      []string                                `protobuf:"bytes,8,rep,name=caa_identities,json=caaIdentities,proto3" json:"caa_identities,omitempty"`
+    ProxyUrl           string                                  `protobuf:"bytes,9,opt,name=proxy_url,json=proxyUrl,proto3" json:"proxy_url,omitempty"`
+    DisableProxy       bool                                    `protobuf:"varint,10,opt,name=disable_proxy,json=disableProxy,proto3" json:"disable_proxy,omitempty"`
+    DnsResolver        string                                  `protobuf:"bytes,11,opt,name=dns_resolver,json=dnsResolver,proto3" json:"dns_resolver,omitempty"`
+    unknownFields      protoimpl.UnknownFields
+    sizeCache          protoimpl.SizeCache
 }
 
 func (x *ACMEProvisioner) Reset() {
@@ -1593,10 +1596,31 @@ func (x *ACMEProvisioner) GetWebsite() string {
 }
 
 func (x *ACMEProvisioner) GetCaaIdentities() []string {
-	if x != nil {
-		return x.CaaIdentities
-	}
-	return nil
+    if x != nil {
+        return x.CaaIdentities
+    }
+    return nil
+}
+
+func (x *ACMEProvisioner) GetProxyUrl() string {
+    if x != nil {
+        return x.ProxyUrl
+    }
+    return ""
+}
+
+func (x *ACMEProvisioner) GetDisableProxy() bool {
+    if x != nil {
+        return x.DisableProxy
+    }
+    return false
+}
+
+func (x *ACMEProvisioner) GetDnsResolver() string {
+    if x != nil {
+        return x.DnsResolver
+    }
+    return ""
 }
 
 type X5CProvisioner struct {
