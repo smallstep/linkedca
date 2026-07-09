@@ -152,6 +152,7 @@ message ACMEProvisioner {
 		APPLE = 1;
 		STEP  = 2;
 		TPM   = 3;
+		ANDROID_KEY = 4;
 	}
 	bool force_cn = 1;
 	bool require_eab = 2;
