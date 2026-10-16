@@ -146,6 +146,7 @@ message ACMEProvisioner {
 		DNS_01      = 2;
 		TLS_ALPN_01 = 3;
 		DEVICE_ATTEST_01 = 4;
+		DNS_PERSIST_01 = 5;
 	}
 	enum AttestationFormatType {
 		NONE = 0;
@@ -162,6 +163,8 @@ message ACMEProvisioner {
 	string terms_of_service = 6;
 	string website = 7;
 	repeated string caa_identities = 8;
+	string account_hash_prefix = 9;
+	repeated string issuer_domain_names = 10;
 }
 
 message X5CProvisioner {
