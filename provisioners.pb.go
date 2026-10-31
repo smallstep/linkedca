@@ -107,6 +107,7 @@ const (
 	ACMEProvisioner_TLS_ALPN_01      ACMEProvisioner_ChallengeType = 3
 	ACMEProvisioner_DEVICE_ATTEST_01 ACMEProvisioner_ChallengeType = 4
 	ACMEProvisioner_DNS_PERSIST_01   ACMEProvisioner_ChallengeType = 5
+	ACMEProvisioner_REMOTE_ATTEST_01 ACMEProvisioner_ChallengeType = 6
 )
 
 // Enum value maps for ACMEProvisioner_ChallengeType.
@@ -118,6 +119,7 @@ var (
 		3: "TLS_ALPN_01",
 		4: "DEVICE_ATTEST_01",
 		5: "DNS_PERSIST_01",
+		6: "REMOTE_ATTEST_01",
 	}
 	ACMEProvisioner_ChallengeType_value = map[string]int32{
 		"UNKNOWN":          0,
@@ -126,6 +128,7 @@ var (
 		"TLS_ALPN_01":      3,
 		"DEVICE_ATTEST_01": 4,
 		"DNS_PERSIST_01":   5,
+		"REMOTE_ATTEST_01": 6,
 	}
 )
 
@@ -263,7 +266,7 @@ func (x Webhook_Kind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Webhook_Kind.Descriptor instead.
 func (Webhook_Kind) EnumDescriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{23, 0}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{25, 0}
 }
 
 type Webhook_CertType int32
@@ -312,7 +315,7 @@ func (x Webhook_CertType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Webhook_CertType.Descriptor instead.
 func (Webhook_CertType) EnumDescriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{23, 1}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{25, 1}
 }
 
 type Provisioner struct {
@@ -1517,6 +1520,7 @@ type ACMEProvisioner struct {
 	CaaIdentities      []string                                `protobuf:"bytes,8,rep,name=caa_identities,json=caaIdentities,proto3" json:"caa_identities,omitempty"`
 	AccountHashPrefix  string                                  `protobuf:"bytes,9,opt,name=account_hash_prefix,json=accountHashPrefix,proto3" json:"account_hash_prefix,omitempty"`
 	IssuerDomainNames  []string                                `protobuf:"bytes,10,rep,name=issuer_domain_names,json=issuerDomainNames,proto3" json:"issuer_domain_names,omitempty"`
+	RemoteAttestation  *ACMERemoteAttestation                  `protobuf:"bytes,11,opt,name=remote_attestation,json=remoteAttestation,proto3" json:"remote_attestation,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1621,6 +1625,228 @@ func (x *ACMEProvisioner) GetIssuerDomainNames() []string {
 	return nil
 }
 
+func (x *ACMEProvisioner) GetRemoteAttestation() *ACMERemoteAttestation {
+	if x != nil {
+		return x.RemoteAttestation
+	}
+	return nil
+}
+
+// ACMERemoteAttestation configures the remote-attest-01 challenge of an ACME
+// provisioner (draft-ietf-acme-rats), which is enabled through its challenges.
+type ACMERemoteAttestation struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// require adds a remote-attestation identifier to every order without one.
+	Require bool `protobuf:"varint,1,opt,name=require,proto3" json:"require,omitempty"`
+	// formats are the evidence formats accepted: tdx, sev-snp and
+	// confidential-space.
+	Formats []string `protobuf:"bytes,2,rep,name=formats,proto3" json:"formats,omitempty"`
+	// claims_hint is sent to clients as the challenge's attestClaimsHint.
+	ClaimsHint []string `protobuf:"bytes,3,rep,name=claims_hint,json=claimsHint,proto3" json:"claims_hint,omitempty"`
+	// tdx_roots is a PEM bundle that replaces Intel's SGX root CA.
+	TdxRoots []byte `protobuf:"bytes,4,opt,name=tdx_roots,json=tdxRoots,proto3" json:"tdx_roots,omitempty"`
+	// sev_snp_roots is a PEM bundle of ARK, ASK and ASVK certificates that
+	// replaces AMD's.
+	SevSnpRoots       []byte                 `protobuf:"bytes,5,opt,name=sev_snp_roots,json=sevSnpRoots,proto3" json:"sev_snp_roots,omitempty"`
+	ConfidentialSpace *ACMEConfidentialSpace `protobuf:"bytes,6,opt,name=confidential_space,json=confidentialSpace,proto3" json:"confidential_space,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *ACMERemoteAttestation) Reset() {
+	*x = ACMERemoteAttestation{}
+	mi := &file_linkedca_provisioners_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ACMERemoteAttestation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ACMERemoteAttestation) ProtoMessage() {}
+
+func (x *ACMERemoteAttestation) ProtoReflect() protoreflect.Message {
+	mi := &file_linkedca_provisioners_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ACMERemoteAttestation.ProtoReflect.Descriptor instead.
+func (*ACMERemoteAttestation) Descriptor() ([]byte, []int) {
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ACMERemoteAttestation) GetRequire() bool {
+	if x != nil {
+		return x.Require
+	}
+	return false
+}
+
+func (x *ACMERemoteAttestation) GetFormats() []string {
+	if x != nil {
+		return x.Formats
+	}
+	return nil
+}
+
+func (x *ACMERemoteAttestation) GetClaimsHint() []string {
+	if x != nil {
+		return x.ClaimsHint
+	}
+	return nil
+}
+
+func (x *ACMERemoteAttestation) GetTdxRoots() []byte {
+	if x != nil {
+		return x.TdxRoots
+	}
+	return nil
+}
+
+func (x *ACMERemoteAttestation) GetSevSnpRoots() []byte {
+	if x != nil {
+		return x.SevSnpRoots
+	}
+	return nil
+}
+
+func (x *ACMERemoteAttestation) GetConfidentialSpace() *ACMEConfidentialSpace {
+	if x != nil {
+		return x.ConfidentialSpace
+	}
+	return nil
+}
+
+// ACMEConfidentialSpace configures the confidential-space format of the
+// remote-attest-01 challenge: Google Cloud Attestation PKI tokens for
+// Confidential Space workloads, and the values the workload must match.
+type ACMEConfidentialSpace struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// roots is a PEM bundle with the roots of Google Cloud Attestation's PKI.
+	Roots []byte `protobuf:"bytes,1,opt,name=roots,proto3" json:"roots,omitempty"`
+	// audience defaults to the ACME directory URL.
+	Audience string `protobuf:"bytes,2,opt,name=audience,proto3" json:"audience,omitempty"`
+	// max_token_age is a duration, for example 5m.
+	MaxTokenAge              string   `protobuf:"bytes,3,opt,name=max_token_age,json=maxTokenAge,proto3" json:"max_token_age,omitempty"`
+	ImageDigests             []string `protobuf:"bytes,4,rep,name=image_digests,json=imageDigests,proto3" json:"image_digests,omitempty"`
+	ImageSignerKeyIds        []string `protobuf:"bytes,5,rep,name=image_signer_key_ids,json=imageSignerKeyIds,proto3" json:"image_signer_key_ids,omitempty"`
+	RequireSupportAttributes []string `protobuf:"bytes,6,rep,name=require_support_attributes,json=requireSupportAttributes,proto3" json:"require_support_attributes,omitempty"`
+	Hwmodels                 []string `protobuf:"bytes,7,rep,name=hwmodels,proto3" json:"hwmodels,omitempty"`
+	Swnames                  []string `protobuf:"bytes,8,rep,name=swnames,proto3" json:"swnames,omitempty"`
+	ProjectIds               []string `protobuf:"bytes,9,rep,name=project_ids,json=projectIds,proto3" json:"project_ids,omitempty"`
+	ServiceAccounts          []string `protobuf:"bytes,10,rep,name=service_accounts,json=serviceAccounts,proto3" json:"service_accounts,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *ACMEConfidentialSpace) Reset() {
+	*x = ACMEConfidentialSpace{}
+	mi := &file_linkedca_provisioners_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ACMEConfidentialSpace) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ACMEConfidentialSpace) ProtoMessage() {}
+
+func (x *ACMEConfidentialSpace) ProtoReflect() protoreflect.Message {
+	mi := &file_linkedca_provisioners_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ACMEConfidentialSpace.ProtoReflect.Descriptor instead.
+func (*ACMEConfidentialSpace) Descriptor() ([]byte, []int) {
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ACMEConfidentialSpace) GetRoots() []byte {
+	if x != nil {
+		return x.Roots
+	}
+	return nil
+}
+
+func (x *ACMEConfidentialSpace) GetAudience() string {
+	if x != nil {
+		return x.Audience
+	}
+	return ""
+}
+
+func (x *ACMEConfidentialSpace) GetMaxTokenAge() string {
+	if x != nil {
+		return x.MaxTokenAge
+	}
+	return ""
+}
+
+func (x *ACMEConfidentialSpace) GetImageDigests() []string {
+	if x != nil {
+		return x.ImageDigests
+	}
+	return nil
+}
+
+func (x *ACMEConfidentialSpace) GetImageSignerKeyIds() []string {
+	if x != nil {
+		return x.ImageSignerKeyIds
+	}
+	return nil
+}
+
+func (x *ACMEConfidentialSpace) GetRequireSupportAttributes() []string {
+	if x != nil {
+		return x.RequireSupportAttributes
+	}
+	return nil
+}
+
+func (x *ACMEConfidentialSpace) GetHwmodels() []string {
+	if x != nil {
+		return x.Hwmodels
+	}
+	return nil
+}
+
+func (x *ACMEConfidentialSpace) GetSwnames() []string {
+	if x != nil {
+		return x.Swnames
+	}
+	return nil
+}
+
+func (x *ACMEConfidentialSpace) GetProjectIds() []string {
+	if x != nil {
+		return x.ProjectIds
+	}
+	return nil
+}
+
+func (x *ACMEConfidentialSpace) GetServiceAccounts() []string {
+	if x != nil {
+		return x.ServiceAccounts
+	}
+	return nil
+}
+
 type X5CProvisioner struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Roots         [][]byte               `protobuf:"bytes,1,rep,name=roots,proto3" json:"roots,omitempty"`
@@ -1630,7 +1856,7 @@ type X5CProvisioner struct {
 
 func (x *X5CProvisioner) Reset() {
 	*x = X5CProvisioner{}
-	mi := &file_linkedca_provisioners_proto_msgTypes[15]
+	mi := &file_linkedca_provisioners_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1642,7 +1868,7 @@ func (x *X5CProvisioner) String() string {
 func (*X5CProvisioner) ProtoMessage() {}
 
 func (x *X5CProvisioner) ProtoReflect() protoreflect.Message {
-	mi := &file_linkedca_provisioners_proto_msgTypes[15]
+	mi := &file_linkedca_provisioners_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1655,7 +1881,7 @@ func (x *X5CProvisioner) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use X5CProvisioner.ProtoReflect.Descriptor instead.
 func (*X5CProvisioner) Descriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{15}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *X5CProvisioner) GetRoots() [][]byte {
@@ -1674,7 +1900,7 @@ type K8SSAProvisioner struct {
 
 func (x *K8SSAProvisioner) Reset() {
 	*x = K8SSAProvisioner{}
-	mi := &file_linkedca_provisioners_proto_msgTypes[16]
+	mi := &file_linkedca_provisioners_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1686,7 +1912,7 @@ func (x *K8SSAProvisioner) String() string {
 func (*K8SSAProvisioner) ProtoMessage() {}
 
 func (x *K8SSAProvisioner) ProtoReflect() protoreflect.Message {
-	mi := &file_linkedca_provisioners_proto_msgTypes[16]
+	mi := &file_linkedca_provisioners_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1699,7 +1925,7 @@ func (x *K8SSAProvisioner) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use K8SSAProvisioner.ProtoReflect.Descriptor instead.
 func (*K8SSAProvisioner) Descriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{16}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *K8SSAProvisioner) GetPublicKeys() [][]byte {
@@ -1717,7 +1943,7 @@ type SSHPOPProvisioner struct {
 
 func (x *SSHPOPProvisioner) Reset() {
 	*x = SSHPOPProvisioner{}
-	mi := &file_linkedca_provisioners_proto_msgTypes[17]
+	mi := &file_linkedca_provisioners_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1729,7 +1955,7 @@ func (x *SSHPOPProvisioner) String() string {
 func (*SSHPOPProvisioner) ProtoMessage() {}
 
 func (x *SSHPOPProvisioner) ProtoReflect() protoreflect.Message {
-	mi := &file_linkedca_provisioners_proto_msgTypes[17]
+	mi := &file_linkedca_provisioners_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1742,7 +1968,7 @@ func (x *SSHPOPProvisioner) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SSHPOPProvisioner.ProtoReflect.Descriptor instead.
 func (*SSHPOPProvisioner) Descriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{17}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{19}
 }
 
 type SCEPDecrypter struct {
@@ -1757,7 +1983,7 @@ type SCEPDecrypter struct {
 
 func (x *SCEPDecrypter) Reset() {
 	*x = SCEPDecrypter{}
-	mi := &file_linkedca_provisioners_proto_msgTypes[18]
+	mi := &file_linkedca_provisioners_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1769,7 +1995,7 @@ func (x *SCEPDecrypter) String() string {
 func (*SCEPDecrypter) ProtoMessage() {}
 
 func (x *SCEPDecrypter) ProtoReflect() protoreflect.Message {
-	mi := &file_linkedca_provisioners_proto_msgTypes[18]
+	mi := &file_linkedca_provisioners_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1782,7 +2008,7 @@ func (x *SCEPDecrypter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SCEPDecrypter.ProtoReflect.Descriptor instead.
 func (*SCEPDecrypter) Descriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{18}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *SCEPDecrypter) GetCertificate() []byte {
@@ -1829,7 +2055,7 @@ type SCEPProvisioner struct {
 
 func (x *SCEPProvisioner) Reset() {
 	*x = SCEPProvisioner{}
-	mi := &file_linkedca_provisioners_proto_msgTypes[19]
+	mi := &file_linkedca_provisioners_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1841,7 +2067,7 @@ func (x *SCEPProvisioner) String() string {
 func (*SCEPProvisioner) ProtoMessage() {}
 
 func (x *SCEPProvisioner) ProtoReflect() protoreflect.Message {
-	mi := &file_linkedca_provisioners_proto_msgTypes[19]
+	mi := &file_linkedca_provisioners_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1854,7 +2080,7 @@ func (x *SCEPProvisioner) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SCEPProvisioner.ProtoReflect.Descriptor instead.
 func (*SCEPProvisioner) Descriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{19}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *SCEPProvisioner) GetForceCn() bool {
@@ -1922,7 +2148,7 @@ type NebulaProvisioner struct {
 
 func (x *NebulaProvisioner) Reset() {
 	*x = NebulaProvisioner{}
-	mi := &file_linkedca_provisioners_proto_msgTypes[20]
+	mi := &file_linkedca_provisioners_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1934,7 +2160,7 @@ func (x *NebulaProvisioner) String() string {
 func (*NebulaProvisioner) ProtoMessage() {}
 
 func (x *NebulaProvisioner) ProtoReflect() protoreflect.Message {
-	mi := &file_linkedca_provisioners_proto_msgTypes[20]
+	mi := &file_linkedca_provisioners_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1947,7 +2173,7 @@ func (x *NebulaProvisioner) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NebulaProvisioner.ProtoReflect.Descriptor instead.
 func (*NebulaProvisioner) Descriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{20}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *NebulaProvisioner) GetRoots() [][]byte {
@@ -1967,7 +2193,7 @@ type BasicAuth struct {
 
 func (x *BasicAuth) Reset() {
 	*x = BasicAuth{}
-	mi := &file_linkedca_provisioners_proto_msgTypes[21]
+	mi := &file_linkedca_provisioners_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1979,7 +2205,7 @@ func (x *BasicAuth) String() string {
 func (*BasicAuth) ProtoMessage() {}
 
 func (x *BasicAuth) ProtoReflect() protoreflect.Message {
-	mi := &file_linkedca_provisioners_proto_msgTypes[21]
+	mi := &file_linkedca_provisioners_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1992,7 +2218,7 @@ func (x *BasicAuth) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BasicAuth.ProtoReflect.Descriptor instead.
 func (*BasicAuth) Descriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{21}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *BasicAuth) GetUsername() string {
@@ -2018,7 +2244,7 @@ type BearerToken struct {
 
 func (x *BearerToken) Reset() {
 	*x = BearerToken{}
-	mi := &file_linkedca_provisioners_proto_msgTypes[22]
+	mi := &file_linkedca_provisioners_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2030,7 +2256,7 @@ func (x *BearerToken) String() string {
 func (*BearerToken) ProtoMessage() {}
 
 func (x *BearerToken) ProtoReflect() protoreflect.Message {
-	mi := &file_linkedca_provisioners_proto_msgTypes[22]
+	mi := &file_linkedca_provisioners_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2043,7 +2269,7 @@ func (x *BearerToken) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BearerToken.ProtoReflect.Descriptor instead.
 func (*BearerToken) Descriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{22}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *BearerToken) GetBearerToken() string {
@@ -2073,7 +2299,7 @@ type Webhook struct {
 
 func (x *Webhook) Reset() {
 	*x = Webhook{}
-	mi := &file_linkedca_provisioners_proto_msgTypes[23]
+	mi := &file_linkedca_provisioners_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2085,7 +2311,7 @@ func (x *Webhook) String() string {
 func (*Webhook) ProtoMessage() {}
 
 func (x *Webhook) ProtoReflect() protoreflect.Message {
-	mi := &file_linkedca_provisioners_proto_msgTypes[23]
+	mi := &file_linkedca_provisioners_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2098,7 +2324,7 @@ func (x *Webhook) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Webhook.ProtoReflect.Descriptor instead.
 func (*Webhook) Descriptor() ([]byte, []int) {
-	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{23}
+	return file_linkedca_provisioners_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *Webhook) GetName() string {
@@ -2310,7 +2536,7 @@ const file_linkedca_provisioners_proto_rawDesc = "" +
 	"\x1adisable_trust_on_first_use\x18\x05 \x01(\bR\x16disableTrustOnFirstUse\x12)\n" +
 	"\x10subscription_ids\x18\x06 \x03(\tR\x0fsubscriptionIds\x12\x1d\n" +
 	"\n" +
-	"object_ids\x18\a \x03(\tR\tobjectIds\"\xb4\x05\n" +
+	"object_ids\x18\a \x03(\tR\tobjectIds\"\x9b\x06\n" +
 	"\x0fACMEProvisioner\x12\x19\n" +
 	"\bforce_cn\x18\x01 \x01(\bR\aforceCn\x12\x1f\n" +
 	"\vrequire_eab\x18\x02 \x01(\bR\n" +
@@ -2325,7 +2551,8 @@ const file_linkedca_provisioners_proto_rawDesc = "" +
 	"\x0ecaa_identities\x18\b \x03(\tR\rcaaIdentities\x12.\n" +
 	"\x13account_hash_prefix\x18\t \x01(\tR\x11accountHashPrefix\x12.\n" +
 	"\x13issuer_domain_names\x18\n" +
-	" \x03(\tR\x11issuerDomainNames\"p\n" +
+	" \x03(\tR\x11issuerDomainNames\x12N\n" +
+	"\x12remote_attestation\x18\v \x01(\v2\x1f.linkedca.ACMERemoteAttestationR\x11remoteAttestation\"\x86\x01\n" +
 	"\rChallengeType\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\v\n" +
 	"\aHTTP_01\x10\x01\x12\n" +
@@ -2333,13 +2560,35 @@ const file_linkedca_provisioners_proto_rawDesc = "" +
 	"\x06DNS_01\x10\x02\x12\x0f\n" +
 	"\vTLS_ALPN_01\x10\x03\x12\x14\n" +
 	"\x10DEVICE_ATTEST_01\x10\x04\x12\x12\n" +
-	"\x0eDNS_PERSIST_01\x10\x05\"P\n" +
+	"\x0eDNS_PERSIST_01\x10\x05\x12\x14\n" +
+	"\x10REMOTE_ATTEST_01\x10\x06\"P\n" +
 	"\x15AttestationFormatType\x12\b\n" +
 	"\x04NONE\x10\x00\x12\t\n" +
 	"\x05APPLE\x10\x01\x12\b\n" +
 	"\x04STEP\x10\x02\x12\a\n" +
 	"\x03TPM\x10\x03\x12\x0f\n" +
-	"\vANDROID_KEY\x10\x04\"&\n" +
+	"\vANDROID_KEY\x10\x04\"\xfd\x01\n" +
+	"\x15ACMERemoteAttestation\x12\x18\n" +
+	"\arequire\x18\x01 \x01(\bR\arequire\x12\x18\n" +
+	"\aformats\x18\x02 \x03(\tR\aformats\x12\x1f\n" +
+	"\vclaims_hint\x18\x03 \x03(\tR\n" +
+	"claimsHint\x12\x1b\n" +
+	"\ttdx_roots\x18\x04 \x01(\fR\btdxRoots\x12\"\n" +
+	"\rsev_snp_roots\x18\x05 \x01(\fR\vsevSnpRoots\x12N\n" +
+	"\x12confidential_space\x18\x06 \x01(\v2\x1f.linkedca.ACMEConfidentialSpaceR\x11confidentialSpace\"\x83\x03\n" +
+	"\x15ACMEConfidentialSpace\x12\x14\n" +
+	"\x05roots\x18\x01 \x01(\fR\x05roots\x12\x1a\n" +
+	"\baudience\x18\x02 \x01(\tR\baudience\x12\"\n" +
+	"\rmax_token_age\x18\x03 \x01(\tR\vmaxTokenAge\x12#\n" +
+	"\rimage_digests\x18\x04 \x03(\tR\fimageDigests\x12/\n" +
+	"\x14image_signer_key_ids\x18\x05 \x03(\tR\x11imageSignerKeyIds\x12<\n" +
+	"\x1arequire_support_attributes\x18\x06 \x03(\tR\x18requireSupportAttributes\x12\x1a\n" +
+	"\bhwmodels\x18\a \x03(\tR\bhwmodels\x12\x18\n" +
+	"\aswnames\x18\b \x03(\tR\aswnames\x12\x1f\n" +
+	"\vproject_ids\x18\t \x03(\tR\n" +
+	"projectIds\x12)\n" +
+	"\x10service_accounts\x18\n" +
+	" \x03(\tR\x0fserviceAccounts\"&\n" +
 	"\x0eX5CProvisioner\x12\x14\n" +
 	"\x05roots\x18\x01 \x03(\fR\x05roots\"3\n" +
 	"\x10K8sSAProvisioner\x12\x1f\n" +
@@ -2403,7 +2652,7 @@ func file_linkedca_provisioners_proto_rawDescGZIP() []byte {
 }
 
 var file_linkedca_provisioners_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_linkedca_provisioners_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
+var file_linkedca_provisioners_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_linkedca_provisioners_proto_goTypes = []any{
 	(Provisioner_Type)(0),                      // 0: linkedca.Provisioner.Type
 	(ACMEProvisioner_ChallengeType)(0),         // 1: linkedca.ACMEProvisioner.ChallengeType
@@ -2425,17 +2674,19 @@ var file_linkedca_provisioners_proto_goTypes = []any{
 	(*AWSProvisioner)(nil),                     // 17: linkedca.AWSProvisioner
 	(*AzureProvisioner)(nil),                   // 18: linkedca.AzureProvisioner
 	(*ACMEProvisioner)(nil),                    // 19: linkedca.ACMEProvisioner
-	(*X5CProvisioner)(nil),                     // 20: linkedca.X5CProvisioner
-	(*K8SSAProvisioner)(nil),                   // 21: linkedca.K8sSAProvisioner
-	(*SSHPOPProvisioner)(nil),                  // 22: linkedca.SSHPOPProvisioner
-	(*SCEPDecrypter)(nil),                      // 23: linkedca.SCEPDecrypter
-	(*SCEPProvisioner)(nil),                    // 24: linkedca.SCEPProvisioner
-	(*NebulaProvisioner)(nil),                  // 25: linkedca.NebulaProvisioner
-	(*BasicAuth)(nil),                          // 26: linkedca.BasicAuth
-	(*BearerToken)(nil),                        // 27: linkedca.BearerToken
-	(*Webhook)(nil),                            // 28: linkedca.Webhook
-	(*timestamppb.Timestamp)(nil),              // 29: google.protobuf.Timestamp
-	(*Policy)(nil),                             // 30: linkedca.Policy
+	(*ACMERemoteAttestation)(nil),              // 20: linkedca.ACMERemoteAttestation
+	(*ACMEConfidentialSpace)(nil),              // 21: linkedca.ACMEConfidentialSpace
+	(*X5CProvisioner)(nil),                     // 22: linkedca.X5CProvisioner
+	(*K8SSAProvisioner)(nil),                   // 23: linkedca.K8sSAProvisioner
+	(*SSHPOPProvisioner)(nil),                  // 24: linkedca.SSHPOPProvisioner
+	(*SCEPDecrypter)(nil),                      // 25: linkedca.SCEPDecrypter
+	(*SCEPProvisioner)(nil),                    // 26: linkedca.SCEPProvisioner
+	(*NebulaProvisioner)(nil),                  // 27: linkedca.NebulaProvisioner
+	(*BasicAuth)(nil),                          // 28: linkedca.BasicAuth
+	(*BearerToken)(nil),                        // 29: linkedca.BearerToken
+	(*Webhook)(nil),                            // 30: linkedca.Webhook
+	(*timestamppb.Timestamp)(nil),              // 31: google.protobuf.Timestamp
+	(*Policy)(nil),                             // 32: linkedca.Policy
 }
 var file_linkedca_provisioners_proto_depIdxs = []int32{
 	0,  // 0: linkedca.Provisioner.type:type_name -> linkedca.Provisioner.Type
@@ -2443,10 +2694,10 @@ var file_linkedca_provisioners_proto_depIdxs = []int32{
 	9,  // 2: linkedca.Provisioner.claims:type_name -> linkedca.Claims
 	13, // 3: linkedca.Provisioner.x509_template:type_name -> linkedca.Template
 	13, // 4: linkedca.Provisioner.ssh_template:type_name -> linkedca.Template
-	29, // 5: linkedca.Provisioner.created_at:type_name -> google.protobuf.Timestamp
-	29, // 6: linkedca.Provisioner.deleted_at:type_name -> google.protobuf.Timestamp
-	30, // 7: linkedca.Provisioner.policy:type_name -> linkedca.Policy
-	28, // 8: linkedca.Provisioner.webhooks:type_name -> linkedca.Webhook
+	31, // 5: linkedca.Provisioner.created_at:type_name -> google.protobuf.Timestamp
+	31, // 6: linkedca.Provisioner.deleted_at:type_name -> google.protobuf.Timestamp
+	32, // 7: linkedca.Provisioner.policy:type_name -> linkedca.Policy
+	30, // 8: linkedca.Provisioner.webhooks:type_name -> linkedca.Webhook
 	0,  // 9: linkedca.ProvisionerIdentity.type:type_name -> linkedca.Provisioner.Type
 	14, // 10: linkedca.ProvisionerDetails.JWK:type_name -> linkedca.JWKProvisioner
 	15, // 11: linkedca.ProvisionerDetails.OIDC:type_name -> linkedca.OIDCProvisioner
@@ -2454,11 +2705,11 @@ var file_linkedca_provisioners_proto_depIdxs = []int32{
 	17, // 13: linkedca.ProvisionerDetails.AWS:type_name -> linkedca.AWSProvisioner
 	18, // 14: linkedca.ProvisionerDetails.Azure:type_name -> linkedca.AzureProvisioner
 	19, // 15: linkedca.ProvisionerDetails.ACME:type_name -> linkedca.ACMEProvisioner
-	20, // 16: linkedca.ProvisionerDetails.X5C:type_name -> linkedca.X5CProvisioner
-	21, // 17: linkedca.ProvisionerDetails.K8sSA:type_name -> linkedca.K8sSAProvisioner
-	22, // 18: linkedca.ProvisionerDetails.SSHPOP:type_name -> linkedca.SSHPOPProvisioner
-	24, // 19: linkedca.ProvisionerDetails.SCEP:type_name -> linkedca.SCEPProvisioner
-	25, // 20: linkedca.ProvisionerDetails.Nebula:type_name -> linkedca.NebulaProvisioner
+	22, // 16: linkedca.ProvisionerDetails.X5C:type_name -> linkedca.X5CProvisioner
+	23, // 17: linkedca.ProvisionerDetails.K8sSA:type_name -> linkedca.K8sSAProvisioner
+	24, // 18: linkedca.ProvisionerDetails.SSHPOP:type_name -> linkedca.SSHPOPProvisioner
+	26, // 19: linkedca.ProvisionerDetails.SCEP:type_name -> linkedca.SCEPProvisioner
+	27, // 20: linkedca.ProvisionerDetails.Nebula:type_name -> linkedca.NebulaProvisioner
 	5,  // 21: linkedca.ProvisionerList.provisioners:type_name -> linkedca.Provisioner
 	10, // 22: linkedca.Claims.x509:type_name -> linkedca.X509Claims
 	11, // 23: linkedca.Claims.ssh:type_name -> linkedca.SSHClaims
@@ -2467,16 +2718,18 @@ var file_linkedca_provisioners_proto_depIdxs = []int32{
 	12, // 26: linkedca.SSHClaims.host_durations:type_name -> linkedca.Durations
 	1,  // 27: linkedca.ACMEProvisioner.challenges:type_name -> linkedca.ACMEProvisioner.ChallengeType
 	2,  // 28: linkedca.ACMEProvisioner.attestation_formats:type_name -> linkedca.ACMEProvisioner.AttestationFormatType
-	23, // 29: linkedca.SCEPProvisioner.decrypter:type_name -> linkedca.SCEPDecrypter
-	3,  // 30: linkedca.Webhook.kind:type_name -> linkedca.Webhook.Kind
-	27, // 31: linkedca.Webhook.bearer_token:type_name -> linkedca.BearerToken
-	26, // 32: linkedca.Webhook.basic_auth:type_name -> linkedca.BasicAuth
-	4,  // 33: linkedca.Webhook.cert_type:type_name -> linkedca.Webhook.CertType
-	34, // [34:34] is the sub-list for method output_type
-	34, // [34:34] is the sub-list for method input_type
-	34, // [34:34] is the sub-list for extension type_name
-	34, // [34:34] is the sub-list for extension extendee
-	0,  // [0:34] is the sub-list for field type_name
+	20, // 29: linkedca.ACMEProvisioner.remote_attestation:type_name -> linkedca.ACMERemoteAttestation
+	21, // 30: linkedca.ACMERemoteAttestation.confidential_space:type_name -> linkedca.ACMEConfidentialSpace
+	25, // 31: linkedca.SCEPProvisioner.decrypter:type_name -> linkedca.SCEPDecrypter
+	3,  // 32: linkedca.Webhook.kind:type_name -> linkedca.Webhook.Kind
+	29, // 33: linkedca.Webhook.bearer_token:type_name -> linkedca.BearerToken
+	28, // 34: linkedca.Webhook.basic_auth:type_name -> linkedca.BasicAuth
+	4,  // 35: linkedca.Webhook.cert_type:type_name -> linkedca.Webhook.CertType
+	36, // [36:36] is the sub-list for method output_type
+	36, // [36:36] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_linkedca_provisioners_proto_init() }
@@ -2499,7 +2752,7 @@ func file_linkedca_provisioners_proto_init() {
 		(*ProvisionerDetails_Nebula)(nil),
 	}
 	file_linkedca_provisioners_proto_msgTypes[11].OneofWrappers = []any{}
-	file_linkedca_provisioners_proto_msgTypes[23].OneofWrappers = []any{
+	file_linkedca_provisioners_proto_msgTypes[25].OneofWrappers = []any{
 		(*Webhook_BearerToken)(nil),
 		(*Webhook_BasicAuth)(nil),
 	}
@@ -2509,7 +2762,7 @@ func file_linkedca_provisioners_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_linkedca_provisioners_proto_rawDesc), len(file_linkedca_provisioners_proto_rawDesc)),
 			NumEnums:      5,
-			NumMessages:   24,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

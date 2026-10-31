@@ -147,6 +147,7 @@ message ACMEProvisioner {
 		TLS_ALPN_01 = 3;
 		DEVICE_ATTEST_01 = 4;
 		DNS_PERSIST_01 = 5;
+		REMOTE_ATTEST_01 = 6;
 	}
 	enum AttestationFormatType {
 		NONE = 0;
@@ -165,6 +166,44 @@ message ACMEProvisioner {
 	repeated string caa_identities = 8;
 	string account_hash_prefix = 9;
 	repeated string issuer_domain_names = 10;
+	ACMERemoteAttestation remote_attestation = 11;
+}
+
+// ACMERemoteAttestation configures the remote-attest-01 challenge of an ACME
+// provisioner (draft-ietf-acme-rats), which is enabled through its challenges.
+message ACMERemoteAttestation {
+	// require adds a remote-attestation identifier to every order without one.
+	bool require = 1;
+	// formats are the evidence formats accepted: tdx, sev-snp and
+	// confidential-space.
+	repeated string formats = 2;
+	// claims_hint is sent to clients as the challenge's attestClaimsHint.
+	repeated string claims_hint = 3;
+	// tdx_roots is a PEM bundle that replaces Intel's SGX root CA.
+	bytes tdx_roots = 4;
+	// sev_snp_roots is a PEM bundle of ARK, ASK and ASVK certificates that
+	// replaces AMD's.
+	bytes sev_snp_roots = 5;
+	ACMEConfidentialSpace confidential_space = 6;
+}
+
+// ACMEConfidentialSpace configures the confidential-space format of the
+// remote-attest-01 challenge: Google Cloud Attestation PKI tokens for
+// Confidential Space workloads, and the values the workload must match.
+message ACMEConfidentialSpace {
+	// roots is a PEM bundle with the roots of Google Cloud Attestation's PKI.
+	bytes roots = 1;
+	// audience defaults to the ACME directory URL.
+	string audience = 2;
+	// max_token_age is a duration, for example 5m.
+	string max_token_age = 3;
+	repeated string image_digests = 4;
+	repeated string image_signer_key_ids = 5;
+	repeated string require_support_attributes = 6;
+	repeated string hwmodels = 7;
+	repeated string swnames = 8;
+	repeated string project_ids = 9;
+	repeated string service_accounts = 10;
 }
 
 message X5CProvisioner {
